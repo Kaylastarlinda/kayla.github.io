@@ -1,837 +1,307 @@
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#102f2b">
-
 <title>Laboratório Interativo | IFPA</title>
-
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: #102f2b;
-  color: #173b34;
-}
-
-/* CÂMERA */
-a-scene {
-  position: fixed !important;
-  inset: 0;
-  z-index: 1;
-}
-
-/* IDENTIFICAÇÃO DISCRETA */
-.topo {
-  position: fixed;
-  z-index: 20;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  pointer-events: none;
-}
-
-.marca {
-  padding: 10px 13px;
-  border-radius: 30px;
-  color: white;
-  background: #123b35df;
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: .5px;
-}
-
-.estado {
-  padding: 9px 12px;
-  border-radius: 30px;
-  color: white;
-  background: #123b35df;
-  font-size: 11px;
-}
-
-/* AVISO PEQUENO */
-.dica {
-  position: fixed;
-  z-index: 20;
-  top: 62px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 90%;
-  padding: 9px 13px;
-  border-radius: 20px;
-  color: white;
-  background: #123b35c9;
-  font-size: 12px;
-  text-align: center;
-  pointer-events: none;
-}
-
-/* BOTÃO DE ABRIR */
-.abrir {
-  display: none;
-  position: fixed;
-  z-index: 25;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 90%;
-  padding: 15px 23px;
-  border: none;
-  border-radius: 35px;
-  background: #14745f;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  box-shadow: 0 4px 20px #0005;
-}
-
-/* PAINEL */
-.painel {
-  display: none;
-  position: fixed;
-  z-index: 30;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-height: 43vh;
-  overflow-y: auto;
-  padding: 15px 16px calc(20px + env(safe-area-inset-bottom));
-  background: #f7faf8;
-  border-radius: 23px 23px 0 0;
-  box-shadow: 0 -5px 25px #0004;
-}
-
-.cabecalho-painel {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.cabecalho-painel h2 {
-  margin: 0;
-  font-size: 17px;
-}
-
-.fechar {
-  width: 35px;
-  height: 35px;
-  padding: 0;
-  border-radius: 50%;
-  font-size: 19px;
-  background: #e3eee9;
-}
-
-.navegacao {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 13px;
-}
-
-.navegacao button {
-  flex: 1;
-  padding: 12px 5px;
-  border: none;
-  border-radius: 11px;
-  background: #e3eee9;
-  color: #164b40;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.navegacao button.ativo {
-  background: #14745f;
-  color: white;
-}
-
-.seletores {
-  display: flex;
-  gap: 7px;
-  overflow-x: auto;
-  margin-bottom: 12px;
-}
-
-.seletores button {
-  flex-shrink: 0;
-  padding: 10px 13px;
-  border: none;
-  border-radius: 20px;
-  background: #e3eee9;
-  color: #164b40;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.seletores button.ativo {
-  background: #174e43;
-  color: white;
-}
-
-.conteudo h3 {
-  margin: 7px 0;
-  color: #123b35;
-  font-size: 17px;
-}
-
-.conteudo p {
-  margin: 5px 0;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.etapa {
-  padding: 11px;
-  margin-top: 10px;
-  border-left: 4px solid #14745f;
-  border-radius: 8px;
-  background: #e8f2ed;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.progresso {
-  display: flex;
-  gap: 5px;
-  margin: 12px 0;
-}
-
-.progresso span {
-  height: 5px;
-  flex: 1;
-  border-radius: 5px;
-  background: #d6e3dc;
-}
-
-.progresso span.ativo {
-  background: #14745f;
-}
-
-.acoes {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.acoes button {
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #14745f;
-  color: white;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.acoes button:disabled {
-  opacity: .4;
-}
-
-.nota {
-  margin-top: 12px !important;
-  padding: 9px;
-  background: #fff1d6;
-  border-radius: 9px;
-  color: #6a501e;
-  font-size: 11px !important;
-}
-
-@media (max-width: 380px) {
-  .marca { font-size: 9px; }
-  .painel { max-height: 48vh; }
-}
+:root{--bg:#102f2b;--teal:#176B5B;--mint:#e8f0ee;--ink:#0f3b34}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#top{position:fixed;left:0;right:0;top:0;z-index:6;display:flex;justify-content:space-between;gap:8px;padding:calc(env(safe-area-inset-top) + 10px) 12px 0;pointer-events:none}
+.pill{background:rgba(16,47,43,.88);color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;padding:9px 13px;border-radius:99px}
+#st.ok{background:#176B5B}
+#hud{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top) + 56px);z-index:6;background:rgba(214,69,69,.92);color:#fff;font-weight:800;padding:8px 16px;border-radius:99px;font-size:14px;display:none}
+#stage{position:fixed;inset:0;z-index:1;touch-action:none}
+#hint{position:fixed;left:0;right:0;top:34%;z-index:2;text-align:center;color:#fff;font-weight:600;text-shadow:0 1px 6px #000;pointer-events:none;padding:0 30px}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:7;background:#f6f9f8;border-radius:22px 22px 0 0;padding:6px 14px calc(env(safe-area-inset-bottom) + 12px);box-shadow:0 -6px 24px rgba(0,0,0,.35);max-height:46vh;display:flex;flex-direction:column}
+#grab{align-self:center;border:0;background:#c9d6d3;width:46px;height:6px;border-radius:9px;margin:4px 0 8px;padding:0}
+.row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.row button{flex:1 0 auto;border:0;border-radius:14px;background:#e1ebe8;color:var(--ink);font-weight:800;font-size:13px;padding:11px 14px;white-space:nowrap}
+.row button.on{background:var(--teal);color:#fff}
+.chips button{border-radius:99px;padding:8px 14px;font-size:12.5px}
+.chips button.on{background:var(--bg)}
+#body{overflow-y:auto;min-height:0}
+#sheet.min #body{display:none}
+h2{margin:2px 0 4px;font-size:19px;color:var(--ink)}
+#intro{margin:0 0 8px;font-size:13.5px;color:#3d5a54;line-height:1.35}
+#bar{display:flex;gap:5px;margin-bottom:8px}
+#bar i{flex:1;height:5px;border-radius:9px;background:#cbd8d5}
+#bar i.on{background:var(--teal)}
+#txt{background:var(--mint);border-left:4px solid var(--teal);border-radius:10px;padding:10px 12px;margin:0 0 10px;font-size:15px;line-height:1.4;color:#15342f}
+.nav{display:flex;gap:8px}
+.nav button{flex:1;border:0;border-radius:13px;padding:12px 6px;font-weight:800;font-size:14px;background:#dfe9e6;color:var(--ink)}
+.nav #next{flex:2;background:var(--teal);color:#fff}
+.nav button:disabled{opacity:.4}
+.nav button.on{background:var(--bg);color:#fff}
+small{display:block;margin-top:8px;color:#5d756f;font-size:11px;line-height:1.3}
 </style>
 </head>
-
 <body>
+<div id="top"><span class="pill">IFPA | LABORATÓRIO</span><span class="pill" id="st">PROCURANDO MARCADOR</span></div>
+<div id="hud"></div>
+<div id="hint">Aponte a câmera para o banner</div>
 
-<div class="topo">
-  <div class="marca">IFPA | LABORATÓRIO</div>
-  <div class="estado" id="estado">PROCURANDO MARCADOR</div>
-</div>
-
-<div class="dica" id="dica">
-  Aponte a câmera para o banner
-</div>
-
-<button class="abrir" id="abrir">
-  ✚ EXPLORAR EXPERIÊNCIA
-</button>
-
-<div class="painel" id="painel">
-
-  <div class="cabecalho-painel">
-    <h2 id="tituloPainel">Laboratório interativo</h2>
-    <button class="fechar" id="fechar">×</button>
-  </div>
-
-  <div class="navegacao">
-    <button id="btnAnatomia" class="ativo">ANATOMIA 3D</button>
-    <button id="btnPratica">PRIMEIROS SOCORROS</button>
-  </div>
-
-  <div id="areaAnatomia">
-
-    <div class="seletores">
-      <button class="ativo" data-orgao="coracao">♥ Coração</button>
-      <button data-orgao="pulmoes">Pulmões</button>
-      <button data-orgao="cerebro">Cérebro</button>
-    </div>
-
-    <div class="conteudo">
-      <h3 id="nomeOrgao">O coração humano</h3>
-      <p id="textoOrgao">
-        O coração funciona como uma bomba muscular, impulsionando o sangue por todo o organismo.
-      </p>
-    </div>
-
-  </div>
-
-  <div id="areaPratica" style="display:none">
-
-    <div class="seletores">
-      <button class="ativo" data-pratica="rcp">RCP</button>
-      <button data-pratica="engasgo">ENGASGO</button>
-      <button data-pratica="posicao">POSIÇÃO LATERAL</button>
-    </div>
-
-    <div class="conteudo">
-
-      <h3 id="nomePratica">Reanimação cardiopulmonar</h3>
-
-      <p id="introducao">
-        Conheça as principais etapas de reconhecimento de uma possível parada cardiorrespiratória.
-      </p>
-
-      <div class="progresso" id="progresso"></div>
-
-      <div class="etapa" id="textoEtapa"></div>
-
-      <div class="acoes">
-        <button id="anterior">VOLTAR</button>
-        <button id="proximo">PRÓXIMA ETAPA →</button>
-      </div>
-
-      <p class="nota" id="notaSeguranca">
-        Material educativo. A prática deve ser aprendida em treinamento presencial com profissionais capacitados.
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
-<a-scene
-  mindar-image="
-    imageTargetSrc: ./targets.mind;
-    autoStart: true;
-    uiLoading: no;
-    uiScanning: no;
-    filterMinCF: 0.0005;
-    filterBeta: 1000;
-    warmupTolerance: 5;
-    missTolerance: 10;
-    maxTrack: 1
-  "
-  color-space="sRGB"
-  renderer="colorManagement: true"
-  vr-mode-ui="enabled: false"
-  device-orientation-permission-ui="enabled: false">
-
-  <a-assets timeout="30000">
-    <a-asset-item id="heart" src="./heart.glb"></a-asset-item>
-    <a-asset-item id="lungs" src="./lungs.glb"></a-asset-item>
-    <a-asset-item id="brain" src="./brain.glb"></a-asset-item>
-  </a-assets>
-
-  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-  <a-entity light="type: ambient; intensity: 1.8"></a-entity>
-  <a-entity light="type: directional; intensity: 1.2" position="1 2 2"></a-entity>
-
-  <a-entity mindar-image-target="targetIndex: 0">
-
-    <!-- CORAÇÃO -->
-    <a-entity id="modeloCoracao"
-      gltf-model="#heart"
-      position="0 0 0.12"
-      scale="0.25 0.25 0.25"
-      animation__giro="
-        property: rotation;
-        to: 0 360 0;
-        dur: 25000;
-        loop: true;
-        easing: linear
-      "
-      animation__pulso="
-        property: scale;
-        from: 0.25 0.25 0.25;
-        to: 0.265 0.265 0.265;
-        dir: alternate;
-        dur: 800;
-        loop: true;
-        easing: easeInOutSine
-      ">
+<!-- ====== CONFIGURE AQUI (o caminho do marcador está na tag <a-scene>, em imageTargetSrc) ====== -->
+<a-scene id="sc" loop
+  mindar-image="imageTargetSrc:./targets.mind; filterMinCF:0.0005; filterBeta:200; missTolerance:12; warmupTolerance:6; maxTrack:1; uiLoading:no; uiScanning:no; uiError:no"
+  color-space="sRGB" renderer="colorManagement:true; antialias:false; alpha:true; maxCanvasWidth:1280; maxCanvasHeight:1280; powerPreference:high-performance"
+  vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
+  <a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+  <a-entity light="type:ambient;intensity:1.1"></a-entity>
+  <a-entity light="type:directional;intensity:1.4" position="0.5 1 1.5"></a-entity>
+  <a-entity id="anchor" mindar-image-target="targetIndex:0">
+    <a-entity id="root">
+      <a-entity id="spin">
+        <a-entity id="m-heart" fit-model visible="false" position="0 0 0.25"></a-entity>
+        <a-entity id="m-lungs" fit-model visible="false" position="0 0 0.25"></a-entity>
+        <a-entity id="m-brain" fit-model visible="false" position="0 0 0.25"></a-entity>
+      </a-entity>
     </a-entity>
-
-    <!-- PULMÕES -->
-    <a-entity id="modeloPulmoes"
-      gltf-model="#lungs"
-      position="0 0 0.12"
-      scale="0.25 0.25 0.25"
-      visible="false"
-      animation__respiracao="
-        property: scale;
-        from: 0.25 0.25 0.25;
-        to: 0.27 0.27 0.25;
-        dir: alternate;
-        dur: 2200;
-        loop: true
-      ">
-    </a-entity>
-
-    <!-- CÉREBRO -->
-    <a-entity id="modeloCerebro"
-      gltf-model="#brain"
-      position="0 0 0.12"
-      scale="0.25 0.25 0.25"
-      visible="false"
-      animation="
-        property: rotation;
-        to: 0 360 0;
-        dur: 25000;
-        loop: true;
-        easing: linear
-      ">
-    </a-entity>
-
-    <!-- MANEQUIM DIDÁTICO DE RCP -->
-    <a-entity id="modeloRCP"
-      position="0 0 0.12"
-      visible="false">
-
-      <!-- TAPETE -->
-      <a-box
-        position="0 -0.28 0"
-        width="1.35"
-        height="0.06"
-        depth="0.65"
-        color="#315c50">
-      </a-box>
-
-      <!-- CABEÇA -->
-      <a-sphere
-        position="-0.43 -0.02 0.06"
-        radius="0.15"
-        color="#d9ad8e">
-      </a-sphere>
-
-      <!-- TRONCO -->
-      <a-box
-        position="0 -0.02 0"
-        width="0.65"
-        height="0.23"
-        depth="0.36"
-        color="#e6c2a7"
-        radius="0.08">
-      </a-box>
-
-      <!-- BRAÇOS -->
-      <a-cylinder
-        position="-0.02 0.12 0.19"
-        rotation="0 0 90"
-        radius="0.055"
-        height="0.55"
-        color="#d9ad8e">
-      </a-cylinder>
-
-      <a-cylinder
-        position="-0.02 0.12 -0.19"
-        rotation="0 0 90"
-        radius="0.055"
-        height="0.55"
-        color="#d9ad8e">
-      </a-cylinder>
-
-      <!-- PERNAS -->
-      <a-box
-        position="0.52 -0.03 0.10"
-        width="0.48"
-        height="0.16"
-        depth="0.14"
-        color="#315c87">
-      </a-box>
-
-      <a-box
-        position="0.52 -0.03 -0.10"
-        width="0.48"
-        height="0.16"
-        depth="0.14"
-        color="#315c87">
-      </a-box>
-
-      <!-- ÁREA DO TÓRAX -->
-      <a-circle
-        position="0 -0.01 0.185"
-        radius="0.09"
-        color="#d94c43"
-        material="opacity: 0.85">
-      </a-circle>
-
-      <!-- MÃOS DO SOCORRISTA -->
-      <a-sphere
-        position="0 0.12 0.26"
-        radius="0.075"
-        color="#f1d0b5"
-        animation="
-          property: position;
-          from: 0 0.12 0.26;
-          to: 0 0.075 0.26;
-          dir: alternate;
-          dur: 550;
-          loop: true
-        ">
-      </a-sphere>
-
-      <a-text
-        value="DEMONSTRAÇÃO DE RCP"
-        position="0 0.38 0.20"
-        align="center"
-        color="#ffffff"
-        width="2.5">
-      </a-text>
-
-    </a-entity>
-
   </a-entity>
 </a-scene>
+<div id="stage"></div>
+
+<section id="sheet">
+  <button id="grab" aria-label="Recolher ou expandir"></button>
+  <div class="row" id="tabs"></div>
+  <div class="row chips" id="chips"></div>
+  <div id="body">
+    <h2 id="ttl"></h2>
+    <p id="intro"></p>
+    <div id="bar"></div>
+    <p id="txt"></p>
+    <div class="nav">
+      <button id="prev">← Voltar</button><button id="next">Próximo →</button>
+      <button id="pin">📌 Fixar</button><button id="snd">🔊</button>
+    </div>
+    <small>Arraste para girar · pince com dois dedos para aproximar. Material educativo: a prática deve ser aprendida em treinamento presencial com profissionais capacitados. Emergência: SAMU 192.</small>
+  </div>
+</section>
 
 <script>
+/* ====== CONFIGURE AQUI: nomes dos seus arquivos 3D ====== */
+const CONFIG = { models: { heart:'./heart.glb', lungs:'./lungs.glb', brain:'./brain.glb' } };
 
-/* ELEMENTOS */
-const painel = document.getElementById("painel");
-const abrir = document.getElementById("abrir");
-const fechar = document.getElementById("fechar");
-const dica = document.getElementById("dica");
-const estado = document.getElementById("estado");
+const THREE = AFRAME.THREE, $ = s => document.querySelector(s);
+const mat=(c,o)=>new THREE.MeshStandardMaterial({color:c,roughness:.65,metalness:.05,transparent:o<1,opacity:o??1});
+const mesh=(g,c,o,p=[0,0,0])=>{const m=new THREE.Mesh(g,mat(c,o));m.position.set(...p);return m};
+const box=(w,h,d,c,p,o)=>mesh(new THREE.BoxGeometry(w,h,d),c,o,p);
+const ball=(r,c,p,o)=>mesh(new THREE.SphereGeometry(r,20,14),c,o,p);
+const limb=(r,l,c)=>{const g=new THREE.CylinderGeometry(r,r,l,14);g.rotateX(Math.PI/2);g.translate(0,0,l/2);return mesh(g,c)};
+const grp=(...k)=>{const g=new THREE.Group();k.forEach(x=>g.add(x));return g};
+const SKIN='#f0b98d', SKIN2='#e3a579';
+function lab(txt,col){const c=document.createElement('canvas');c.width=512;c.height=160;const x=c.getContext('2d');x.fillStyle=col;x.beginPath();(x.roundRect||x.rect).call(x,8,8,496,144,40);x.fill();x.fillStyle='#fff';x.font='bold 54px system-ui,sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(txt,256,82);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthTest:false}));s.scale.set(.5,.156,1);s.renderOrder=9;s.visible=false;return s}
 
-const anatomia = document.getElementById("areaAnatomia");
-const pratica = document.getElementById("areaPratica");
+/* Ajusta qualquer modelo para caber no marcador, não importa o tamanho original */
+AFRAME.registerComponent('fit-model',{init(){this.el.addEventListener('model-loaded',()=>{
+  const o=this.el.getObject3D('mesh'); if(!o) return;
+  const b=new THREE.Box3().setFromObject(o), s=b.getSize(new THREE.Vector3()), c=b.getCenter(new THREE.Vector3());
+  const k=.7/Math.max(s.x,s.y,s.z); o.position.sub(c).multiplyScalar(k); o.scale.multiplyScalar(k);
+})}});
 
-let modo = "anatomia";
-let marcadorEncontrado = false;
-let praticaAtual = "rcp";
-let etapaAtual = 0;
-
-/* MODELOS 3D */
-const modelos = {
-  coracao: "modeloCoracao",
-  pulmoes: "modeloPulmoes",
-  cerebro: "modeloCerebro",
-  rcp: "modeloRCP"
-};
-
-function mostrarModelo(nome) {
-  Object.values(modelos).forEach(id => {
-    document.getElementById(id).setAttribute("visible", false);
-  });
-
-  document.getElementById(modelos[nome]).setAttribute("visible", true);
+/* ---------- Demonstração 1: RCP (mãos comprimem o peito no ritmo de 110/min) ---------- */
+function buildRcp(){
+  const tilt=new THREE.Group(); tilt.rotation.x=.96; tilt.position.set(0,-.03,.05);
+  const turn=new THREE.Group(); tilt.add(turn);
+  turn.add(mesh(new THREE.CylinderGeometry(.5,.5,.012,48),'#17463f'));
+  const cg=new THREE.BoxGeometry(.44,.14,.34); cg.translate(0,.07,0);
+  const chest=mesh(cg,'#3b82c4',1,[0,.006,-.04]); turn.add(chest);
+  const ring=mesh(new THREE.RingGeometry(.035,.055,24).rotateX(-Math.PI/2),'#e5484d',1,[0,.142,0]); chest.add(ring);
+  turn.add(ball(.075,SKIN,[0,.08,-.3]), box(.28,.09,.22,'#2b4a7a',[0,.051,.24]));
+  const arms=mesh(new THREE.CylinderGeometry(.03,.03,.5,12),SKIN,1,[0,.3,0]);
+  const hands=grp(box(.15,.04,.09,SKIN),box(.12,.035,.08,SKIN2,[0,.036,0]),arms); hands.position.set(0,.2,-.04); turn.add(hands);
+  const tapL=ball(.03,SKIN,[-.24,.16,-.12]), tapR=ball(.03,SKIN,[.24,.16,-.12]); turn.add(tapL,tapR);
+  const dea=grp(box(.14,.1,.1,'#22c55e'),box(.06,.012,.06,'#fff',[0,.056,0])); dea.position.set(.36,.056,.14); turn.add(dea);
+  const rip=mesh(new THREE.RingGeometry(.06,.075,40).rotateX(-Math.PI/2),'#34d399',0,[0,.02,-.04]); turn.add(rip);
+  const L=[lab('Você está bem?','#1f7a68'),lab('Ligue 192','#d64545'),null,null,lab('Traga o DEA','#2563eb')];
+  L.forEach(l=>{if(l){l.position.set(0,.6,-.04);turn.add(l)}});
+  return {root:tilt,turn,chest,ring,hands,tapL,tapR,dea,rip,L,b:-1,n:0,t:-9};
+}
+function animRcp(R,t,step){
+  const per=60/110; let d=0;
+  if(step>=3){
+    d=.045*(.5-.5*Math.cos((t/per%1)*6.2832));
+    const b=Math.floor(t/per+.5);
+    if(b!==R.b){R.b=b;R.n++;R.t=t;beep();navigator.vibrate&&navigator.vibrate(20);hud(`Compressões: ${R.n}  ·  110/min`)}
+  }
+  R.hands.visible=step>=2; R.hands.position.y=step===2?.25+.03*Math.sin(t*3):.178-d;
+  R.chest.scale.y=1-d/.14;
+  R.ring.visible=step<=2; R.ring.scale.setScalar(step===2?1+.25*Math.abs(Math.sin(t*4)):1);
+  R.tapL.visible=R.tapR.visible=step===0;
+  R.tapL.position.y=R.tapR.position.y=.16+.04*Math.abs(Math.sin(t*6));
+  R.dea.visible=step===1||step===4; R.dea.scale.setScalar(1+.08*Math.sin(t*5));
+  R.L.forEach((l,i)=>l&&(l.visible=i===step));
+  const k=(t-R.t)/.45; R.rip.material.opacity=k<1?.8*(1-k):0; R.rip.scale.setScalar(1+Math.min(k,1)*2.4);
 }
 
-/* ANATOMIA */
-const orgaos = {
-
-  coracao: {
-    nome: "O coração humano",
-    texto: "O coração é um músculo que funciona como uma bomba. Ele impulsiona o sangue, transportando oxigênio e nutrientes para os tecidos do organismo."
-  },
-
-  pulmoes: {
-    nome: "Sistema respiratório",
-    texto: "Nos pulmões ocorre a troca gasosa: o oxigênio passa para o sangue e o gás carbônico é eliminado. O diafragma participa dos movimentos respiratórios."
-  },
-
-  cerebro: {
-    nome: "O cérebro humano",
-    texto: "O cérebro participa do controle dos movimentos, da memória, do pensamento e de diversas funções do organismo. Seu funcionamento depende do fornecimento contínuo de oxigênio."
-  }
-
-};
-
-document.querySelectorAll("[data-orgao]").forEach(botao => {
-
-  botao.addEventListener("click", () => {
-
-    const nome = botao.dataset.orgao;
-
-    mostrarModelo(nome);
-
-    document.getElementById("nomeOrgao").textContent =
-      orgaos[nome].nome;
-
-    document.getElementById("textoOrgao").textContent =
-      orgaos[nome].texto;
-
-    document.querySelectorAll("[data-orgao]").forEach(b => {
-      b.classList.toggle("ativo", b === botao);
-    });
-
+/* ---------- Demonstração 2: Engasgo (vista em corte das vias aéreas) ---------- */
+function buildCk(){
+  const g=new THREE.Group(); g.position.set(0,.02,.15); g.scale.setScalar(.8);
+  const turn=new THREE.Group(); g.add(turn);
+  const tm=mat('#e57f8f',.4); tm.side=THREE.DoubleSide; tm.depthWrite=false;
+  turn.add(new THREE.Mesh(new THREE.CylinderGeometry(.12,.12,.7,32,1,true),tm));
+  const cap=new THREE.Mesh(new THREE.CylinderGeometry(.21,.12,.14,32,1,true),tm); cap.position.y=.42; turn.add(cap);
+  const lungs=[-1,1].map(s=>{const l=ball(.13,'#ff9aa8',[s*.17,-.45,0]);l.scale.set(1,1.3,.8);turn.add(l);return l});
+  const food=ball(.09,'#f0a030',[.05,.05,0]); turn.add(food);
+  const parts=Array.from({length:16},(_,i)=>{const p=new THREE.Mesh(new THREE.SphereGeometry(.014,8,6),new THREE.MeshBasicMaterial({color:'#7dd3fc'}));p.userData={o:i/16,x:(Math.random()-.5)*.13};turn.add(p);return p});
+  const hand=grp(box(.14,.07,.06,SKIN),ball(.04,SKIN,[-.1,0,0])); hand.position.set(.4,.05,0); turn.add(hand);
+  const fist=grp(ball(.06,SKIN),mesh(new THREE.ConeGeometry(.045,.12,12),'#34d399',1,[0,.12,0])); fist.position.set(0,-.72,0); turn.add(fist);
+  const L=[lab('Passagem parcial','#1f7a68'),lab('Via bloqueada!','#d64545'),null,null,lab('Desmaiou? RCP + 192','#d64545')];
+  L.forEach(l=>{if(l){l.position.set(0,.68,0);turn.add(l)}});
+  return {root:g,turn,tm,food,lungs,parts,hand,fist,L};
+}
+function animCk(C,t,step,lt){
+  let fx=0,fy=.05,block=step!==0,burst=false; C.food.visible=true;
+  if(step===0)fx=.05;
+  C.hand.visible=step===2; C.fist.visible=step===3; C.hand.position.x=.4; C.fist.position.y=-.72;
+  if(step===2){const c=lt%2.4; if(c<1.5){const k=(c/.3)%1;C.hand.position.x=.4-.2*Math.sin(k*Math.PI);fy=.05+.012*Math.floor(c/.3)} else fy=.11}
+  if(step===3){const c=lt%4;
+    if(c<2){const k=(c/.4)%1;C.fist.position.y=-.72+.08*Math.sin(k*Math.PI);fy=.05+.03*Math.floor(c/.4)}
+    else if(c<2.3)fy=.2;
+    else{const u=(c-2.3)/.7;fy=.2+Math.min(u,1)*.85;burst=true;block=false;C.food.visible=c<3.1}}
+  C.food.position.set(fx,fy,0);
+  C.tm.color.set(block?'#ff4d5a':'#e57f8f'); C.tm.opacity=block?.4+.15*Math.sin(t*6):.4;
+  C.lungs.forEach(l=>l.scale.set(1+.03*Math.sin(t*1.6)*(block?0:1),1.3,.8));
+  C.parts.forEach((p,i)=>{
+    const sp=burst?.9:.35, u=((t*sp+p.userData.o)%1);
+    let y=.5-u*.85, x=p.userData.x;
+    if(block){y=Math.max(y,fy+.11+(i%4)*.03)} else if(Math.abs(y-fy)<.13&&C.food.visible&&step===0){x=-.08}
+    p.position.set(x,y,0); p.visible=step!==4||i<4;
   });
-
-});
-
-/* DEMONSTRAÇÕES EDUCATIVAS */
-const demonstracoes = {
-
-  rcp: {
-    nome: "Reanimação cardiopulmonar",
-
-    introducao: "Conheça as principais etapas de reconhecimento e resposta diante de uma possível parada cardiorrespiratória.",
-
-    etapas: [
-
-      "1. Verifique se o ambiente está seguro. Observe se a pessoa responde quando você chama e toca seus ombros.",
-
-      "2. Peça ajuda. Solicite que alguém ligue para o SAMU (192) e procure um desfibrilador externo automático (DEA), se disponível.",
-
-      "3. Verifique se a pessoa respira normalmente por no máximo 10 segundos. Se não responder e não respirar normalmente, trate como possível parada cardiorrespiratória.",
-
-      "4. Inicie compressões no centro do tórax, sobre a metade inferior do esterno. Para adultos, mantenha frequência de 100 a 120 compressões por minuto e profundidade aproximada de 5 a 6 centímetros.",
-
-      "5. Permita o retorno completo do tórax entre as compressões. Se houver DEA disponível, ligue o aparelho e siga as orientações sonoras. Continue até a chegada do socorro ou a retomada de sinais de vida."
-    ]
-  },
-
-  engasgo: {
-    nome: "Como reconhecer e agir no engasgo",
-
-    introducao: "A obstrução das vias aéreas pode ser leve ou grave. Reconhecer a diferença é essencial.",
-
-    etapas: [
-
-      "1. Observe a pessoa. Se ela consegue falar, tossir e respirar, incentive a tosse e acompanhe a situação.",
-
-      "2. Se não consegue falar, respirar ou tossir efetivamente, reconheça a possibilidade de obstrução grave e peça ajuda imediatamente.",
-
-      "3. Em adultos e crianças acima de 1 ano, a orientação geral para obstrução grave é alternar 5 golpes nas costas com 5 compressões abdominais, conforme treinamento adequado.",
-
-      "4. Em gestantes ou pessoas nas quais não seja possível realizar compressões abdominais, são utilizadas compressões torácicas, com orientação apropriada.",
-
-      "5. Em bebês menores de 1 ano, nunca realize compressões abdominais. São utilizadas técnicas específicas de golpes nas costas e compressões torácicas. Acione o SAMU (192)."
-    ]
-  },
-
-  posicao: {
-    nome: "Posição lateral de segurança",
-
-    introducao: "A posição lateral de segurança pode ajudar a manter as vias aéreas desobstruídas em uma pessoa inconsciente que respira normalmente.",
-
-    etapas: [
-
-      "1. Verifique se o ambiente está seguro e avalie a resposta da pessoa.",
-
-      "2. Verifique a respiração. Se a pessoa estiver inconsciente, mas respirando normalmente, solicite ajuda e acione o SAMU (192).",
-
-      "3. Se não houver suspeita de trauma que contraindique a movimentação, coloque a pessoa cuidadosamente de lado, mantendo a cabeça posicionada para favorecer a passagem do ar.",
-
-      "4. Observe continuamente a respiração até a chegada da equipe de emergência.",
-
-      "5. Se a respiração deixar de ser normal, coloque a pessoa de costas e inicie as medidas de reanimação, seguindo as orientações do atendimento de emergência."
-    ]
-  }
-
-};
-
-function atualizarEtapa() {
-
-  const dados = demonstracoes[praticaAtual];
-
-  document.getElementById("nomePratica").textContent =
-    dados.nome;
-
-  document.getElementById("introducao").textContent =
-    dados.introducao;
-
-  document.getElementById("textoEtapa").textContent =
-    dados.etapas[etapaAtual];
-
-  const progresso = document.getElementById("progresso");
-
-  progresso.innerHTML = "";
-
-  dados.etapas.forEach((item, indice) => {
-
-    const barra = document.createElement("span");
-
-    if (indice <= etapaAtual) {
-      barra.classList.add("ativo");
-    }
-
-    progresso.appendChild(barra);
-
-  });
-
-  document.getElementById("anterior").disabled =
-    etapaAtual === 0;
-
-  document.getElementById("proximo").textContent =
-    etapaAtual === dados.etapas.length - 1
-      ? "RECOMEÇAR ↻"
-      : "PRÓXIMA ETAPA →";
-
+  C.L.forEach((l,i)=>l&&(l.visible=i===step));
 }
 
-document.getElementById("anterior").addEventListener("click", () => {
-
-  if (etapaAtual > 0) {
-    etapaAtual--;
-    atualizarEtapa();
-  }
-
-});
-
-document.getElementById("proximo").addEventListener("click", () => {
-
-  const total = demonstracoes[praticaAtual].etapas.length;
-
-  etapaAtual = etapaAtual === total - 1 ? 0 : etapaAtual + 1;
-
-  atualizarEtapa();
-
-});
-
-document.querySelectorAll("[data-pratica]").forEach(botao => {
-
-  botao.addEventListener("click", () => {
-
-    praticaAtual = botao.dataset.pratica;
-    etapaAtual = 0;
-
-    document.querySelectorAll("[data-pratica]").forEach(b => {
-      b.classList.toggle("ativo", b === botao);
-    });
-
-    if (praticaAtual === "rcp") {
-      mostrarModelo("rcp");
-    } else {
-      mostrarModelo("coracao");
-    }
-
-    atualizarEtapa();
-
-  });
-
-});
-
-/* ALTERNAR EXPERIÊNCIAS */
-function mudarModo(novoModo) {
-
-  modo = novoModo;
-
-  anatomia.style.display =
-    modo === "anatomia" ? "block" : "none";
-
-  pratica.style.display =
-    modo === "pratica" ? "block" : "none";
-
-  document.getElementById("btnAnatomia").classList.toggle(
-    "ativo", modo === "anatomia"
-  );
-
-  document.getElementById("btnPratica").classList.toggle(
-    "ativo", modo === "pratica"
-  );
-
-  if (modo === "anatomia") {
-    mostrarModelo("coracao");
-  } else {
-    mostrarModelo(praticaAtual === "rcp" ? "rcp" : "coracao");
-    atualizarEtapa();
-  }
-
+/* ---------- Demonstração 3: Posição lateral de segurança ---------- */
+function buildLat(){
+  const tilt=new THREE.Group(); tilt.rotation.x=.96; tilt.position.set(0,-.03,.05);
+  const turn=new THREE.Group(); tilt.add(turn);
+  turn.add(mesh(new THREE.CylinderGeometry(.5,.5,.012,48),'#17463f'));
+  const fig=new THREE.Group(); fig.scale.setScalar(.68); fig.position.z=-.04; turn.add(fig);
+  const person=new THREE.Group(); fig.add(person);
+  const tg=new THREE.BoxGeometry(.24,.12,.32); tg.translate(0,.06,0);
+  person.add(mesh(tg,'#3b82c4',1,[0,0,-.1]), ball(.075,SKIN,[0,.08,-.36]), ball(.014,SKIN2,[0,.16,-.36]), box(.22,.1,.14,'#2b4a7a',[0,.05,.13]));
+  const leg=x=>{const hip=new THREE.Group();hip.position.set(x,.05,.18);hip.add(limb(.035,.2,'#2b4a7a'));const knee=new THREE.Group();knee.position.z=.2;knee.add(limb(.032,.2,'#2b4a7a'));hip.add(knee);person.add(hip);return {hip,knee}};
+  const legL=leg(-.06), legR=leg(.06);
+  const armLg=new THREE.Group(); armLg.position.set(-.15,.09,-.2); armLg.add(limb(.028,.26,'#3b82c4'),ball(.03,SKIN,[0,0,.27])); person.add(armLg);
+  const armR=new THREE.Group(); armR.position.set(.15,.09,-.2); armR.add(limb(.028,.26,'#3b82c4'),ball(.03,SKIN,[0,0,.27])); fig.add(armR);
+  const L=[lab('Responde?','#1f7a68'),lab('Respira normalmente?','#d64545'),null,null,lab('Posição lateral ✔','#1f7a68')];
+  L.forEach(l=>{if(l){l.position.set(0,.55,-.1);turn.add(l)}});
+  return {root:tilt,turn,person,legL,armLg,armR,L,s:{arm:0,knee:0,roll:0}};
+}
+function animLat(A,step,dt){
+  const T={arm:step>=2?1:0,knee:step>=3?1:0,roll:step>=4?1:0}, k=Math.min(1,dt*3.5), s=A.s;
+  for(const n in s) s[n]+=(T[n]-s[n])*k;
+  A.armR.rotation.y=s.arm*1.5708;
+  A.armR.position.set(.15-.06*s.roll,.09-.06*s.roll,-.2);
+  A.armLg.rotation.y=Math.PI*s.knee;
+  A.legL.hip.rotation.x=-.96*s.knee; A.legL.knee.rotation.x=1.9*s.knee;
+  A.person.rotation.z=-1.5708*s.roll; A.person.position.y=.12*s.roll;
+  A.L.forEach((l,i)=>l&&(l.visible=i===step));
 }
 
-document.getElementById("btnAnatomia").addEventListener("click", () => {
-  mudarModo("anatomia");
-});
+/* ---------- Conteúdo ---------- */
+const TOP={anat:{label:'ANATOMIA 3D',subs:['heart','lungs','brain']},fa:{label:'PRIMEIROS SOCORROS',subs:['rcp','choke','lat']}};
+const TP={
+ heart:{chip:'♥ Coração',title:'O coração humano',intro:'O coração funciona como uma bomba muscular, impulsionando o sangue por todo o organismo.',steps:['Do tamanho aproximado de um punho fechado, o coração bate cerca de 100 mil vezes por dia.','Tem quatro câmaras: dois átrios recebem o sangue e dois ventrículos o bombeiam.','Na RCP, as compressões substituem temporariamente o bombeamento do coração, levando sangue ao cérebro.']},
+ lungs:{chip:'Pulmões',title:'Os pulmões',intro:'É nos pulmões que o oxigênio entra no sangue e o gás carbônico sai.',steps:['As trocas gasosas acontecem nos alvéolos, pequenos sacos de ar que ficam no fim das vias aéreas.','O ar percorre nariz ou boca, traqueia e brônquios até chegar aos alvéolos.','Quando algo bloqueia as vias aéreas (engasgo), o ar não chega aos pulmões. Por isso reconhecer rápido é essencial.']},
+ brain:{chip:'Cérebro',title:'O cérebro',intro:'O cérebro comanda movimentos, sentidos, memória e a respiração.',steps:['Mesmo pesando pouco, ele consome cerca de 20% do oxigênio do corpo.','Sem oxigênio, as células cerebrais começam a sofrer lesões em poucos minutos. Por isso agir rápido faz diferença.','Pessoa inconsciente que respira normalmente precisa de vias aéreas livres: veja a posição lateral de segurança.']},
+ rcp:{chip:'RCP',title:'Reanimação cardiopulmonar',intro:'Para pessoa sem resposta e que não respira ou respira de forma anormal.',steps:['Verifique se o local é seguro. Toque nos ombros da pessoa e chame em voz alta.','Sem resposta e sem respirar normalmente? Ligue 192 (ou peça a alguém) e peça um DEA. Siga as instruções do atendente.','Apoie as mãos sobrepostas no centro do peito, com os braços esticados e os ombros sobre as mãos.','Comprima forte e rápido, de 100 a 120 vezes por minuto (cerca de 5 cm em adultos). Siga o bipe e deixe o peito voltar a cada compressão.','Não pare até a equipe chegar ou a pessoa reagir. Se houver DEA, ligue-o e siga a voz do aparelho.']},
+ choke:{chip:'Engasgo',title:'Como reconhecer e agir no engasgo',intro:'A obstrução das vias aéreas pode ser leve ou grave. Reconhecer a diferença é essencial.',steps:['Observe a pessoa. Se ela consegue falar, tossir e respirar, incentive a tosse e acompanhe a situação.','Se não consegue falar, tossir ou respirar, leva as mãos à garganta ou fica arroxeada: é grave. Ligue 192 ou peça a alguém.','Incline a pessoa para frente e dê até 5 golpes firmes nas costas, entre as escápulas, com a base da mão.','Se não resolver, posicione-se atrás, com o punho acima do umbigo, e faça até 5 compressões rápidas para dentro e para cima. Alterne golpes e compressões.','Se a pessoa desmaiar, apoie-a no chão com cuidado, mantenha contato com o 192 e inicie a RCP conforme orientado. Bebês e gestantes exigem técnica específica: procure treinamento.']},
+ lat:{chip:'Posição lateral',title:'Posição lateral de segurança',intro:'Pode ajudar a manter as vias aéreas desobstruídas em uma pessoa inconsciente que respira normalmente.',steps:['Verifique se o ambiente está seguro e avalie a resposta da pessoa.','Confirme se ela respira normalmente. Se não, ligue 192 e siga para a RCP.','Posicione o braço mais próximo de você em ângulo reto com o corpo.','Dobre o joelho do lado oposto e apoie a mão oposta junto ao rosto.','Role a pessoa em sua direção, mantendo a cabeça levemente inclinada para trás. Chame o 192 e monitore a respiração. Se houver suspeita de lesão na coluna, evite mover sem orientação.']}
+};
 
-document.getElementById("btnPratica").addEventListener("click", () => {
-  mudarModo("pratica");
-});
+/* ---------- Estado e interface ---------- */
+const S={tab:'anat',sub:'heart',i:0,t0:0}, U={ry:0,s:1}, loaded={};
+let RC,CK,LT,ac,sound=true,found=false,pinned=false;
+const sc=$('#sc'), spin=$('#spin');
+const MODEL={heart:$('#m-heart'),lungs:$('#m-lungs'),brain:$('#m-brain')};
 
-/* ABRIR E FECHAR PAINEL */
-abrir.addEventListener("click", () => {
-  painel.style.display = "block";
-  abrir.style.display = "none";
-});
+function hud(t){const h=$('#hud');h.textContent=t;h.style.display=t?'block':'none'}
+function beep(){if(!sound||!ac)return;const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.setValueAtTime(.25,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.08);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.09)}
 
-fechar.addEventListener("click", () => {
-  painel.style.display = "none";
-  abrir.style.display = "block";
-});
+function render(){
+  $('#tabs').innerHTML=Object.entries(TOP).map(([k,v])=>`<button data-tab="${k}" class="${S.tab===k?'on':''}">${v.label}</button>`).join('');
+  $('#chips').innerHTML=TOP[S.tab].subs.map(k=>`<button data-sub="${k}" class="${S.sub===k?'on':''}">${TP[k].chip}</button>`).join('');
+  const T=TP[S.sub];
+  $('#ttl').textContent=T.title; $('#intro').textContent=T.intro;
+  $('#bar').innerHTML=T.steps.map((_,i)=>`<i class="${i<=S.i?'on':''}"></i>`).join('');
+  $('#txt').textContent=`${S.i+1}. ${T.steps[S.i]}`;
+  $('#prev').disabled=S.i===0;
+  $('#next').textContent=S.i===T.steps.length-1?'Reiniciar ↺':'Próximo →';
+  $('#pin').classList.toggle('on',pinned); $('#pin').textContent=pinned?'📍 Soltar':'📌 Fixar';
+  $('#snd').textContent=sound?'🔊':'🔇';
+  const anat=S.tab==='anat';
+  for(const k in MODEL) MODEL[k].object3D.visible=anat&&S.sub===k;
+  RC.root.visible=S.sub==='rcp'; CK.root.visible=S.sub==='choke'; LT.root.visible=S.sub==='lat';
+  if(!(S.sub==='rcp'&&S.i>=3)) hud('');
+}
+function go(sub,i=0){
+  S.sub=sub;S.i=i;S.t0=sc.time/1000;U.ry=0;U.s=1;
+  if(MODEL[sub]&&!loaded[sub]){loaded[sub]=1;MODEL[sub].setAttribute('gltf-model',CONFIG.models[sub])}
+  if(sub==='rcp'&&i>=3)RC.n=0;
+  render();
+}
+function step(d){const n=TP[S.sub].steps.length;let i=S.i+d;if(i>=n)i=0;S.i=Math.max(0,i);S.t0=sc.time/1000;if(S.sub==='rcp'&&S.i===3)RC.n=0;render()}
 
-/* RECONHECIMENTO DO BANNER */
-const cena = document.querySelector("a-scene");
+document.addEventListener('pointerdown',()=>{if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}},{once:true});
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(b){S.tab=b.dataset.tab;go(TOP[S.tab].subs[0])}};
+$('#chips').onclick=e=>{const b=e.target.closest('button');if(b)go(b.dataset.sub)};
+$('#prev').onclick=()=>step(-1); $('#next').onclick=()=>step(1);
+$('#snd').onclick=()=>{sound=!sound;render()};
+$('#grab').onclick=()=>$('#sheet').classList.toggle('min');
+$('#pin').onclick=()=>{
+  if(!found&&!pinned){$('#hint').textContent='Reconheça o banner antes de fixar';$('#hint').style.display='block';return}
+  const r=$('#root').object3D;
+  if(!pinned){const cam=sc.camera;sc.object3D.updateMatrixWorld(true);cam.attach(r);pinned=true;st('MODO FIXO',1)}
+  else{$('#anchor').object3D.add(r);r.position.set(0,0,0);r.quaternion.identity();r.scale.set(1,1,1);pinned=false;found=false;st('PROCURANDO MARCADOR',0)}
+  render();
+};
 
-cena.addEventListener("targetFound", () => {
+/* Gestos: arrastar gira, pinça aproxima */
+const P=new Map(), stage=$('#stage');
+stage.onpointerdown=e=>{stage.setPointerCapture(e.pointerId);P.set(e.pointerId,{x:e.clientX,y:e.clientY})};
+stage.onpointermove=e=>{
+  const p=P.get(e.pointerId); if(!p)return;
+  if(P.size===1){U.ry+=(e.clientX-p.x)*.012}
+  else if(P.size===2){const o=[...P.entries()].find(([id])=>id!==e.pointerId)[1];const d0=Math.hypot(p.x-o.x,p.y-o.y),d1=Math.hypot(e.clientX-o.x,e.clientY-o.y);U.s=Math.min(2.2,Math.max(.5,U.s*d1/d0))}
+  p.x=e.clientX;p.y=e.clientY;
+};
+stage.onpointerup=stage.onpointercancel=e=>P.delete(e.pointerId);
 
-  marcadorEncontrado = true;
+function st(t,ok){const e=$('#st');e.textContent=t;e.classList.toggle('ok',!!ok);$('#hint').style.display=ok?'none':'block';$('#hint').textContent='Aponte a câmera para o banner'}
 
-  estado.textContent = "MARCADOR RECONHECIDO";
-  dica.style.display = "none";
-
-  abrir.style.display = "block";
-
-});
-
-cena.addEventListener("targetLost", () => {
-
-  marcadorEncontrado = false;
-
-  estado.textContent = "PROCURANDO MARCADOR";
-
-  // Mantém o painel educativo aberto se já foi aberto.
-  // O objeto 3D depende do reconhecimento do banner.
-
-  if (painel.style.display !== "block") {
-    abrir.style.display = "none";
-    dica.style.display = "block";
-    dica.textContent = "Aproxime novamente a câmera do banner";
+/* Loop principal */
+AFRAME.registerComponent('loop',{
+  init(){
+    RC=buildRcp();CK=buildCk();LT=buildLat();
+    [RC,CK,LT].forEach(o=>{o.root.visible=false;spin.object3D.add(o.root)});
+    $('#anchor').addEventListener('targetFound',()=>{found=true;if(!pinned)st('MARCADOR RECONHECIDO',1)});
+    $('#anchor').addEventListener('targetLost',()=>{if(!pinned){found=false;st('PROCURANDO MARCADOR',0)}});
+    this.el.addEventListener('loaded',()=>{render()});
+    render();
+  },
+  tick(ms,dtms){
+    const t=ms/1000,dt=Math.min(dtms/1000,.1),lt=t-S.t0;
+    spin.object3D.scale.setScalar(U.s);
+    if(S.tab==='anat'){
+      const m=MODEL[S.sub].object3D; m.rotation.y=U.ry;
+      const s=S.sub==='heart'?1+Math.pow(Math.abs(Math.sin(t*3.8)),8)*.07:S.sub==='lungs'?1+.035*Math.sin(t*1.6):1;
+      m.scale.setScalar(s); m.position.y=S.sub==='brain'?.02*Math.sin(t*1.5):0;
+    } else if(S.sub==='rcp'){RC.turn.rotation.y=U.ry;animRcp(RC,t,S.i)}
+    else if(S.sub==='choke'){CK.turn.rotation.y=U.ry;animCk(CK,t,S.i,lt)}
+    else if(S.sub==='lat'){LT.turn.rotation.y=U.ry;animLat(LT,S.i,dt)}
   }
-
 });
-
-cena.addEventListener("loaded", () => {
-  estado.textContent = "CÂMERA INICIADA";
-});
-
-cena.addEventListener("arError", () => {
-  estado.textContent = "ERRO NA CÂMERA";
-  dica.textContent = "Verifique a permissão de câmera e recarregue a página.";
-});
-
-/* INICIALIZAÇÃO */
-mostrarModelo("coracao");
-atualizarEtapa();
-
 </script>
-
 </body>
 </html>
+
+
+
+
+
