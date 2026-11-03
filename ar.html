@@ -100,10 +100,13 @@ function lab(txt,col){const c=document.createElement('canvas');c.width=512;c.hei
 /* Ajusta qualquer modelo para caber no marcador, não importa o tamanho original */
 AFRAME.registerComponent('fit-model',{init(){this.el.addEventListener('model-loaded',()=>{
   const o=this.el.getObject3D('mesh'); if(!o) return;
+  const e=this.el.object3D, par=e.parent, p0=e.position.clone(), s0=e.scale.clone(), r0=e.rotation.clone();
+  if(par) par.remove(e);
+  e.position.set(0,0,0); e.scale.set(1,1,1); e.rotation.set(0,0,0); e.updateMatrixWorld(true);
   const b=new THREE.Box3().setFromObject(o), s=b.getSize(new THREE.Vector3()), c=b.getCenter(new THREE.Vector3());
-  const k=.7/Math.max(s.x,s.y,s.z); o.position.sub(c).multiplyScalar(k); o.scale.multiplyScalar(k);
+  const k=.7/Math.max(s.x,s.y,s.z,.0001); o.position.sub(c).multiplyScalar(k); o.scale.multiplyScalar(k);
+  e.position.copy(p0); e.scale.copy(s0); e.rotation.copy(r0); if(par) par.add(e);
 })}});
-
 /* ---------- Demonstração 1: RCP (mãos comprimem o peito no ritmo de 110/min) ---------- */
 function buildRcp(){
   const tilt=new THREE.Group(); tilt.rotation.x=.96; tilt.position.set(0,-.03,.05);
@@ -282,7 +285,8 @@ AFRAME.registerComponent('loop',{
     [RC,CK,LT].forEach(o=>{o.root.visible=false;spin.object3D.add(o.root)});
     $('#anchor').addEventListener('targetFound',()=>{found=true;if(!pinned)st('MARCADOR RECONHECIDO',1)});
     $('#anchor').addEventListener('targetLost',()=>{if(!pinned){found=false;st('PROCURANDO MARCADOR',0)}});
-    this.el.addEventListener('loaded',()=>{render()});
+    this.el.addEventListener('loaded',()=>go(S.sub));
+for(const k in MODEL){MODEL[k].addEventListener('model-error',()=>hud('Erro ao carregar '+CONFIG.models[k]))}
     render();
   },
   tick(ms,dtms){
