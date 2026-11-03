@@ -1,10 +1,13 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laboratório de Primeiros Socorros | IFPA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#102f2b">
+
+<title>Laboratório Interativo | IFPA</title>
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
@@ -14,353 +17,818 @@
 
 body {
   margin: 0;
+  overflow: hidden;
   font-family: Arial, sans-serif;
-  background: #f1f6f3;
-  color: #183b34;
+  background: #102f2b;
+  color: #173b34;
 }
 
-header {
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  width: 100%;
-  padding: 15px;
-  background: #123b35;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  font-size: 14px;
+/* CÂMERA */
+a-scene {
+  position: fixed !important;
+  inset: 0;
+  z-index: 1;
 }
 
-#orientacao {
+/* IDENTIFICAÇÃO DISCRETA */
+.topo {
   position: fixed;
-  z-index: 5;
-  top: 65px;
+  z-index: 20;
+  top: 12px;
   left: 12px;
   right: 12px;
-  padding: 14px;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 3px 15px #0002;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-#orientacao strong { color: #14745f; }
-
-#mensagem {
-  position: fixed;
-  z-index: 4;
-  inset: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background: #102d28aa;
+  pointer-events: none;
+}
+
+.marca {
+  padding: 10px 13px;
+  border-radius: 30px;
   color: white;
-  text-align: center;
+  background: #123b35df;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: .5px;
 }
 
-#mensagem div {
-  max-width: 330px;
-  background: #123b35;
-  padding: 25px;
+.estado {
+  padding: 9px 12px;
+  border-radius: 30px;
+  color: white;
+  background: #123b35df;
+  font-size: 11px;
+}
+
+/* AVISO PEQUENO */
+.dica {
+  position: fixed;
+  z-index: 20;
+  top: 62px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  padding: 9px 13px;
   border-radius: 20px;
-  line-height: 1.6;
+  color: white;
+  background: #123b35c9;
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none;
 }
 
-#painel {
+/* BOTÃO DE ABRIR */
+.abrir {
   display: none;
   position: fixed;
-  z-index: 8;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-height: 52vh;
-  overflow-y: auto;
-  padding: 20px 15px;
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
-  background: white;
-  border-radius: 22px 22px 0 0;
-  box-shadow: 0 -5px 20px #0002;
-}
-
-#painel h2 {
-  margin: 0 0 10px;
-  color: #123b35;
-}
-
-#painel p {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.botoes {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 9px;
-}
-
-button {
+  z-index: 25;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  padding: 15px 23px;
   border: none;
-  padding: 14px;
-  border-radius: 12px;
-  background: #e5f1ec;
+  border-radius: 35px;
+  background: #14745f;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 20px #0005;
+}
+
+/* PAINEL */
+.painel {
+  display: none;
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 43vh;
+  overflow-y: auto;
+  padding: 15px 16px calc(20px + env(safe-area-inset-bottom));
+  background: #f7faf8;
+  border-radius: 23px 23px 0 0;
+  box-shadow: 0 -5px 25px #0004;
+}
+
+.cabecalho-painel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cabecalho-painel h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.fechar {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 19px;
+  background: #e3eee9;
+}
+
+.navegacao {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 13px;
+}
+
+.navegacao button {
+  flex: 1;
+  padding: 12px 5px;
+  border: none;
+  border-radius: 11px;
+  background: #e3eee9;
   color: #164b40;
   font-weight: bold;
-  cursor: pointer;
+  font-size: 12px;
 }
 
-button.ativo {
+.navegacao button.ativo {
   background: #14745f;
   color: white;
 }
 
-.alerta {
-  background: #fff4dd;
-  color: #694f18;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 12px !important;
+.seletores {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  margin-bottom: 12px;
 }
 
-a {
-  color: #14745f;
+.seletores button {
+  flex-shrink: 0;
+  padding: 10px 13px;
+  border: none;
+  border-radius: 20px;
+  background: #e3eee9;
+  color: #164b40;
+  font-size: 12px;
   font-weight: bold;
 }
 
-a-scene {
-  position: fixed;
-  inset: 0;
+.seletores button.ativo {
+  background: #174e43;
+  color: white;
+}
+
+.conteudo h3 {
+  margin: 7px 0;
+  color: #123b35;
+  font-size: 17px;
+}
+
+.conteudo p {
+  margin: 5px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.etapa {
+  padding: 11px;
+  margin-top: 10px;
+  border-left: 4px solid #14745f;
+  border-radius: 8px;
+  background: #e8f2ed;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.progresso {
+  display: flex;
+  gap: 5px;
+  margin: 12px 0;
+}
+
+.progresso span {
+  height: 5px;
+  flex: 1;
+  border-radius: 5px;
+  background: #d6e3dc;
+}
+
+.progresso span.ativo {
+  background: #14745f;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.acoes button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #14745f;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.acoes button:disabled {
+  opacity: .4;
+}
+
+.nota {
+  margin-top: 12px !important;
+  padding: 9px;
+  background: #fff1d6;
+  border-radius: 9px;
+  color: #6a501e;
+  font-size: 11px !important;
+}
+
+@media (max-width: 380px) {
+  .marca { font-size: 9px; }
+  .painel { max-height: 48vh; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-IFPA | LABORATÓRIO DE PRIMEIROS SOCORROS
-</header>
-
-<div id="orientacao">
-<strong>REALIDADE AUMENTADA</strong><br>
-Aponte a câmera para a imagem do banner. Quando o marcador for reconhecido, você poderá explorar os modelos 3D.
+<div class="topo">
+  <div class="marca">IFPA | LABORATÓRIO</div>
+  <div class="estado" id="estado">PROCURANDO MARCADOR</div>
 </div>
 
-<div id="mensagem">
-<div>
-<h2>Experiência interativa</h2>
-<p>Permita o acesso à câmera e aponte para o marcador do banner.</p>
-<p id="status">Iniciando câmera...</p>
-</div>
+<div class="dica" id="dica">
+  Aponte a câmera para o banner
 </div>
 
-<div id="painel">
+<button class="abrir" id="abrir">
+  ✚ EXPLORAR EXPERIÊNCIA
+</button>
 
-<h2 id="titulo">Coração humano</h2>
+<div class="painel" id="painel">
 
-<p id="descricao">
-O coração funciona como uma bomba muscular, impulsionando o sangue para todo o organismo.
-</p>
+  <div class="cabecalho-painel">
+    <h2 id="tituloPainel">Laboratório interativo</h2>
+    <button class="fechar" id="fechar">×</button>
+  </div>
 
-<div class="botoes">
-<button class="ativo" data-modelo="coracao">♥ Coração</button>
-<button data-modelo="pulmoes">Pulmões</button>
-<button data-modelo="cerebro">Cérebro</button>
-<button data-modelo="maleta">Maleta de primeiros socorros</button>
-</div>
+  <div class="navegacao">
+    <button id="btnAnatomia" class="ativo">ANATOMIA 3D</button>
+    <button id="btnPratica">PRIMEIROS SOCORROS</button>
+  </div>
 
-<p class="alerta">
-Conteúdo educativo. As representações não substituem treinamento presencial. Em uma emergência, ligue 192 (SAMU).
-</p>
+  <div id="areaAnatomia">
 
-<p><a href="./index.html">Voltar ao site principal</a></p>
+    <div class="seletores">
+      <button class="ativo" data-orgao="coracao">♥ Coração</button>
+      <button data-orgao="pulmoes">Pulmões</button>
+      <button data-orgao="cerebro">Cérebro</button>
+    </div>
+
+    <div class="conteudo">
+      <h3 id="nomeOrgao">O coração humano</h3>
+      <p id="textoOrgao">
+        O coração funciona como uma bomba muscular, impulsionando o sangue por todo o organismo.
+      </p>
+    </div>
+
+  </div>
+
+  <div id="areaPratica" style="display:none">
+
+    <div class="seletores">
+      <button class="ativo" data-pratica="rcp">RCP</button>
+      <button data-pratica="engasgo">ENGASGO</button>
+      <button data-pratica="posicao">POSIÇÃO LATERAL</button>
+    </div>
+
+    <div class="conteudo">
+
+      <h3 id="nomePratica">Reanimação cardiopulmonar</h3>
+
+      <p id="introducao">
+        Conheça as principais etapas de reconhecimento de uma possível parada cardiorrespiratória.
+      </p>
+
+      <div class="progresso" id="progresso"></div>
+
+      <div class="etapa" id="textoEtapa"></div>
+
+      <div class="acoes">
+        <button id="anterior">VOLTAR</button>
+        <button id="proximo">PRÓXIMA ETAPA →</button>
+      </div>
+
+      <p class="nota" id="notaSeguranca">
+        Material educativo. A prática deve ser aprendida em treinamento presencial com profissionais capacitados.
+      </p>
+
+    </div>
+
+  </div>
 
 </div>
 
 <a-scene
-mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiLoading: no; uiScanning: no"
-color-space="sRGB"
-renderer="colorManagement: true"
-vr-mode-ui="enabled: false"
-device-orientation-permission-ui="enabled: false">
+  mindar-image="
+    imageTargetSrc: ./targets.mind;
+    autoStart: true;
+    uiLoading: no;
+    uiScanning: no;
+    filterMinCF: 0.0005;
+    filterBeta: 1000;
+    warmupTolerance: 5;
+    missTolerance: 10;
+    maxTrack: 1
+  "
+  color-space="sRGB"
+  renderer="colorManagement: true"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false">
 
-<a-assets timeout="20000">
-<a-asset-item id="heart" src="./heart.glb"></a-asset-item>
-<a-asset-item id="lungs" src="./lungs.glb"></a-asset-item>
-<a-asset-item id="brain" src="./brain.glb"></a-asset-item>
-</a-assets>
+  <a-assets timeout="30000">
+    <a-asset-item id="heart" src="./heart.glb"></a-asset-item>
+    <a-asset-item id="lungs" src="./lungs.glb"></a-asset-item>
+    <a-asset-item id="brain" src="./brain.glb"></a-asset-item>
+  </a-assets>
 
-<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-<a-entity light="type: ambient; intensity: 1.8"></a-entity>
-<a-entity light="type: directional; intensity: 1.2" position="1 2 2"></a-entity>
+  <a-entity light="type: ambient; intensity: 1.8"></a-entity>
+  <a-entity light="type: directional; intensity: 1.2" position="1 2 2"></a-entity>
 
-<a-entity mindar-image-target="targetIndex: 0">
+  <a-entity mindar-image-target="targetIndex: 0">
 
-<a-entity id="coracao"
-gltf-model="#heart"
-position="0 0 0.15"
-scale="0.25 0.25 0.25"
-animation="property: rotation; to: 0 360 0; dur: 18000; loop: true; easing: linear">
-</a-entity>
+    <!-- CORAÇÃO -->
+    <a-entity id="modeloCoracao"
+      gltf-model="#heart"
+      position="0 0 0.12"
+      scale="0.25 0.25 0.25"
+      animation__giro="
+        property: rotation;
+        to: 0 360 0;
+        dur: 25000;
+        loop: true;
+        easing: linear
+      "
+      animation__pulso="
+        property: scale;
+        from: 0.25 0.25 0.25;
+        to: 0.265 0.265 0.265;
+        dir: alternate;
+        dur: 800;
+        loop: true;
+        easing: easeInOutSine
+      ">
+    </a-entity>
 
-<a-entity id="pulmoes"
-gltf-model="#lungs"
-position="0 0 0.15"
-scale="0.25 0.25 0.25"
-visible="false"
-animation="property: rotation; to: 0 360 0; dur: 22000; loop: true; easing: linear">
-</a-entity>
+    <!-- PULMÕES -->
+    <a-entity id="modeloPulmoes"
+      gltf-model="#lungs"
+      position="0 0 0.12"
+      scale="0.25 0.25 0.25"
+      visible="false"
+      animation__respiracao="
+        property: scale;
+        from: 0.25 0.25 0.25;
+        to: 0.27 0.27 0.25;
+        dir: alternate;
+        dur: 2200;
+        loop: true
+      ">
+    </a-entity>
 
-<a-entity id="cerebro"
-gltf-model="#brain"
-position="0 0 0.15"
-scale="0.25 0.25 0.25"
-visible="false"
-animation="property: rotation; to: 0 360 0; dur: 22000; loop: true; easing: linear">
-</a-entity>
+    <!-- CÉREBRO -->
+    <a-entity id="modeloCerebro"
+      gltf-model="#brain"
+      position="0 0 0.12"
+      scale="0.25 0.25 0.25"
+      visible="false"
+      animation="
+        property: rotation;
+        to: 0 360 0;
+        dur: 25000;
+        loop: true;
+        easing: linear
+      ">
+    </a-entity>
 
-<!-- MALETA 3D -->
+    <!-- MANEQUIM DIDÁTICO DE RCP -->
+    <a-entity id="modeloRCP"
+      position="0 0 0.12"
+      visible="false">
 
-<a-entity id="maleta" visible="false" position="0 0 0.15">
+      <!-- TAPETE -->
+      <a-box
+        position="0 -0.28 0"
+        width="1.35"
+        height="0.06"
+        depth="0.65"
+        color="#315c50">
+      </a-box>
 
-<a-box position="0 0 0"
-width="0.95" height="0.58" depth="0.30"
-color="#d9e7e2">
-</a-box>
+      <!-- CABEÇA -->
+      <a-sphere
+        position="-0.43 -0.02 0.06"
+        radius="0.15"
+        color="#d9ad8e">
+      </a-sphere>
 
-<a-box position="0 0.33 0"
-width="0.42" height="0.12" depth="0.30"
-color="#d9e7e2">
-</a-box>
+      <!-- TRONCO -->
+      <a-box
+        position="0 -0.02 0"
+        width="0.65"
+        height="0.23"
+        depth="0.36"
+        color="#e6c2a7"
+        radius="0.08">
+      </a-box>
 
-<a-box position="0 0.02 0.17"
-width="0.15" height="0.42" depth="0.025"
-color="#c83232">
-</a-box>
+      <!-- BRAÇOS -->
+      <a-cylinder
+        position="-0.02 0.12 0.19"
+        rotation="0 0 90"
+        radius="0.055"
+        height="0.55"
+        color="#d9ad8e">
+      </a-cylinder>
 
-<a-box position="0 0.02 0.18"
-width="0.42" height="0.14" depth="0.025"
-color="#c83232">
-</a-box>
+      <a-cylinder
+        position="-0.02 0.12 -0.19"
+        rotation="0 0 90"
+        radius="0.055"
+        height="0.55"
+        color="#d9ad8e">
+      </a-cylinder>
 
-<a-sphere position="-0.27 -0.12 0.22"
-radius="0.075" color="#e4b34f">
-</a-sphere>
+      <!-- PERNAS -->
+      <a-box
+        position="0.52 -0.03 0.10"
+        width="0.48"
+        height="0.16"
+        depth="0.14"
+        color="#315c87">
+      </a-box>
 
-<a-box position="0.25 -0.14 0.22"
-width="0.12" height="0.18" depth="0.08"
-color="#6d9dc2">
-</a-box>
+      <a-box
+        position="0.52 -0.03 -0.10"
+        width="0.48"
+        height="0.16"
+        depth="0.14"
+        color="#315c87">
+      </a-box>
 
-<a-cylinder position="0.27 0.12 0.22"
-radius="0.055" height="0.20"
-color="#ffffff" rotation="0 0 90">
-</a-cylinder>
+      <!-- ÁREA DO TÓRAX -->
+      <a-circle
+        position="0 -0.01 0.185"
+        radius="0.09"
+        color="#d94c43"
+        material="opacity: 0.85">
+      </a-circle>
 
-</a-entity>
+      <!-- MÃOS DO SOCORRISTA -->
+      <a-sphere
+        position="0 0.12 0.26"
+        radius="0.075"
+        color="#f1d0b5"
+        animation="
+          property: position;
+          from: 0 0.12 0.26;
+          to: 0 0.075 0.26;
+          dir: alternate;
+          dur: 550;
+          loop: true
+        ">
+      </a-sphere>
 
-</a-entity>
+      <a-text
+        value="DEMONSTRAÇÃO DE RCP"
+        position="0 0.38 0.20"
+        align="center"
+        color="#ffffff"
+        width="2.5">
+      </a-text>
+
+    </a-entity>
+
+  </a-entity>
 </a-scene>
 
 <script>
 
-const informacoes = {
+/* ELEMENTOS */
+const painel = document.getElementById("painel");
+const abrir = document.getElementById("abrir");
+const fechar = document.getElementById("fechar");
+const dica = document.getElementById("dica");
+const estado = document.getElementById("estado");
 
-coracao: {
-titulo: "Coração humano",
-descricao: "O coração é um músculo que funciona como uma bomba. Ele impulsiona o sangue, levando oxigênio e nutrientes aos tecidos do corpo."
-},
+const anatomia = document.getElementById("areaAnatomia");
+const pratica = document.getElementById("areaPratica");
 
-pulmoes: {
-titulo: "Sistema respiratório",
-descricao: "Nos pulmões ocorre a troca gasosa. O oxigênio do ar passa para o sangue e o gás carbônico é eliminado durante a expiração. O diafragma participa diretamente desse processo."
-},
+let modo = "anatomia";
+let marcadorEncontrado = false;
+let praticaAtual = "rcp";
+let etapaAtual = 0;
 
-cerebro: {
-titulo: "Cérebro humano",
-descricao: "O cérebro coordena movimentos, pensamentos, memória e diversas funções do organismo. Ele precisa receber oxigênio continuamente através da circulação sanguínea."
-},
+/* MODELOS 3D */
+const modelos = {
+  coracao: "modeloCoracao",
+  pulmoes: "modeloPulmoes",
+  cerebro: "modeloCerebro",
+  rcp: "modeloRCP"
+};
 
-maleta: {
-titulo: "Maleta de primeiros socorros",
-descricao: "A maleta pode conter materiais como luvas descartáveis, gaze, ataduras e outros itens definidos conforme as necessidades da instituição e orientação profissional. Os materiais devem estar identificados, dentro da validade e acessíveis a pessoas capacitadas."
+function mostrarModelo(nome) {
+  Object.values(modelos).forEach(id => {
+    document.getElementById(id).setAttribute("visible", false);
+  });
+
+  document.getElementById(modelos[nome]).setAttribute("visible", true);
 }
+
+/* ANATOMIA */
+const orgaos = {
+
+  coracao: {
+    nome: "O coração humano",
+    texto: "O coração é um músculo que funciona como uma bomba. Ele impulsiona o sangue, transportando oxigênio e nutrientes para os tecidos do organismo."
+  },
+
+  pulmoes: {
+    nome: "Sistema respiratório",
+    texto: "Nos pulmões ocorre a troca gasosa: o oxigênio passa para o sangue e o gás carbônico é eliminado. O diafragma participa dos movimentos respiratórios."
+  },
+
+  cerebro: {
+    nome: "O cérebro humano",
+    texto: "O cérebro participa do controle dos movimentos, da memória, do pensamento e de diversas funções do organismo. Seu funcionamento depende do fornecimento contínuo de oxigênio."
+  }
 
 };
 
-const modelos = [
-"coracao",
-"pulmoes",
-"cerebro",
-"maleta"
-];
+document.querySelectorAll("[data-orgao]").forEach(botao => {
 
-function selecionar(nome) {
+  botao.addEventListener("click", () => {
 
-modelos.forEach(function(id) {
-document.getElementById(id).setAttribute(
-"visible",
-id === nome
-);
+    const nome = botao.dataset.orgao;
+
+    mostrarModelo(nome);
+
+    document.getElementById("nomeOrgao").textContent =
+      orgaos[nome].nome;
+
+    document.getElementById("textoOrgao").textContent =
+      orgaos[nome].texto;
+
+    document.querySelectorAll("[data-orgao]").forEach(b => {
+      b.classList.toggle("ativo", b === botao);
+    });
+
+  });
+
 });
 
-document.getElementById("titulo").textContent =
-informacoes[nome].titulo;
+/* DEMONSTRAÇÕES EDUCATIVAS */
+const demonstracoes = {
 
-document.getElementById("descricao").textContent =
-informacoes[nome].descricao;
+  rcp: {
+    nome: "Reanimação cardiopulmonar",
 
-document.querySelectorAll("[data-modelo]").forEach(function(botao) {
-botao.classList.toggle(
-"ativo",
-botao.dataset.modelo === nome
-);
-});
+    introducao: "Conheça as principais etapas de reconhecimento e resposta diante de uma possível parada cardiorrespiratória.",
+
+    etapas: [
+
+      "1. Verifique se o ambiente está seguro. Observe se a pessoa responde quando você chama e toca seus ombros.",
+
+      "2. Peça ajuda. Solicite que alguém ligue para o SAMU (192) e procure um desfibrilador externo automático (DEA), se disponível.",
+
+      "3. Verifique se a pessoa respira normalmente por no máximo 10 segundos. Se não responder e não respirar normalmente, trate como possível parada cardiorrespiratória.",
+
+      "4. Inicie compressões no centro do tórax, sobre a metade inferior do esterno. Para adultos, mantenha frequência de 100 a 120 compressões por minuto e profundidade aproximada de 5 a 6 centímetros.",
+
+      "5. Permita o retorno completo do tórax entre as compressões. Se houver DEA disponível, ligue o aparelho e siga as orientações sonoras. Continue até a chegada do socorro ou a retomada de sinais de vida."
+    ]
+  },
+
+  engasgo: {
+    nome: "Como reconhecer e agir no engasgo",
+
+    introducao: "A obstrução das vias aéreas pode ser leve ou grave. Reconhecer a diferença é essencial.",
+
+    etapas: [
+
+      "1. Observe a pessoa. Se ela consegue falar, tossir e respirar, incentive a tosse e acompanhe a situação.",
+
+      "2. Se não consegue falar, respirar ou tossir efetivamente, reconheça a possibilidade de obstrução grave e peça ajuda imediatamente.",
+
+      "3. Em adultos e crianças acima de 1 ano, a orientação geral para obstrução grave é alternar 5 golpes nas costas com 5 compressões abdominais, conforme treinamento adequado.",
+
+      "4. Em gestantes ou pessoas nas quais não seja possível realizar compressões abdominais, são utilizadas compressões torácicas, com orientação apropriada.",
+
+      "5. Em bebês menores de 1 ano, nunca realize compressões abdominais. São utilizadas técnicas específicas de golpes nas costas e compressões torácicas. Acione o SAMU (192)."
+    ]
+  },
+
+  posicao: {
+    nome: "Posição lateral de segurança",
+
+    introducao: "A posição lateral de segurança pode ajudar a manter as vias aéreas desobstruídas em uma pessoa inconsciente que respira normalmente.",
+
+    etapas: [
+
+      "1. Verifique se o ambiente está seguro e avalie a resposta da pessoa.",
+
+      "2. Verifique a respiração. Se a pessoa estiver inconsciente, mas respirando normalmente, solicite ajuda e acione o SAMU (192).",
+
+      "3. Se não houver suspeita de trauma que contraindique a movimentação, coloque a pessoa cuidadosamente de lado, mantendo a cabeça posicionada para favorecer a passagem do ar.",
+
+      "4. Observe continuamente a respiração até a chegada da equipe de emergência.",
+
+      "5. Se a respiração deixar de ser normal, coloque a pessoa de costas e inicie as medidas de reanimação, seguindo as orientações do atendimento de emergência."
+    ]
+  }
+
+};
+
+function atualizarEtapa() {
+
+  const dados = demonstracoes[praticaAtual];
+
+  document.getElementById("nomePratica").textContent =
+    dados.nome;
+
+  document.getElementById("introducao").textContent =
+    dados.introducao;
+
+  document.getElementById("textoEtapa").textContent =
+    dados.etapas[etapaAtual];
+
+  const progresso = document.getElementById("progresso");
+
+  progresso.innerHTML = "";
+
+  dados.etapas.forEach((item, indice) => {
+
+    const barra = document.createElement("span");
+
+    if (indice <= etapaAtual) {
+      barra.classList.add("ativo");
+    }
+
+    progresso.appendChild(barra);
+
+  });
+
+  document.getElementById("anterior").disabled =
+    etapaAtual === 0;
+
+  document.getElementById("proximo").textContent =
+    etapaAtual === dados.etapas.length - 1
+      ? "RECOMEÇAR ↻"
+      : "PRÓXIMA ETAPA →";
 
 }
 
-document.querySelectorAll("[data-modelo]").forEach(function(botao) {
+document.getElementById("anterior").addEventListener("click", () => {
 
-botao.addEventListener("click", function() {
-selecionar(botao.dataset.modelo);
+  if (etapaAtual > 0) {
+    etapaAtual--;
+    atualizarEtapa();
+  }
+
 });
 
+document.getElementById("proximo").addEventListener("click", () => {
+
+  const total = demonstracoes[praticaAtual].etapas.length;
+
+  etapaAtual = etapaAtual === total - 1 ? 0 : etapaAtual + 1;
+
+  atualizarEtapa();
+
 });
 
+document.querySelectorAll("[data-pratica]").forEach(botao => {
+
+  botao.addEventListener("click", () => {
+
+    praticaAtual = botao.dataset.pratica;
+    etapaAtual = 0;
+
+    document.querySelectorAll("[data-pratica]").forEach(b => {
+      b.classList.toggle("ativo", b === botao);
+    });
+
+    if (praticaAtual === "rcp") {
+      mostrarModelo("rcp");
+    } else {
+      mostrarModelo("coracao");
+    }
+
+    atualizarEtapa();
+
+  });
+
+});
+
+/* ALTERNAR EXPERIÊNCIAS */
+function mudarModo(novoModo) {
+
+  modo = novoModo;
+
+  anatomia.style.display =
+    modo === "anatomia" ? "block" : "none";
+
+  pratica.style.display =
+    modo === "pratica" ? "block" : "none";
+
+  document.getElementById("btnAnatomia").classList.toggle(
+    "ativo", modo === "anatomia"
+  );
+
+  document.getElementById("btnPratica").classList.toggle(
+    "ativo", modo === "pratica"
+  );
+
+  if (modo === "anatomia") {
+    mostrarModelo("coracao");
+  } else {
+    mostrarModelo(praticaAtual === "rcp" ? "rcp" : "coracao");
+    atualizarEtapa();
+  }
+
+}
+
+document.getElementById("btnAnatomia").addEventListener("click", () => {
+  mudarModo("anatomia");
+});
+
+document.getElementById("btnPratica").addEventListener("click", () => {
+  mudarModo("pratica");
+});
+
+/* ABRIR E FECHAR PAINEL */
+abrir.addEventListener("click", () => {
+  painel.style.display = "block";
+  abrir.style.display = "none";
+});
+
+fechar.addEventListener("click", () => {
+  painel.style.display = "none";
+  abrir.style.display = "block";
+});
+
+/* RECONHECIMENTO DO BANNER */
 const cena = document.querySelector("a-scene");
 
-cena.addEventListener("loaded", function() {
-document.getElementById("status").textContent =
-"Câmera carregada. Procure a imagem do banner.";
-});
+cena.addEventListener("targetFound", () => {
 
-cena.addEventListener("arReady", function() {
-document.getElementById("status").textContent =
-"Aponte para o marcador do banner.";
-});
+  marcadorEncontrado = true;
 
-cena.addEventListener("targetFound", function() {
+  estado.textContent = "MARCADOR RECONHECIDO";
+  dica.style.display = "none";
 
-document.getElementById("mensagem").style.display = "none";
-document.getElementById("painel").style.display = "block";
+  abrir.style.display = "block";
 
 });
 
-cena.addEventListener("targetLost", function() {
+cena.addEventListener("targetLost", () => {
 
-document.getElementById("painel").style.display = "none";
-document.getElementById("mensagem").style.display = "flex";
+  marcadorEncontrado = false;
+
+  estado.textContent = "PROCURANDO MARCADOR";
+
+  // Mantém o painel educativo aberto se já foi aberto.
+  // O objeto 3D depende do reconhecimento do banner.
+
+  if (painel.style.display !== "block") {
+    abrir.style.display = "none";
+    dica.style.display = "block";
+    dica.textContent = "Aproxime novamente a câmera do banner";
+  }
 
 });
 
-cena.addEventListener("arError", function() {
-document.getElementById("status").textContent =
-"Erro ao iniciar a câmera. Verifique as permissões do navegador.";
+cena.addEventListener("loaded", () => {
+  estado.textContent = "CÂMERA INICIADA";
 });
 
-selecionar("coracao");
+cena.addEventListener("arError", () => {
+  estado.textContent = "ERRO NA CÂMERA";
+  dica.textContent = "Verifique a permissão de câmera e recarregue a página.";
+});
+
+/* INICIALIZAÇÃO */
+mostrarModelo("coracao");
+atualizarEtapa();
 
 </script>
 
