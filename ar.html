@@ -1,84 +1,368 @@
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Lei Lucas - Primeiros Socorros AR</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
-  <body style="margin:0; overflow:hidden; font-family:Arial;">
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" 
-             color-space="sRGB" 
-             renderer="colorManagement: true, physicallyCorrectLights: true"
-             vr-mode-ui="enabled: false" 
-             device-orientation-permission-ui="enabled: false">
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratório de Primeiros Socorros | IFPA</title>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-entity light="type: ambient; intensity: 1.8"></a-entity>
-        <a-entity light="type: directional; intensity: 1.2" position="1 2 2"></a-entity>
+<style>
+* { box-sizing: border-box; }
 
-        <!-- CENÁRIO: Boneco de Primeiros Socorros -->
-        <a-entity id="kit-cena" position="0 -0.3 0.2" scale="0.8 0.8 0.8">
-          
-          <!-- Base (chão) -->
-          <a-circle position="0 -0.5 0" rotation="-90 0 0" radius="0.8" color="#22c55e" opacity="0.3"></a-circle>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f6f3;
+  color: #183b34;
+}
 
-          <!-- Boneco deitado (tronco) -->
-          <a-box position="0 -0.2 0" width="0.6" height="0.2" depth="1" color="#ffdbac" rounded></a-box>
-          <!-- Cabeça -->
-          <a-sphere position="0 -0.15 0.7" radius="0.25" color="#ffdbac"></a-sphere>
-          
-          <!-- Mãos fazendo compressão (animadas) -->
-          <a-entity id="maos" position="0 0.3 0" animation="property: position; from: 0 0.3 0; to: 0 0.05 0; dur: 500; dir: alternate; loop: true; easing: easeInOutQuad">
-            <a-box position="0 0 0" width="0.25" height="0.08" depth="0.25" color="#ff8a65"></a-box>
-            <a-box position="0 0.08 0" width="0.25" height="0.08" depth="0.25" color="#ff8a65"></a-box>
-          </a-entity>
+header {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  width: 100%;
+  padding: 15px;
+  background: #123b35;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
 
-          <!-- Coração pulsando no peito -->
-          <a-sphere position="0 0.1 0.1" radius="0.12" color="#ef4444" 
-                    animation="property: scale; from: 1 1 1; to: 1.3 1.3 1.3; dur: 400; dir: alternate; loop: true"></a-sphere>
+#orientacao {
+  position: fixed;
+  z-index: 5;
+  top: 65px;
+  left: 12px;
+  right: 12px;
+  padding: 14px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 3px 15px #0002;
+  font-size: 13px;
+  line-height: 1.5;
+}
 
-          <!-- Texto 3D com instruções -->
-          <a-text value="1. CHAME SAMU 192" position="0 0.8 0.1" align="center" color="#dc2626" width="2" font="exo2bold"></a-text>
-          <a-text value="2. 30 COMPRESSOES" position="0 0.65 0.1" align="center" color="black" width="1.8"></a-text>
-        </a-entity>
-      </a-entity>
-    </a-scene>
+#orientacao strong { color: #14745f; }
 
-    <!-- PAINEL DE INSTRUÇÕES NA TELA -->
-    <div id="painel" style="position:fixed; bottom:0; left:0; width:100%; background:white; border-radius:20px 20px 0 0; padding:15px; box-shadow:0 -5px 20px rgba(0,0,0,0.2); display:none;">
-      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-        <div style="background:#dc2626; color:white; border-radius:50%; width:35px; height:35px; display:flex; align-items:center; justify-content:center; font-weight:bold;">!</div>
-        <b style="color:#dc2626;">LEI LUCAS 13.722/18 - PASSO A PASSO</b>
-      </div>
-      <div id="passo" style="font-size:15px; line-height:1.4;">
-        <b>1.</b> Verifique se a criança responde<br>
-        <b>2.</b> Ligue <b style="color:red;">SAMU 192</b><br>
-        <b>3.</b> Inicie 30 compressões no centro do peito<br>
-        <b>4.</b> Se engasgada: 5 tapas nas costas + 5 compressões abdominais
-      </div>
-      <button onclick="document.getElementById('painel').style.display='none'" style="margin-top:12px; width:100%; background:#22c55e; color:white; border:none; padding:10px; border-radius:10px; font-weight:bold;">ENTENDI</button>
-    </div>
+#mensagem {
+  position: fixed;
+  z-index: 4;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: #102d28aa;
+  color: white;
+  text-align: center;
+}
 
-    <div id="scan" style="position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); color:white; text-align:center; padding:20px;">
-      <div>
-        <div style="font-size:50px;">📦➡️❤️</div>
-        <p style="font-weight:bold;">Aponte a câmera para o banner<br>do Kit de Primeiros Socorros</p>
-      </div>
-    </div>
+#mensagem div {
+  max-width: 330px;
+  background: #123b35;
+  padding: 25px;
+  border-radius: 20px;
+  line-height: 1.6;
+}
 
-    <script>
-      const scene = document.querySelector('a-scene');
-      scene.addEventListener('targetFound', () => {
-        document.getElementById('scan').style.display = 'none';
-        document.getElementById('painel').style.display = 'block';
-      });
-      scene.addEventListener('targetLost', () => {
-        document.getElementById('scan').style.display = 'flex';
-      });
-    </script>
-  </body>
+#painel {
+  display: none;
+  position: fixed;
+  z-index: 8;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 52vh;
+  overflow-y: auto;
+  padding: 20px 15px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  background: white;
+  border-radius: 22px 22px 0 0;
+  box-shadow: 0 -5px 20px #0002;
+}
+
+#painel h2 {
+  margin: 0 0 10px;
+  color: #123b35;
+}
+
+#painel p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.botoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px;
+}
+
+button {
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  background: #e5f1ec;
+  color: #164b40;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.ativo {
+  background: #14745f;
+  color: white;
+}
+
+.alerta {
+  background: #fff4dd;
+  color: #694f18;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px !important;
+}
+
+a {
+  color: #14745f;
+  font-weight: bold;
+}
+
+a-scene {
+  position: fixed;
+  inset: 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+IFPA | LABORATÓRIO DE PRIMEIROS SOCORROS
+</header>
+
+<div id="orientacao">
+<strong>REALIDADE AUMENTADA</strong><br>
+Aponte a câmera para a imagem do banner. Quando o marcador for reconhecido, você poderá explorar os modelos 3D.
+</div>
+
+<div id="mensagem">
+<div>
+<h2>Experiência interativa</h2>
+<p>Permita o acesso à câmera e aponte para o marcador do banner.</p>
+<p id="status">Iniciando câmera...</p>
+</div>
+</div>
+
+<div id="painel">
+
+<h2 id="titulo">Coração humano</h2>
+
+<p id="descricao">
+O coração funciona como uma bomba muscular, impulsionando o sangue para todo o organismo.
+</p>
+
+<div class="botoes">
+<button class="ativo" data-modelo="coracao">♥ Coração</button>
+<button data-modelo="pulmoes">Pulmões</button>
+<button data-modelo="cerebro">Cérebro</button>
+<button data-modelo="maleta">Maleta de primeiros socorros</button>
+</div>
+
+<p class="alerta">
+Conteúdo educativo. As representações não substituem treinamento presencial. Em uma emergência, ligue 192 (SAMU).
+</p>
+
+<p><a href="./index.html">Voltar ao site principal</a></p>
+
+</div>
+
+<a-scene
+mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiLoading: no; uiScanning: no"
+color-space="sRGB"
+renderer="colorManagement: true"
+vr-mode-ui="enabled: false"
+device-orientation-permission-ui="enabled: false">
+
+<a-assets timeout="20000">
+<a-asset-item id="heart" src="./heart.glb"></a-asset-item>
+<a-asset-item id="lungs" src="./lungs.glb"></a-asset-item>
+<a-asset-item id="brain" src="./brain.glb"></a-asset-item>
+</a-assets>
+
+<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+<a-entity light="type: ambient; intensity: 1.8"></a-entity>
+<a-entity light="type: directional; intensity: 1.2" position="1 2 2"></a-entity>
+
+<a-entity mindar-image-target="targetIndex: 0">
+
+<a-entity id="coracao"
+gltf-model="#heart"
+position="0 0 0.15"
+scale="0.25 0.25 0.25"
+animation="property: rotation; to: 0 360 0; dur: 18000; loop: true; easing: linear">
+</a-entity>
+
+<a-entity id="pulmoes"
+gltf-model="#lungs"
+position="0 0 0.15"
+scale="0.25 0.25 0.25"
+visible="false"
+animation="property: rotation; to: 0 360 0; dur: 22000; loop: true; easing: linear">
+</a-entity>
+
+<a-entity id="cerebro"
+gltf-model="#brain"
+position="0 0 0.15"
+scale="0.25 0.25 0.25"
+visible="false"
+animation="property: rotation; to: 0 360 0; dur: 22000; loop: true; easing: linear">
+</a-entity>
+
+<!-- MALETA 3D -->
+
+<a-entity id="maleta" visible="false" position="0 0 0.15">
+
+<a-box position="0 0 0"
+width="0.95" height="0.58" depth="0.30"
+color="#d9e7e2">
+</a-box>
+
+<a-box position="0 0.33 0"
+width="0.42" height="0.12" depth="0.30"
+color="#d9e7e2">
+</a-box>
+
+<a-box position="0 0.02 0.17"
+width="0.15" height="0.42" depth="0.025"
+color="#c83232">
+</a-box>
+
+<a-box position="0 0.02 0.18"
+width="0.42" height="0.14" depth="0.025"
+color="#c83232">
+</a-box>
+
+<a-sphere position="-0.27 -0.12 0.22"
+radius="0.075" color="#e4b34f">
+</a-sphere>
+
+<a-box position="0.25 -0.14 0.22"
+width="0.12" height="0.18" depth="0.08"
+color="#6d9dc2">
+</a-box>
+
+<a-cylinder position="0.27 0.12 0.22"
+radius="0.055" height="0.20"
+color="#ffffff" rotation="0 0 90">
+</a-cylinder>
+
+</a-entity>
+
+</a-entity>
+</a-scene>
+
+<script>
+
+const informacoes = {
+
+coracao: {
+titulo: "Coração humano",
+descricao: "O coração é um músculo que funciona como uma bomba. Ele impulsiona o sangue, levando oxigênio e nutrientes aos tecidos do corpo."
+},
+
+pulmoes: {
+titulo: "Sistema respiratório",
+descricao: "Nos pulmões ocorre a troca gasosa. O oxigênio do ar passa para o sangue e o gás carbônico é eliminado durante a expiração. O diafragma participa diretamente desse processo."
+},
+
+cerebro: {
+titulo: "Cérebro humano",
+descricao: "O cérebro coordena movimentos, pensamentos, memória e diversas funções do organismo. Ele precisa receber oxigênio continuamente através da circulação sanguínea."
+},
+
+maleta: {
+titulo: "Maleta de primeiros socorros",
+descricao: "A maleta pode conter materiais como luvas descartáveis, gaze, ataduras e outros itens definidos conforme as necessidades da instituição e orientação profissional. Os materiais devem estar identificados, dentro da validade e acessíveis a pessoas capacitadas."
+}
+
+};
+
+const modelos = [
+"coracao",
+"pulmoes",
+"cerebro",
+"maleta"
+];
+
+function selecionar(nome) {
+
+modelos.forEach(function(id) {
+document.getElementById(id).setAttribute(
+"visible",
+id === nome
+);
+});
+
+document.getElementById("titulo").textContent =
+informacoes[nome].titulo;
+
+document.getElementById("descricao").textContent =
+informacoes[nome].descricao;
+
+document.querySelectorAll("[data-modelo]").forEach(function(botao) {
+botao.classList.toggle(
+"ativo",
+botao.dataset.modelo === nome
+);
+});
+
+}
+
+document.querySelectorAll("[data-modelo]").forEach(function(botao) {
+
+botao.addEventListener("click", function() {
+selecionar(botao.dataset.modelo);
+});
+
+});
+
+const cena = document.querySelector("a-scene");
+
+cena.addEventListener("loaded", function() {
+document.getElementById("status").textContent =
+"Câmera carregada. Procure a imagem do banner.";
+});
+
+cena.addEventListener("arReady", function() {
+document.getElementById("status").textContent =
+"Aponte para o marcador do banner.";
+});
+
+cena.addEventListener("targetFound", function() {
+
+document.getElementById("mensagem").style.display = "none";
+document.getElementById("painel").style.display = "block";
+
+});
+
+cena.addEventListener("targetLost", function() {
+
+document.getElementById("painel").style.display = "none";
+document.getElementById("mensagem").style.display = "flex";
+
+});
+
+cena.addEventListener("arError", function() {
+document.getElementById("status").textContent =
+"Erro ao iniciar a câmera. Verifique as permissões do navegador.";
+});
+
+selecionar("coracao");
+
+</script>
+
+</body>
 </html>
