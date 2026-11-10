@@ -1,175 +1,370 @@
-from pathlib import Path
-p = Path("/mnt/data/index.html")
-html = p.read_text(encoding="utf-8")
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Como produzir um banner educativo com tecnologia | IFPA Campus Paragominas</title>
+<meta name="description" content="Guia interativo, passo a passo, para planejar, criar no Canva e finalizar um banner educativo, com QR Code, realidade aumentada e modelos 3D como recursos complementares.">
+<meta name="theme-color" content="#176B5B">
+<style>
+:root{--logo:none;--g:#176B5B;--gl:#e4f1ee;--ink:#1d2b28;--mut:#4f625c;--ln:#cfdcd8;--ok:#1b7a3d;--no:#b3261e;--am:#f2b705;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font:17px/1.6 Inter,Arial,sans-serif;color:var(--ink);background:#fff}
+h1,h2,h3{font-family:Poppins,Arial,sans-serif;line-height:1.2;margin:0}
+a{color:var(--g)}
+:focus-visible{outline:3px solid var(--am);outline-offset:2px}
+button{font:inherit;cursor:pointer}
+.w{max-width:980px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:9;background:var(--g);padding-top:env(safe-area-inset-top,0px)}
+nav .w{display:flex;gap:4px;overflow-x:auto;align-items:center;padding-top:6px;padding-bottom:6px}
+nav b{color:#fff;white-space:nowrap;margin-right:8px;display:flex;gap:8px;align-items:center}
+nav a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:99px;white-space:nowrap;font-size:15px}
+nav a:hover{background:rgba(255,255,255,.18)}
+.lg{width:32px;height:32px;border-radius:50%;background:var(--logo) center/cover no-repeat,#fff;flex:none}
+.hero{background:var(--gl);padding:52px 0 40px}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);margin-bottom:10px}
+.hero p{max-width:62ch;margin:0 0 12px;color:var(--mut)}
+.inst{font-size:.95rem;color:var(--mut);margin-bottom:14px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.btn{font-weight:600;background:var(--g);color:#fff;border:2px solid var(--g);border-radius:12px;padding:12px 20px;text-decoration:none;display:inline-block}
+.btn.o{background:#fff;color:var(--g)}
+section{padding:48px 0}
+section.s{background:var(--gl)}
+h2.t{font-size:clamp(1.5rem,4.5vw,2.1rem);margin-bottom:8px}
+.sub{color:var(--mut);margin:0 0 22px;max-width:66ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px;text-align:left}
+.card b.n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;margin-bottom:8px}
+.card h3{font-size:1.05rem;margin-bottom:4px}
+.card p{margin:0;font-size:.93rem;color:var(--mut)}
+.chip{display:inline-block;font-size:.78rem;font-weight:600;background:var(--gl);color:var(--g);padding:2px 10px;border-radius:99px;margin-top:8px}
+button.card{width:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font:inherit;color:inherit}button.card:hover{border-color:var(--g)}
+.note{background:#fff7dc;border-left:5px solid var(--am);padding:12px 16px;border-radius:8px;margin:16px 0;max-width:70ch}
+.note.g{background:var(--gl);border-color:var(--g)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button,.pills button{border:2px solid var(--g);background:#fff;color:var(--g);border-radius:99px;padding:8px 14px;font-weight:600;font-size:.95rem}
+.tabs button[aria-selected=true],.pills button[aria-pressed=true]{background:var(--g);color:#fff}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.pn{display:none}.pn.on{display:block}
+.pn h3{font-size:1.5rem;margin-bottom:6px}
+.pn h4{margin:22px 0 8px;font-size:1.1rem;color:var(--g)}
+.nav2{display:flex;justify-content:space-between;gap:10px;margin-top:26px}
+.bar{height:10px;background:var(--gl);border-radius:6px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;width:0;background:var(--g);transition:width .3s}
+label.f{display:block;font-weight:600;margin:12px 0 4px}
+input[type=text],textarea{width:100%;font:inherit;padding:10px 12px;border:2px solid var(--ln);border-radius:10px}
+.out{background:var(--gl);border-radius:12px;padding:14px 16px;margin-top:14px;white-space:pre-line}
+ol.tut{list-style:none;padding:0;margin:0}
+.chk label{display:flex;gap:12px;align-items:flex-start;padding:11px 12px;border:2px solid var(--ln);border-radius:12px;margin-bottom:8px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--g);flex:none;margin-top:3px}
+.chk label:has(input:checked){border-color:var(--g);background:var(--gl)}
+details{border:1px solid var(--ln);border-radius:12px;margin:8px 0;background:#fff}
+summary{cursor:pointer;padding:12px 16px;font-weight:600}
+details div{padding:0 16px 12px}
+.cmp{display:grid;grid-template-columns:minmax(0,230px) 1fr;gap:20px;align-items:start}
+@media(max-width:680px){.cmp{grid-template-columns:1fr}details.il{margin-left:0}}
+.mock{aspect-ratio:3/4;border:1px solid var(--ln);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.mock .b{border-radius:4px;padding:6px}
+.mock.bad{background:#d9d27a;color:#b9b06a;font-size:9px;gap:2px}
+.mock.bad .t{font:700 10px "Comic Sans MS",cursive;text-align:right}
+.mock.bad .b{background:#cfc66f;line-height:1.1}
+.mock.good{background:#fff;font-size:11px}
+.mock.good .t{font:700 15px Poppins,Arial,sans-serif;color:var(--g);border-bottom:3px solid var(--g);padding-bottom:4px}
+.mock.good .b{background:var(--gl)}
+.mock .qr{display:none;width:42px;height:42px;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/10px 10px;border:3px solid #fff;outline:1px solid #000}
+.mock.good .qr{display:block}
+.ct{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center}
+@media(max-width:560px){.ct{grid-template-columns:1fr}}
+.prev{border-radius:12px;padding:18px;font:700 1.3rem Poppins,Arial,sans-serif;text-align:center;border:1px solid var(--ln)}
+.qrbox svg{max-width:100%;height:auto;display:block;margin:10px 0;border:1px solid var(--ln)}
+.timer{font:700 3rem Poppins,Arial,sans-serif;color:var(--g)}
+.ph{display:grid;grid-template-columns:90px 1fr;margin-bottom:10px;border-radius:12px;overflow:hidden;border:1px solid var(--ln);background:#fff}
+.ph b{background:var(--am);display:grid;place-items:center;font:700 1.2rem Poppins,Arial,sans-serif;padding:10px}
+.ph div{padding:12px 16px}
+.ex{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:22px;align-items:start}
+@media(max-width:680px){.ex{grid-template-columns:1fr}}
+.bn2{aspect-ratio:3/4;border:2px solid var(--g);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;font-size:11px;background:#fff}
+.bn2>div{border:2px dashed transparent;border-radius:6px;padding:5px;background:var(--gl)}
+.bn2 .hl{border-color:var(--g);background:#fff7dc}
+.bn2 .tt{font:700 14px Poppins,Arial,sans-serif;color:var(--g)}
+.bn2 .row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:none;padding:0}
+.bn2 .row span{background:var(--gl);padding:5px;border-radius:4px}
+.bn2 .qx{display:flex;gap:6px;align-items:center}
+details.il{margin:0 0 12px 32px;border-style:dashed}
+details.il summary{font-weight:500;font-size:.92rem;color:var(--g);padding:8px 14px}
+.fg{margin:0 12px 12px;border:1px solid var(--ln);border-radius:10px;overflow:hidden;background:#fff;max-width:520px}
+.fg svg,.fg img{display:block;width:100%;height:auto}
+.fg figcaption{font-size:.82rem;color:var(--mut);padding:6px 10px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+model-viewer{display:block;width:100%;height:340px;background:var(--gl);border-radius:14px}
+model-viewer .arb{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;white-space:nowrap;background:var(--g);color:#fff;border:0;border-radius:99px;padding:10px 16px;font-size:14px;font-weight:600}
+.q{border:1px solid var(--ln);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fff}
+.q p{font-weight:600;margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;padding:10px 12px;margin:6px 0;border:2px solid var(--ln);border-radius:10px;background:#fff;color:var(--ink)}
+.opt.ok{border-color:var(--ok);background:#e6f4ea}.opt.no{border-color:var(--no);background:#fce8e6}
+.fb{font-size:.95rem;color:var(--mut);margin-top:6px}
+.sc{font:700 1.3rem Poppins,Arial,sans-serif;color:var(--g)}
+.ref{padding-left:22px;font-size:.95rem}.ref li{margin:8px 0}
+footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav aria-label="Navegação principal"><div class="w"><b><span class="lg" role="img" aria-label="Logo do IFPA"></span>IFPA · Banner educativo</b>
+<a href="#inicio">Início</a><a href="#passos">Passo a passo</a><a href="#pratica">Prática</a><a href="#exemplo">Exemplo</a><a href="#ra">RA e 3D</a><a href="#quiz">Quiz</a><a href="#refs">Referências</a></div></nav>
 
-# Add navigation entry for the new hands-on laboratory.
-html = html.replace(
-    '<a href="#exemplo">Exemplo</a><a href="#ra">RA e 3D</a>',
-    '<a href="#exemplo">Exemplo</a><a href="#laboratorio">Laboratório</a><a href="#ra">RA e 3D</a>'
-)
+<header class="hero" id="inicio"><div class="w">
+<div class="inst">Instituto Federal do Pará · Campus Paragominas · Licenciatura em Pedagogia</div>
+<h1>Como produzir um banner educativo utilizando tecnologia</h1>
+<p>Um guia interativo, em 5 etapas, para você aprender a planejar, criar no Canva, organizar visualmente e finalizar um banner. QR Code, realidade aumentada e modelos 3D entram como recursos complementares.</p>
+<p>Aqui você faz, testa e confere cada etapa. No fim, terá condições de criar o seu próprio banner.</p>
+<div class="btns"><a class="btn" href="#passos">Começar o passo a passo</a><a class="btn o" href="#pratica">Ver a prática</a><a class="btn o" href="#quiz">Fazer o quiz</a></div>
+</div></header>
 
-# Insert a practical, live banner-building laboratory before the AR section.
-lab = r'''
-<section id="laboratorio">
-  <div class="w">
-    <h2 class="t">Laboratório: monte seu banner agora</h2>
-    <p class="sub">Experimente decisões de conteúdo e design. O quadro à direita muda enquanto você preenche os campos — como uma prévia do que está construindo no Canva.</p>
-    <div class="two">
-      <div class="card">
-        <h3>1. Defina o conteúdo</h3>
-        <label class="f" for="labTema">Tema</label>
-        <input type="text" id="labTema" value="Primeiros socorros na escola" maxlength="70">
-        <label class="f" for="labSub">Subtítulo ou mensagem principal</label>
-        <input type="text" id="labSub" value="Saber agir com segurança pode salvar vidas." maxlength="100">
-        <label class="f" for="labAutor">Autores e instituição</label>
-        <input type="text" id="labAutor" value="Nome dos estudantes · IFPA — Campus Paragominas" maxlength="100">
-        <label class="f" for="labBloco1">Bloco 1: ideia principal</label>
-        <input type="text" id="labBloco1" value="Reconheça a situação" maxlength="65">
-        <label class="f" for="labBloco2">Bloco 2: orientação</label>
-        <input type="text" id="labBloco2" value="Peça ajuda e mantenha a calma" maxlength="65">
-        <label class="f" for="labBloco3">Bloco 3: informação complementar</label>
-        <input type="text" id="labBloco3" value="Conheça os procedimentos corretos" maxlength="65">
-        <label class="f" for="labCor">Cor principal</label>
-        <select id="labCor">
-          <option value="#176B5B">Verde institucional</option>
-          <option value="#174A7E">Azul</option>
-          <option value="#8B3A3A">Vermelho escuro</option>
-          <option value="#6B4C9A">Roxo</option>
-          <option value="#A35D16">Laranja queimado</option>
-        </select>
-        <label class="f" for="labFormato">Organização dos blocos</label>
-        <select id="labFormato">
-          <option value="coluna">Em coluna</option>
-          <option value="grade">Em três colunas</option>
-        </select>
-        <div class="btns">
-          <button class="btn" id="labAtualizar" type="button">Atualizar prévia</button>
-          <button class="btn o" id="labCopiar" type="button">Copiar meu planejamento</button>
-        </div>
-        <p class="fb" id="labAviso" aria-live="polite">Edite os campos e observe a prévia.</p>
-      </div>
-      <div>
-        <div class="card">
-          <h3>2. Prévia do banner</h3>
-          <p class="sub" style="margin:4px 0 12px">Modelo didático simplificado. A composição final deve ser ajustada no Canva conforme o tamanho definido pelo professor.</p>
-          <div id="labPreview" class="lab-preview">
-            <div class="lab-top"><small>INSTITUTO FEDERAL DO PARÁ · PEDAGOGIA</small><h3 id="prevTema">Primeiros socorros na escola</h3><p id="prevSub">Saber agir com segurança pode salvar vidas.</p></div>
-            <div class="lab-author" id="prevAutor">Nome dos estudantes · IFPA — Campus Paragominas</div>
-            <div class="lab-blocks" id="prevBlocks">
-              <div><b>01</b><span id="prevB1">Reconheça a situação</span></div>
-              <div><b>02</b><span id="prevB2">Peça ajuda e mantenha a calma</span></div>
-              <div><b>03</b><span id="prevB3">Conheça os procedimentos corretos</span></div>
-            </div>
-            <div class="lab-image">ESPAÇO PARA IMAGEM, ILUSTRAÇÃO OU GRÁFICO</div>
-            <div class="lab-bottom">QR CODE (OPCIONAL) · REFERÊNCIAS</div>
-          </div>
-          <p class="fb">Observe a hierarquia: título primeiro, depois mensagem principal, blocos curtos e informações complementares.</p>
-        </div>
-        <div class="note g">
-          <b>Desafio de design:</b> tente reduzir cada bloco a uma ideia. Se o leitor precisar parar para ler um parágrafo longo, transforme-o em tópicos, esquema ou imagem explicativa.
-        </div>
-      </div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>3. Antes de abrir o Canva, confira suas decisões</h3>
-      <div class="chk" id="labChecklist">
-        <label><input type="checkbox"><span>Meu banner tem um objetivo claro e um público definido.</span></label>
-        <label><input type="checkbox"><span>O título informa o assunto sem ser genérico.</span></label>
-        <label><input type="checkbox"><span>Separei o conteúdo em poucas ideias principais.</span></label>
-        <label><input type="checkbox"><span>Sei quais imagens, dados ou exemplos preciso procurar.</span></label>
-        <label><input type="checkbox"><span>Vou indicar autores, instituição e fontes consultadas.</span></label>
-      </div>
-      <p class="fb" id="labCheckCount" aria-live="polite">0 de 5 decisões conferidas.</p>
-    </div>
-  </div>
-</section>
+<section><div class="w">
+<h2 class="t">As 5 etapas</h2>
+<p class="sub">Clique em uma etapa para ir direto ao conteúdo.</p>
+<div class="grid" id="ov"></div>
+</div></section>
 
-<section class="s" id="atividade">
-  <div class="w">
-    <h2 class="t">Proposta de atividade em grupo</h2>
-    <p class="sub">Uma sequência para transformar o conteúdo estudado em uma produção colaborativa.</p>
-    <div class="grid">
-      <div class="card"><b class="n">1</b><h3>Pesquisar</h3><p>Escolham um tema educativo e localizem informações em fontes confiáveis. Registrem os dados bibliográficos.</p><span class="chip">Pesquisa</span></div>
-      <div class="card"><b class="n">2</b><h3>Planejar</h3><p>Definam público, objetivo, título e três mensagens principais. Façam um esboço da organização.</p><span class="chip">Roteiro</span></div>
-      <div class="card"><b class="n">3</b><h3>Produzir</h3><p>Construam o banner no Canva ou em outra ferramenta digital. Priorizem leitura, contraste e alinhamento.</p><span class="chip">Criação</span></div>
-      <div class="card"><b class="n">4</b><h3>Enriquecer</h3><p>Se fizer sentido, incluam QR Code com conteúdo complementar ou uma experiência de realidade aumentada.</p><span class="chip">Tecnologia</span></div>
-      <div class="card"><b class="n">5</b><h3>Apresentar</h3><p>Expliquem as escolhas visuais e mostrem como o público pode acessar os recursos digitais.</p><span class="chip">Socialização</span></div>
-    </div>
-    <div class="note">A tecnologia deve apoiar a aprendizagem, não competir com o conteúdo. Um banner pode ser excelente sem realidade aumentada; o essencial é comunicar com clareza e responsabilidade.</div>
-  </div>
-</section>
-'''
+<section class="s" id="passos"><div class="w">
+<h2 class="t">Passo a passo</h2>
+<p class="sub">Siga as etapas na ordem. Você pode voltar sempre que precisar.</p>
+<div class="tabs" role="tablist" id="tabs" aria-label="Etapas"></div>
+<div class="bar" aria-hidden="true"><i id="pb"></i></div>
 
-html = html.replace('<section id="ra"><div class="w">', lab + '\n<section id="ra"><div class="w">')
+<!-- 1 -->
+<article class="pn" id="p1" role="tabpanel">
+<h3>1. Planejamento</h3>
+<p>Antes de abrir qualquer programa, decida três coisas: o <b>tema</b>, o <b>objetivo</b> e o <b>público</b>. Isso evita um banner cheio de informação sem direção.</p>
+<h4>Monte sua ficha de planejamento</h4>
+<label class="f" for="i1">Tema do banner</label><input type="text" id="i1" placeholder="Ex.: Horta da escola">
+<label class="f" for="i2">O que o público deve entender ao ler?</label><input type="text" id="i2" placeholder="Ex.: Como a horta funciona e como participar">
+<label class="f" for="i3">Quem vai ler?</label><input type="text" id="i3" placeholder="Ex.: Estudantes e professores">
+<div class="out" id="fo" aria-live="polite">Preencha os campos para ver sua ficha.</div>
+<div class="btns"><button class="btn o" id="cp" type="button">Copiar ficha</button></div>
+<h4>Dicas</h4>
+<ul><li>Um banner comunica uma ideia principal. Se tiver três, pense em três blocos.</li><li>Use o papel para um <b>esboço rápido</b>: onde ficam título, blocos e imagem.</li><li>Pesquise em fontes confiáveis e anote os autores para as referências.</li></ul>
+</article>
 
-# Add a more explicit bridge between the existing AR demo and the digital banner workflow.
-html = html.replace(
-    '<p>Quer ir além do QR Code? Veja a seção <a href="#ra">Realidade aumentada e 3D</a>.</p>',
-    '<p>Quer ir além do QR Code? Veja a seção <a href="#ra">Realidade aumentada e 3D</a>. A RA é uma etapa opcional: primeiro finalize o banner e só depois prepare o marcador e o conteúdo virtual.</p>'
-)
-html = html.replace(
-    '<div class="two">\n <div class="card"><span class="chip" style="margin:0 0 8px">Experiência com a câmera</span>',
-    '<div class="note g"><b>Como conectar a RA ao banner:</b> escolha no próprio banner uma imagem de alto contraste e sem muitos elementos; use essa imagem como marcador no MindAR; associe a ela o conteúdo virtual; publique a página de RA; por fim, acrescente ao banner um QR Code que abra essa experiência. Assim, o QR Code abre a câmera e o marcador permite reconhecer a imagem.</div>\n <div class="two">\n <div class="card"><span class="chip" style="margin:0 0 8px">Experiência com a câmera</span>'
-)
+<!-- 2 -->
+<article class="pn" id="p2" role="tabpanel">
+<h3>2. Criação digital no Canva</h3>
+<p>O Canva é uma ferramenta gratuita de design que roda no navegador. Siga o tutorial, abra a ilustração de cada passo e marque o que concluir.</p>
+<div class="chk"><ol class="tut" id="tut"></ol></div>
+<div class="bar" aria-hidden="true"><i id="tb"></i></div><p id="tc" aria-live="polite">0 de 8 passos concluídos</p>
+<div class="note g">Os nomes dos botões do Canva podem mudar com atualizações. Se não encontrar um, use a busca do próprio Canva. Você também pode criar o banner no Google Slides ou no PowerPoint, seguindo a mesma lógica.</div>
+<div class="note">Quer mostrar a tela real? Faça um print de cada passo e salve na pasta <b>img</b> do site com os nomes <b>canva-1.png</b>, <b>canva-2.png</b> e assim até <b>canva-8.png</b>. O site troca a ilustração pelo seu print automaticamente.</div>
+</article>
 
-# Add CSS for the new interactive preview and improve select appearance.
-css = r'''
-.lab-preview{--lab:#176B5B;border:2px solid var(--lab);border-radius:14px;padding:16px;background:#fff;min-height:420px;display:flex;flex-direction:column;gap:12px}
-.lab-top{background:var(--lab);color:#fff;border-radius:9px;padding:16px}
-.lab-top small{font-size:.65rem;letter-spacing:.08em;font-weight:700}
-.lab-top h3{font-size:clamp(1.25rem,3vw,1.8rem);margin:10px 0}
-.lab-top p{margin:0;color:#fff}
-.lab-author{font-size:.78rem;color:var(--mut);text-align:center}
-.lab-blocks{display:grid;grid-template-columns:1fr;gap:8px}
-.lab-blocks.grid-mode{grid-template-columns:repeat(3,minmax(0,1fr))}
-.lab-blocks>div{display:flex;gap:9px;align-items:center;background:var(--gl);border-radius:8px;padding:10px;font-size:.88rem}
-.lab-blocks b{color:var(--lab);font-size:1.1rem}
-.lab-image{flex:1;min-height:90px;border:2px dashed var(--ln);border-radius:8px;display:grid;place-items:center;text-align:center;padding:12px;color:var(--mut);font-size:.78rem}
-.lab-bottom{border-top:1px solid var(--ln);padding-top:9px;text-align:center;font-size:.7rem;color:var(--mut);font-weight:700}
-#labCor,#labFormato{width:100%;font:inherit;padding:10px 12px;border:2px solid var(--ln);border-radius:10px;background:#fff;color:var(--ink)}
-@media(max-width:560px){.lab-blocks.grid-mode{grid-template-columns:1fr}}
-'''
-html = html.replace('</style>', css + '\n</style>')
+<!-- 3 -->
+<article class="pn" id="p3" role="tabpanel">
+<h3>3. Organização visual</h3>
+<p>Um bom banner se lê de longe e em poucos segundos. Abra cada item e veja o que fazer.</p>
+<details open><summary>Títulos</summary><div>Um título grande e claro, que diga o assunto em poucas palavras. Subtítulos menores, em ordem de importância.</div></details>
+<details><summary>Fontes</summary><div>Use no máximo duas fontes. Prefira letras sem serifa e legíveis a distância. Evite fontes decorativas em textos longos.</div></details>
+<details><summary>Contraste</summary><div>Texto escuro sobre fundo claro (ou o contrário). Teste na ferramenta abaixo.</div></details>
+<details><summary>Alinhamento</summary><div>Alinhe os blocos a uma mesma linha e mantenha margens iguais. No Canva, use as guias que aparecem ao arrastar.</div></details>
+<details><summary>Imagens</summary><div>Boa resolução, ligadas ao tema, com autorização de uso e crédito da autoria.</div></details>
+<details><summary>Distribuição das informações</summary><div>Blocos curtos, com espaço em branco entre eles. Aproxime o que se relaciona e afaste o que não se relaciona.</div></details>
+<h4>Veja a diferença</h4>
+<div class="cmp"><div id="mk" class="mock bad" role="img" aria-label="Miniatura de banner"><div class="t">projeto</div><div class="b">texto texto texto texto texto texto texto texto texto texto texto texto texto texto</div><div class="b">texto texto texto texto texto texto texto texto texto texto</div><div class="b">texto texto texto texto texto texto</div><div class="qr"></div></div>
+<div><div class="pills cm" role="group" aria-label="Versão"><button type="button" data-m="bad" aria-pressed="true">Banner confuso</button> <button type="button" data-m="good" aria-pressed="false">Banner organizado</button></div><ul id="why"></ul></div></div>
+<h4>Teste de contraste</h4>
+<p>Escolha a cor do texto e a do fundo. A razão de contraste segue a referência de acessibilidade WCAG.</p>
+<div class="ct"><div><label class="f" for="c1">Cor do texto</label><input type="color" id="c1" value="#1d2b28"><label class="f" for="c2">Cor do fundo</label><input type="color" id="c2" value="#ffffff"></div>
+<div><div class="prev" id="cv">Título do banner</div><p id="cr" aria-live="polite"></p></div></div>
+</article>
 
-# Add the live preview behavior before the quiz script section.
-js = r'''
-/* laboratório de banner: prévia ao vivo */
-(function(){
-  var ids=["labTema","labSub","labAutor","labBloco1","labBloco2","labBloco3","labCor","labFormato"];
-  function atualizar(){
-    var tema=$("labTema").value.trim()||"Título do banner";
-    var sub=$("labSub").value.trim()||"Mensagem principal";
-    var autor=$("labAutor").value.trim()||"Autores e instituição";
-    $("prevTema").textContent=tema;
-    $("prevSub").textContent=sub;
-    $("prevAutor").textContent=autor;
-    $("prevB1").textContent=$("labBloco1").value.trim()||"Ideia principal 1";
-    $("prevB2").textContent=$("labBloco2").value.trim()||"Ideia principal 2";
-    $("prevB3").textContent=$("labBloco3").value.trim()||"Ideia principal 3";
-    var cor=$("labCor").value;
-    $("labPreview").style.setProperty("--lab",cor);
-    $("labPreview").querySelector(".lab-top").style.background=cor;
-    $("labPreview").querySelectorAll(".lab-blocks b").forEach(function(b){b.style.color=cor});
-    $("labPreview").querySelectorAll(".lab-blocks>div").forEach(function(b){b.style.background=cor+"18"});
-    $("prevBlocks").classList.toggle("grid-mode",$("labFormato").value==="grade");
-  }
-  ids.forEach(function(id){$(id).addEventListener("input",atualizar);$(id).addEventListener("change",atualizar)});
-  $("labAtualizar").addEventListener("click",function(){atualizar();$("labAviso").textContent="Prévia atualizada. Agora leve essas decisões para o Canva."});
-  $("labCopiar").addEventListener("click",function(){
-    atualizar();
-    var t="PLANEJAMENTO DO BANNER\\nTema: "+$("labTema").value+"\\nMensagem principal: "+$("labSub").value+"\\nAutores/instituição: "+$("labAutor").value+"\\nBloco 1: "+$("labBloco1").value+"\\nBloco 2: "+$("labBloco2").value+"\\nBloco 3: "+$("labBloco3").value+"\\nCor: "+$("labCor").value+"\\nOrganização: "+$("labFormato").value;
-    if(navigator.clipboard && navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){$("labAviso").textContent="Planejamento copiado! Cole em seu documento ou grupo."}).catch(function(){$("labAviso").textContent=t})}
-    else{$("labAviso").textContent=t}
-  });
-  $("labChecklist").addEventListener("change",function(){
-    var n=$("labChecklist").querySelectorAll("input:checked").length;
-    $("labCheckCount").textContent=n+" de 5 decisões conferidas.";
-  });
-  atualizar();
-})();
-'''
-html = html.replace('/* quiz */', js + '\n/* quiz */')
+<!-- 4 -->
+<article class="pn" id="p4" role="tabpanel">
+<h3>4. Recursos tecnológicos</h3>
+<div class="note g"><b>O QR Code é um recurso complementar.</b> O objetivo principal é um banner claro e bem organizado. O código só leva o leitor a um conteúdo extra em um site, como vídeos, textos ou questionários.</div>
+<h4>Gere seu QR Code</h4>
+<label class="f" for="qu">Endereço do site</label><input type="text" id="qu" value="https://kaylastarlinda.github.io/kayla.github.io/">
+<div class="btns"><button class="btn" id="qg" type="button">Gerar QR Code</button></div>
+<div class="qrbox" id="qo" aria-live="polite"></div>
+<h4>Cuidados</h4>
+<ul><li>Deixe espaço em branco ao redor do código.</li><li>Escreva uma instrução ao lado: o que a pessoa vai encontrar?</li><li>Teste em mais de um celular antes de apresentar.</li><li>Deixe o link escrito por perto, como alternativa.</li></ul>
+<p>Quer ir além do QR Code? Veja a seção <a href="#ra">Realidade aumentada e 3D</a>.</p>
+</article>
 
-out = Path("/mnt/data/index_interativo.html")
-out.write_text(html, encoding="utf-8")
-print(f"Arquivo criado: {out} ({len(html):,} caracteres)")
+<!-- 5 -->
+<article class="pn" id="p5" role="tabpanel">
+<h3>5. Finalização</h3>
+<p>Revise, visualize o resultado e prepare o banner para impressão ou exposição.</p>
+<div class="chk" id="fk"></div>
+<div class="bar" aria-hidden="true"><i id="fb2"></i></div><p id="fc" aria-live="polite">0 de 8 itens conferidos</p>
+<div class="note g">Para imprimir, baixe o arquivo em PDF e confirme o tamanho com a gráfica. Para exposição digital, use PNG ou PDF.</div>
+</article>
+
+<div class="nav2"><button class="btn o" id="pv" type="button">Etapa anterior</button><button class="btn" id="nx" type="button">Próxima etapa</button></div>
+</div></section>
+
+<section id="pratica"><div class="w">
+<h2 class="t">Mão na massa</h2>
+<p class="sub">Em duplas ou grupos, vocês criam um banner digital. O papel continua servindo para o esboço.</p>
+<div class="ph"><b>5 min</b><div><b>Esboço no papel</b><br>Definam tema, objetivo e público (etapa 1) e desenhem onde ficam título, blocos e imagem.</div></div>
+<div class="ph"><b>10 min</b><div><b>Criação no Canva</b><br>Montem o banner digital seguindo as etapas 2 e 3: modelo, textos, imagens, cores e alinhamento.</div></div>
+<div class="ph"><b>5 min</b><div><b>QR Code e revisão</b><br>Gerem o QR Code (etapa 4) e confiram o banner com a lista da etapa 5.</div></div>
+<div class="card" style="text-align:center"><div class="timer" id="tm">20:00</div>
+<div class="btns" style="justify-content:center"><button class="btn" id="ts" type="button">Iniciar</button><button class="btn o" id="tr" type="button">Zerar</button></div></div>
+</div></section>
+
+<section class="s" id="exemplo"><div class="w">
+<h2 class="t">Exemplo prático</h2>
+<p class="sub">Este é o banner físico que usamos como exemplo. O tema é primeiros socorros na escola, mas o que importa aqui é como ele foi construído. Escolha uma parte para ver o motivo.</p>
+<div class="ex"><div class="bn2" role="img" aria-label="Estrutura do banner de exemplo">
+<div data-p="titulo" class="tt">Título do banner</div>
+<div data-p="blocos" class="row"><span>Bloco 1</span><span>Bloco 2</span><span>Bloco 3</span></div>
+<div data-p="imagem" style="flex:1;display:grid;place-items:center">Imagem</div>
+<div data-p="qr" class="qx"><svg width="34" height="34" viewBox="0 0 8 8" aria-hidden="true"><path fill="#000" d="M0 0h3v3H0zM5 0h3v3H5zM0 5h3v3H0zM4 4h1v1H4zM6 5h2v1H6zM5 7h3v1H5z"/></svg>Escaneie e saiba mais</div>
+<div data-p="refs">Referências</div></div>
+<div><div class="pills" id="hp" role="group" aria-label="Partes do banner"></div><div class="note g" id="ht" aria-live="polite" style="margin-top:14px"></div></div></div>
+</div></section>
+
+<section id="ra"><div class="w">
+<h2 class="t">Realidade aumentada e 3D: o banner que ganha vida</h2>
+<p class="sub">Recursos opcionais para ir além do QR Code. A realidade aumentada combina elementos reais e virtuais, em tempo real e alinhados (Azuma, 1997). O QR Code, sozinho, apenas abre um endereço: ele não cria realidade aumentada.</p>
+<div class="two">
+<div class="card"><span class="chip" style="margin:0 0 8px">Experiência com a câmera</span><h3>Banner que ganha vida</h3>
+<p style="margin:6px 0 14px">A pessoa aponta a câmera do celular para uma imagem específica do banner. A plataforma reconhece o marcador e exibe uma animação, um modelo 3D ou um vídeo.</p>
+<a class="btn" href="./ar.html">Abrir experiência pela câmera</a></div>
+<div class="card"><span class="chip" style="margin:0 0 8px">Modelos 3D de exemplo</span><h3>Objetos que um banner pode mostrar</h3>
+<p style="margin:6px 0 12px">Escolha um modelo, arraste para girar e use dois dedos para aproximar. Em celulares compatíveis, o botão mostra o objeto no ambiente à sua frente.</p>
+<div class="pills" id="oc" role="group" aria-label="Modelos 3D"></div>
+<model-viewer id="mv" src="heart.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate alt="Coração humano em 3D" camera-orbit="0deg 80deg auto" environment-image="neutral" exposure="1.1" shadow-intensity="1" touch-action="pan-y">
+<button slot="ar-button" class="arb" type="button">Ver em realidade aumentada</button></model-viewer>
+<p class="sub" id="mvm" hidden style="margin:10px 0 0">Não foi possível carregar o modelo 3D neste navegador.</p>
+<p class="sub" style="font-size:.88rem;margin:10px 0 0">Modelos de Sketchfab (licença CC BY 4.0). Autores e links nas Referências.</p></div>
+</div>
+<details style="margin-top:18px"><summary>Como criar uma experiência de realidade aumentada</summary><div>
+<ol><li>Finalize o design do banner.</li><li>Escolha uma área com ilustração nítida para ser o marcador.</li><li>Crie a experiência em uma plataforma de WebAR ou desenvolva uma solução com rastreamento de imagem.</li><li>Adicione o conteúdo digital e publique.</li><li>Copie o link público gerado e coloque no botão “Abrir experiência pela câmera”.</li><li>Gere o QR Code com o endereço correto e teste em outro celular.</li></ol>
+<p>Opções: <a href="https://mywebar.com">MyWebAR</a> (confira recursos e preços, pois o rastreamento de imagem personalizada pode exigir plano pago) ou <a href="https://github.com/hiukim/mind-ar-js">MindAR</a> (solução técnica).</p></div></details>
+</div></section>
+
+<section class="s" id="quiz"><div class="w">
+<h2 class="t">Quiz: você aprendeu a fazer um banner?</h2>
+<p class="sub">Responda e veja a explicação de cada pergunta.</p>
+<div id="qz"></div><p class="sc" id="qs" aria-live="polite"></p>
+</div></section>
+
+<section><div class="w">
+<h2 class="t">Conclusão</h2>
+<p class="sub">Ao final deste guia, você aprendeu a:</p>
+<ul><li><b>Planejar</b> um banner: tema, objetivo e público.</li><li><b>Criar</b> o banner em uma ferramenta digital, como o Canva.</li><li><b>Organizar</b> títulos, fontes, cores, imagens e blocos.</li><li><b>Usar a tecnologia</b> como apoio, com QR Code, realidade aumentada e 3D como recursos complementares.</li><li><b>Finalizar</b> o banner para impressão ou exposição.</li></ul>
+<p>Agora é com você: escolha um tema e crie o seu banner educativo.</p>
+</div></section>
+
+<section class="s" id="refs"><div class="w">
+<h2 class="t">Referências</h2>
+<ol class="ref">
+<li>AGHER08. <i>Human Brain</i> (modelo 3D). Sketchfab. Licença <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Disponível em: <a href="https://sketchfab.com/3d-models/human-brain-c9c9d4d671b94345952d012cc2ea7a24">sketchfab.com</a>. Texturas com resolução reduzida para carregar mais rápido.</li>
+<li>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <i>NBR 15437: Informação e documentação – Pôsteres técnicos e científicos – Apresentação</i>. Rio de Janeiro: ABNT.</li>
+<li>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <i>NBR 6023: Informação e documentação – Referências – Elaboração</i>. Rio de Janeiro: ABNT, 2018.</li>
+<li>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <i>NBR 10520: Informação e documentação – Citações em documentos – Apresentação</i>. Rio de Janeiro: ABNT.</li>
+<li>AZUMA, Ronald T. A survey of augmented reality. <i>Presence</i>, v. 6, n. 4, p. 355–385, 1997.</li>
+<li>DONDIS, Donis A. <i>Sintaxe da linguagem visual</i>. 3. ed. São Paulo: Martins Fontes, 2007.</li>
+<li>EDUCAÇÃO METODISTA. Sistemas de Bibliotecas. <i>Manual de apresentação de pôsteres técnicos e científicos: segundo ABNT NBR 15437</i>. São Bernardo do Campo, 2021.</li>
+<li>NESHALLADS. <i>Realistic Human Heart</i> (modelo 3D). Sketchfab. Licença <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Disponível em: <a href="https://sketchfab.com/3d-models/realistic-human-heart-3f8072336ce94d18b3d0d055a1ece089">sketchfab.com</a>. Texturas com resolução reduzida.</li>
+<li>NESHALLADS. <i>Realistic Human Lungs</i> (modelo 3D). Sketchfab. Licença <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Disponível em: <a href="https://sketchfab.com/3d-models/realistic-human-lungs-ce09f4099a68467880f46e61eb9a3531">sketchfab.com</a>. Texturas com resolução reduzida.</li>
+<li>REZENDE, Janaina Regina de Faria. <i>Realidade aumentada e leitura híbrida</i>. Dissertação (Mestrado) – UFMG, Belo Horizonte, 2024. Disponível em: <a href="https://hdl.handle.net/1843/71948">hdl.handle.net/1843/71948</a>.</li>
+<li>W3C. <i>Web Content Accessibility Guidelines (WCAG) 2.1</i>. Disponível em: <a href="https://www.w3.org/TR/WCAG21/">w3.org/TR/WCAG21</a>.</li>
+<li>WILLIAMS, Robin. <i>Design para quem não é designer</i>. 4. ed. São Paulo: Callis, 2013.</li>
+</ol>
+<p class="sub">Confira com a biblioteca a edição das normas ABNT exigida pelo professor.</p>
+</div></section>
+
+<footer><div class="w"><b>Como produzir um banner educativo utilizando tecnologia</b><br>Instituto Federal de Educação, Ciência e Tecnologia do Pará (IFPA) · Campus Paragominas · Licenciatura em Pedagogia · 2026</div></footer>
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script>
+var $=function(i){return document.getElementById(i)};
+var ST=[["Planejamento","Tema, objetivo e público","Papel e ficha"],["Criação digital","Canva do modelo ao banner","Canva"],["Organização visual","Títulos, fontes, contraste, imagens","Teste de contraste"],["Recursos tecnológicos","QR Code como complemento","Gerador de QR Code"],["Finalização","Revisar, visualizar e imprimir","Lista de conferência"]];
+var cur=0;
+$("ov").innerHTML=ST.map(function(s,i){return '<button class="card" data-i="'+i+'" type="button"><b class="n">'+(i+1)+'</b><h3>'+s[0]+'</h3><p>'+s[1]+'</p><span class="chip">'+s[2]+'</span></button>'}).join("");
+$("tabs").innerHTML=ST.map(function(s,i){return '<button role="tab" data-i="'+i+'" type="button">'+(i+1)+'. '+s[0]+'</button>'}).join("");
+function go(i,sc){cur=Math.max(0,Math.min(4,i));for(var k=0;k<5;k++){$("p"+(k+1)).classList.toggle("on",k==cur)}
+ document.querySelectorAll("#tabs button").forEach(function(b,k){b.setAttribute("aria-selected",k==cur)});
+ $("pb").style.width=((cur+1)*20)+"%";$("pv").disabled=cur==0;$("nx").disabled=cur==4;if(sc)$("passos").scrollIntoView()}
+$("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i,false)});
+$("ov").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i,true)});
+$("pv").onclick=function(){go(cur-1,true)};$("nx").onclick=function(){go(cur+1,true)};go(0,false);
+/* ficha */
+function ficha(){var a=$("i1").value.trim(),b=$("i2").value.trim(),c=$("i3").value.trim();
+ $("fo").textContent=(a||b||c)?"Tema: "+(a||"—")+"\nObjetivo: "+(b||"—")+"\nPúblico: "+(c||"—"):"Preencha os campos para ver sua ficha."}
+["i1","i2","i3"].forEach(function(i){$(i).addEventListener("input",ficha)});
+$("cp").onclick=function(){var t=$("fo").textContent;try{navigator.clipboard.writeText(t);$("cp").textContent="Copiado!"}catch(e){$("cp").textContent="Selecione e copie o texto"}setTimeout(function(){$("cp").textContent="Copiar ficha"},2000)};
+/* checklists */
+var GR="#176B5B",LG="#e4f1ee",LN="#cfdcd8",AM="#f2b705";
+function R(x,y,w,h,f,s){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="4" fill="'+f+'"'+(s?' stroke="'+s+'" stroke-width="2"':'')+'/>'}
+function T(x,y,t,z,c,a){return '<text x="'+x+'" y="'+y+'" font-size="'+(z||12)+'" fill="'+(c||"#1d2b28")+'" text-anchor="'+(a||"start")+'" font-family="Arial,sans-serif">'+t+'</text>'}
+var S=[
+function(){return T(60,16,"canva.com",11,"#53645f")+T(200,92,"Entre na sua conta gratuita",14,0,"middle")+R(150,112,100,32,GR)+T(200,133,"Entrar",13,"#fff","middle")},
+function(){return R(20,44,120,30,GR)+T(80,64,"Criar um design",12,"#fff","middle")+R(160,40,220,148,"#fff",LN)+R(168,50,204,24,LG)+T(176,67,"Tamanho personalizado",12,GR)+T(176,100,"Pôster",12)+T(176,136,"Largura",11,"#53645f")+R(176,142,80,24,"#fff",LN)+T(276,136,"Altura",11,"#53645f")+R(276,142,80,24,"#fff",LN)},
+function(){var s=R(10,34,100,156,LG)+T(60,56,"Modelos",12,GR,"middle");for(var i=0;i<6;i++){var x=124+(i%3)*88,y=40+Math.floor(i/3)*76;s+=R(x,y,80,68,"#fff",i==1?GR:LN)+R(x+8,y+8,40,8,GR)+R(x+8,y+24,64,4,LN)+R(x+8,y+34,64,4,LN)}return s},
+function(){return T(14,70,"Clique no texto",12)+T(14,88,"e digite o seu.",12)+R(140,34,120,156,"#fff",LN)+R(148,42,104,22,LG,GR)+T(200,58,"Título do banner",11,GR,"middle")+R(148,72,104,26,LG)+T(200,89,"Bloco 1",11,0,"middle")+R(148,104,104,26,LG)+T(200,121,"Bloco 2",11,0,"middle")+R(148,136,104,26,LG)+T(200,153,"Bloco 3",11,0,"middle")+T(290,100,"Autores",12,"#53645f")},
+function(){return R(10,34,100,156,LG)+T(60,56,"Elementos",12,GR,"middle")+R(20,70,80,24,"#fff",GR)+T(60,86,"Enviar arquivos",10,GR,"middle")+R(140,34,140,156,"#fff",LN)+R(150,44,120,70,LN)+T(210,84,"Imagem",13,"#53645f","middle")+R(150,124,120,16,LG)+R(150,148,120,16,LG)},
+function(){return R(140,34,140,156,"#fff",LN)+'<line x1="156" y1="34" x2="156" y2="190" stroke="#e91e63" stroke-dasharray="4"/>'+R(156,46,110,24,LG)+R(156,84,110,24,LG)+R(156,122,110,24,LG)+R(156,160,110,24,LG)+T(300,100,"Guias de",12,"#e91e63")+T(300,116,"alinhamento",12,"#e91e63")},
+function(){return R(30,60,50,50,GR)+R(90,60,50,50,LG,LN)+R(150,60,50,50,AM)+T(30,134,"Até 3 cores",13)+T(240,84,"Fonte 1: títulos",13)+T(240,110,"Fonte 2: textos",13)+T(30,160,"Aplique em todos os blocos.",12,"#53645f")},
+function(){return R(250,34,130,28,GR)+T(315,53,"Compartilhar",12,"#fff","middle")+R(220,68,160,100,"#fff",LN)+R(228,76,144,24,LG)+T(238,93,"Baixar",12,GR)+T(238,120,"PDF para impressão",12)+T(238,146,"PNG para tela",12)}];
+function sk(n){return '<svg viewBox="0 0 400 200" role="img" aria-label="Ilustração esquemática do passo '+n+'">'+R(0,0,400,200,"#fff",LN)+R(0,0,400,24,LG)+'<circle cx="12" cy="12" r="4" fill="#e57373"/><circle cx="26" cy="12" r="4" fill="#f2b705"/><circle cx="40" cy="12" r="4" fill="#81c784"/>'+S[n-1]()+'</svg>'}
+function mk(id,items,bar,cnt,label,wrap){$(id).innerHTML=items.map(function(x){var t=x,e="";if(Array.isArray(x)){t=x[0];e=x[1]}var l='<label><input type="checkbox"><span>'+t+'</span></label>';return wrap?'<li>'+l+e+'</li>':l}).join("");
+ $(id).addEventListener("change",function(){var n=$(id).querySelectorAll("input:checked").length;$(bar).style.width=(n*100/items.length)+"%";$(cnt).textContent=n+" de "+items.length+" "+label})}
+function il(n){return '<details class="il"><summary>Ver ilustração deste passo</summary><figure class="fg" data-n="'+n+'"></figure></details>'}
+mk("tut",[["Acesse <b>canva.com</b> e entre com sua conta gratuita.",il(1)],["Clique em <b>Criar um design</b>. Escolha um formato de pôster ou use <b>Tamanho personalizado</b> com a medida pedida pelo professor ou pelo evento.",il(2)],["Abra <b>Modelos</b> e escolha um modelo simples, com poucos elementos. Ou comece em branco.",il(3)],["Troque os textos do modelo pelo seu <b>título, autores e blocos</b> de conteúdo.",il(4)],["Insira imagens em <b>Elementos</b> ou <b>Enviar arquivos</b>. Use imagens suas ou de licença livre e credite a autoria.",il(5)],["<b>Organize</b> os elementos: use as guias de alinhamento ao arrastar e a opção de posição para alinhar e distribuir.",il(6)],["Defina uma <b>paleta de até 3 cores</b> e no máximo 2 fontes. Aplique em todos os blocos.",il(7)],["Veja em tela cheia e salve: <b>Compartilhar</b> e depois <b>Baixar</b> (PDF para impressão ou PNG).",il(8)]],"tb","tc","passos concluídos",true);
+document.querySelectorAll(".fg").forEach(function(f){var n=+f.dataset.n;f.innerHTML=sk(n)+'<figcaption>Ilustração esquemática. A tela real do Canva pode ser diferente.</figcaption>';
+ var im=new Image();im.alt="Print do passo "+n+" no Canva";im.onload=function(){f.innerHTML="";f.appendChild(im);f.insertAdjacentHTML("beforeend","<figcaption>Print do Canva, passo "+n+".</figcaption>")};im.src="img/canva-"+n+".png"});
+mk("fk",["O tema, o objetivo e o público estão claros.","O tamanho segue a exigência do professor ou do evento.","Há título, autores, instituição e curso.","O texto está curto, em blocos organizados.","O contraste entre texto e fundo está bom.","As imagens têm boa resolução e crédito.","O QR Code foi testado e tem instrução ao lado.","Ortografia e referências foram revisadas."],"fb2","fc","itens conferidos",false);
+/* comparador */
+var W={bad:["Texto demais, fonte pequena e baixo contraste.","Título fraco e sem destaque.","Sem divisão por tema nem alinhamento.","Sem QR Code e sem instrução."],good:["Título grande e com contraste.","Blocos curtos, um por ideia (proximidade).","Cores e formatos repetidos (repetição).","QR Code com espaço livre e uma instrução."]};
+function sm(k){var m=$("mk");m.className="mock "+k;m.querySelector(".t").textContent=k=="good"?"Horta da escola":"projeto";
+ var bs=m.querySelectorAll(".b");bs.forEach(function(b,i){if(!b.dataset.o)b.dataset.o=b.textContent;b.textContent=k=="good"?["Como funciona","Como participar","Resultados"][i]:b.dataset.o});
+ $("why").innerHTML=W[k].map(function(x){return "<li>"+x+"</li>"}).join("");
+ document.querySelectorAll(".cm button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.m==k)})}
+document.querySelectorAll(".cm button").forEach(function(b){b.onclick=function(){sm(b.dataset.m)}});sm("bad");
+/* contraste */
+function lum(h){var c=[1,3,5].map(function(i){var v=parseInt(h.substr(i,2),16)/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+function ctr(){var a=$("c1").value,b=$("c2").value,l1=lum(a),l2=lum(b),r=(Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05);
+ $("cv").style.color=a;$("cv").style.background=b;
+ var v=r>=7?"Excelente":r>=4.5?"Bom para textos":r>=3?"Serve só para títulos grandes":"Fraco: difícil de ler";
+ $("cr").innerHTML="Contraste: <b>"+r.toFixed(1)+":1</b>. "+v+"."}
+$("c1").oninput=ctr;$("c2").oninput=ctr;ctr();
+/* QR */
+$("qg").onclick=function(){var o=$("qo"),u=$("qu").value.trim();if(!u){o.textContent="Digite um endereço.";return}
+ if(typeof qrcode==="undefined"){o.textContent="Não foi possível carregar o gerador. Verifique a internet ou use um gerador de QR Code online.";return}
+ try{var q=qrcode(0,"M");q.addData(u);q.make();var s=q.createSvgTag(6,4);o.innerHTML=s+'<a class="btn o" id="dl" download="qrcode.svg" href="#">Baixar SVG</a>';
+ $("dl").href=URL.createObjectURL(new Blob([s],{type:"image/svg+xml"}))}catch(e){o.textContent="Endereço muito longo. Tente um link mais curto."}};
+/* timer */
+var tl=1200,ti=null;function sh(){$("tm").textContent=("0"+Math.floor(tl/60)).slice(-2)+":"+("0"+tl%60).slice(-2)}
+$("ts").onclick=function(){if(ti){clearInterval(ti);ti=null;this.textContent="Continuar"}else{this.textContent="Pausar";ti=setInterval(function(){if(tl>0){tl--;sh()}else{clearInterval(ti);ti=null;$("ts").textContent="Iniciar"}},1000)}};
+$("tr").onclick=function(){clearInterval(ti);ti=null;tl=1200;sh();$("ts").textContent="Iniciar"};
+/* exemplo */
+var H=[["Título","titulo","Grande, no topo, com contraste. Quem passa de longe entende o assunto."],["Blocos","blocos","Três ideias curtas, uma por bloco. É a proximidade: o que se relaciona fica junto."],["Imagem","imagem","Ilustra o tema e dá descanso ao texto. Tem boa resolução e crédito."],["QR Code","qr","Recurso complementar: leva a um site com conteúdo extra, com instrução ao lado."],["Referências","refs","No rodapé, no padrão ABNT, para dar credibilidade."]];
+$("hp").innerHTML=H.map(function(h,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+h[0]+'</button>'}).join("");
+function hs(i){document.querySelectorAll(".bn2>div").forEach(function(d){d.classList.toggle("hl",d.dataset.p==H[i][1])});$("ht").innerHTML="<b>"+H[i][0]+":</b> "+H[i][2];document.querySelectorAll("#hp button").forEach(function(b,k){b.setAttribute("aria-pressed",k==i)})}
+$("hp").addEventListener("click",function(e){var b=e.target.closest("button");if(b)hs(+b.dataset.i)});hs(0);
+/* modelos 3D */
+var mv=$("mv"),O=[["Coração","heart.glb","Coração humano em 3D","0deg 80deg auto"],["Pulmões","lungs.glb","Pulmões humanos em 3D, com traqueia e brônquios","0deg 80deg auto"],["Cérebro","brain.glb","Cérebro humano em 3D","70deg 75deg auto"]];
+$("oc").innerHTML=O.map(function(o,k){return '<button type="button" data-k="'+k+'" aria-pressed="false">'+o[0]+'</button>'}).join("");
+function so(k){var o=O[k];$("mvm").hidden=true;mv.setAttribute("alt",o[2]);mv.setAttribute("camera-orbit",o[3]);mv.src=o[1];document.querySelectorAll("#oc button").forEach(function(b,j){b.setAttribute("aria-pressed",j==k)})}
+$("oc").addEventListener("click",function(e){var b=e.target.closest("button");if(b)so(+b.dataset.k)});
+mv.addEventListener("error",function(){$("mvm").hidden=false});so(0);
+/* quiz */
+var Q=[["Qual é o primeiro passo para produzir um banner?",["Abrir o Canva e escolher um modelo","Definir tema, objetivo e público","Gerar o QR Code","Imprimir o banner"],1,"O planejamento vem primeiro. Ele orienta todas as decisões seguintes."],
+["No Canva, o que você deve definir ao criar o design?",["Só a cor do fundo","O tamanho exigido pelo professor ou evento","O QR Code","As referências"],1,"Mudar o tamanho depois deforma o layout. Confirme a medida antes de começar."],
+["Qual combinação tem melhor contraste?",["Texto cinza-claro sobre fundo branco","Texto amarelo sobre fundo branco","Texto escuro sobre fundo claro","Texto verde sobre fundo verde"],2,"Texto escuro sobre fundo claro (ou o inverso) facilita a leitura. Teste na ferramenta de contraste."],
+["Qual é o papel do QR Code em um banner?",["É o objetivo principal do banner","Substituir o texto do banner","É um recurso complementar que leva a conteúdo extra","Servir de decoração"],2,"O QR Code complementa o banner. Ele não substitui um bom planejamento nem uma boa organização visual."],
+["Um QR Code, sozinho, cria realidade aumentada?",["Sim, sempre","Não, ele só abre um endereço","Sim, em qualquer celular","Só se for impresso em cores"],1,"O QR Code é a ponte de acesso. A realidade aumentada precisa ser criada em uma plataforma própria."],
+["Como o papel ainda pode ajudar na produção digital?",["Não serve para nada","Para fazer o esboço antes de criar no Canva","Para substituir o banner digital","Só para imprimir no final"],1,"O esboço no papel ajuda a decidir a organização antes de usar a ferramenta."]];
+var dn=0,pt=0;
+Q.forEach(function(it,qi){var d=document.createElement("div");d.className="q";d.innerHTML="<p>"+(qi+1)+". "+it[0]+"</p>";var fb=document.createElement("div");fb.className="fb";fb.setAttribute("aria-live","polite");
+ var bt=it[1].map(function(t,oi){var b=document.createElement("button");b.type="button";b.className="opt";b.textContent=t;
+ b.onclick=function(){bt.forEach(function(x){x.disabled=true});var ok=oi==it[2];if(ok)pt++;dn++;b.classList.add(ok?"ok":"no");bt[it[2]].classList.add("ok");fb.textContent=(ok?"Correto. ":"Não foi dessa vez. ")+it[3];
+ if(dn==Q.length)$("qs").textContent="Você acertou "+pt+" de "+Q.length+". "+(pt>=5?"Ótimo! Você já pode criar o seu banner.":"Releia as etapas e tente de novo.")};d.appendChild(b);return b});
+ d.appendChild(fb);$("qz").appendChild(d)});
+</script>
+</body>
+</html>
