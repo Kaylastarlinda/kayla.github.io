@@ -109,11 +109,29 @@ model-viewer .arb{position:absolute;bottom:12px;left:50%;transform:translateX(-5
 .ref{padding-left:22px;font-size:.95rem}.ref li{margin:8px 0}
 footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+ .ee{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:24px;align-items:start}
+@media(max-width:700px){.ee{grid-template-columns:1fr}}
+.eb{aspect-ratio:3/4;background:#d9d27a;border:2px solid #b9b06a;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.eb .hs{display:block;width:100%;text-align:left;border:2px dashed transparent;border-radius:6px;background:none;padding:4px;font:inherit;color:inherit;cursor:pointer}
+.eb .hs:hover{border-color:var(--g)}
+.eb .hs.f{border:2px solid var(--ok);background:#e6f4ea}
+.eb .hs.w{border:2px solid var(--no)}
+.eb .hs.d{border:2px solid var(--am);background:#fff7dc}
+.eb .r{display:flex;gap:6px;align-items:stretch}
+.eb .e1{font:700 10px "Comic Sans MS",cursive;color:#b9b06a;text-align:right}
+.eb .e2{font-size:7px;line-height:1.05;color:#8a8244;background:#cfc66f;height:92px;overflow:hidden}
+.eb .e3{font-size:12px;color:#e8e2a6}
+.eb .e4{flex:1;height:64px;background:repeating-conic-gradient(#7aa0b0 0 25%,#9bbccb 0 50%) 0 0/9px 9px;filter:blur(.8px);color:#fff;font-size:9px}
+.eb .e5{width:22px;height:22px;flex:none;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/5px 5px;padding:0;align-self:center}
+.eb .ok{background:#fff;color:#1d2b28;font-size:11px;flex:1;height:58px}
+.eb .e6{transform:translate(12px,6px) rotate(-3deg);background:#fff;color:#1d2b28;font-size:11px;flex:1;height:58px}
+.eb .e7{margin-top:auto;height:30px;border:2px dashed #b9b06a;color:#b9b06a;font-size:10px}
+.erl{padding-left:20px}.erl li{margin:8px 0}
 </style>
 </head>
 <body>
 <nav aria-label="Navegação principal"><div class="w"><b><span class="lg" role="img" aria-label="Logo do IFPA"></span>IFPA · Banner educativo</b>
-<a href="#inicio">Início</a><a href="#passos">Passo a passo</a><a href="#pratica">Prática</a><a href="#exemplo">Exemplo</a><a href="#ra">RA e 3D</a><a href="#quiz">Quiz</a><a href="#refs">Referências</a></div></nav>
+<a href="#inicio">Início</a><a href="#passos">Passo a passo</a><a href="#pratica">Prática</a><a href="#exemplo">Exemplo</a><a href="#erros">Caça aos erros</a><a href="#ra">RA e 3D</a><a href="#quiz">Quiz</a><a href="#refs">Referências</a></div></nav>
 
 <header class="hero" id="inicio"><div class="w">
 <div class="inst">Instituto Federal do Pará · Campus Paragominas · Licenciatura em Pedagogia</div>
@@ -225,7 +243,25 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <div><div class="pills" id="hp" role="group" aria-label="Partes do banner"></div><div class="note g" id="ht" aria-live="polite" style="margin-top:14px"></div></div></div>
 </div></section>
 
-<section id="ra"><div class="w">
+<section id="erros"><div class="w">
+<h2 class="t">Caça aos erros: o que há de errado neste banner?</h2>
+<p class="sub">Clique nos pontos do banner que você acha que têm problema. São 7 erros, e algumas partes estão boas. Cuidado com os palpites errados!</p>
+<div class="ee">
+<div class="eb" id="eb">
+<button class="hs e1" type="button" data-e="1">projeto horta</button>
+<button class="hs e2" type="button" data-e="2">A horta da escola foi criada para que os estudantes possam aprender sobre plantas e alimentação e também para que a comunidade escolar participe de atividades ao longo de todo o ano letivo com diferentes turmas e professores que ajudam no plantio na rega e na colheita dos alimentos que depois são usados na merenda e em oficinas de culinária e de reaproveitamento além de projetos de pesquisa feitos em grupo com registro de dados semanais sobre o crescimento das plantas e o clima da região</button>
+<button class="hs e3" type="button" data-e="3">Objetivos: ensinar a cuidar da horta</button>
+<div class="r"><button class="hs e4" type="button" data-e="4">foto.jpg</button><button class="hs e5" type="button" data-e="5" aria-label="QR Code"></button></div>
+<div class="r"><button class="hs ok" type="button" data-o="1">Como funciona</button><button class="hs e6" type="button" data-e="6">Resultados</button><button class="hs ok" type="button" data-o="1">Como participar</button></div>
+<button class="hs e7" type="button" data-e="7" aria-label="Rodapé do banner">rodapé</button>
+</div>
+<div>
+<p class="sc" id="ec" aria-live="polite">Você achou 0 de 7 erros</p>
+<p id="em" aria-live="polite">Clique em uma parte do banner para começar.</p>
+<div class="btns" style="margin-top:0"><button class="btn o" id="eh" type="button">Dica</button><button class="btn o" id="ea" type="button">Mostrar todos</button><button class="btn o" id="er" type="button">Recomeçar</button></div>
+<ol class="erl" id="el"></ol>
+</div></div>
+</div></section><section id="ra"><div class="w">
 <h2 class="t">Realidade aumentada e 3D: o banner que ganha vida</h2>
 <p class="sub">Recursos opcionais para ir além do QR Code. A realidade aumentada combina elementos reais e virtuais, em tempo real e alinhados (Azuma, 1997). O QR Code, sozinho, apenas abre um endereço: ele não cria realidade aumentada.</p>
 <div class="two">
@@ -239,7 +275,11 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <button slot="ar-button" class="arb" type="button">Ver em realidade aumentada</button></model-viewer>
 <p class="sub" id="mvm" hidden style="margin:10px 0 0">Não foi possível carregar o modelo 3D neste navegador.</p>
 <p class="sub" style="font-size:.88rem;margin:10px 0 0">Modelos de Sketchfab (licença CC BY 4.0). Autores e links nas Referências.</p></div>
-</div>
+</div><div class="card"><span class="chip" style="margin:0 0 8px">Tamanho real</span><h3>Banner de 90 × 120 cm na sua sala</h3>
+<p style="margin:6px 0 12px">No celular, toque em “Ver em tamanho real” e aponte para o chão. O banner aparece em pé, no tamanho verdadeiro. Afaste-se 2 ou 3 metros e confira: dá para ler o título e os blocos de longe?</p>
+<model-viewer id="mv2" src="banner-tamanho-real.glb" ar ar-modes="webxr scene-viewer quick-look" ar-placement="floor" ar-scale="fixed" camera-controls alt="Banner educativo de 90 por 120 centímetros sobre um suporte" camera-orbit="0deg 80deg auto" environment-image="neutral" shadow-intensity="1" touch-action="pan-y" style="height:440px">
+<button slot="ar-button" class="arb" type="button">Ver em tamanho real</button></model-viewer>
+<p class="sub" style="font-size:.88rem;margin:10px 0 0">Medidas do banner: 90 cm de largura e 120 cm de altura. Funciona em celulares compatíveis; no computador, gire com o mouse.</p></div>
 <details style="margin-top:18px"><summary>Como criar uma experiência de realidade aumentada</summary><div>
 <ol><li>Finalize o design do banner.</li><li>Escolha uma área com ilustração nítida para ser o marcador.</li><li>Crie a experiência em uma plataforma de WebAR ou desenvolva uma solução com rastreamento de imagem.</li><li>Adicione o conteúdo digital e publique.</li><li>Copie o link público gerado e coloque no botão “Abrir experiência pela câmera”.</li><li>Gere o QR Code com o endereço correto e teste em outro celular.</li></ol>
 <p>Opções: <a href="https://mywebar.com">MyWebAR</a> (confira recursos e preços, pois o rastreamento de imagem personalizada pode exigir plano pago) ou <a href="https://github.com/hiukim/mind-ar-js">MindAR</a> (solução técnica).</p></div></details>
@@ -368,5 +408,23 @@ Q.forEach(function(it,qi){var d=document.createElement("div");d.className="q";d.
  if(dn==Q.length)$("qs").textContent="Você acertou "+pt+" de "+Q.length+". "+(pt>=5?"Ótimo! Você já pode criar o seu banner.":"Releia as etapas e tente de novo.")};d.appendChild(b);return b});
  d.appendChild(fb);$("qz").appendChild(d)});
 </script>
-</body>
+<script>
+(function(){
+var E={1:["Título sem destaque","O título está pequeno, sem contraste e em fonte decorativa. Ele deve ser grande e legível de longe."],2:["Texto demais","Um parágrafo longo, com letra minúscula. Prefira blocos curtos, com uma ideia em cada um."],3:["Baixo contraste","Texto claro sobre fundo claro quase não se lê. Use texto escuro sobre fundo claro (ou o contrário)."],4:["Imagem de baixa qualidade","A imagem está pixelada. Use imagens com boa resolução, ligadas ao tema, e credite a autoria."],5:["QR Code pequeno e sem instrução","O código está minúsculo e sem explicação. Dê tamanho e espaço em branco ao redor, e escreva o que a pessoa vai encontrar."],6:["Bloco desalinhado","Um bloco está fora da linha dos outros. Alinhe os elementos: é o princípio do alinhamento."],7:["Faltam autores e referências","O rodapé está vazio. Todo banner precisa de autores, instituição e referências."]};
+var $=function(i){return document.getElementById(i)},found={},wrong=0,all=document.querySelectorAll("#eb .hs");
+function upd(){var n=Object.keys(found).length;$("ec").textContent="Você achou "+n+" de 7 erros"+(wrong?" · palpites errados: "+wrong:"");
+ $("el").innerHTML=Object.keys(found).map(function(k){return "<li><b>"+E[k][0]+".</b> "+E[k][1]+"</li>"}).join("");
+ if(n==7)$("em").textContent="Parabéns! Você achou todos os erros. Agora confira o seu banner com a lista da etapa 5."}
+function mark(b){b.classList.remove("w","d");b.classList.add("f")}
+all.forEach(function(b){b.onclick=function(){
+ if(b.dataset.e){var k=b.dataset.e;if(!found[k]){found[k]=1;mark(b);$("em").textContent="Isso mesmo! "+E[k][0]+".";}else{$("em").textContent="Esse você já achou."}}
+ else{wrong++;b.classList.add("w");setTimeout(function(){b.classList.remove("w")},900);$("em").textContent="Essa parte está boa: texto curto, legível e com bom contraste. Continue procurando."}
+ upd()}});
+$("eh").onclick=function(){var p=[].filter.call(all,function(b){return b.dataset.e&&!found[b.dataset.e]})[0];if(!p){$("em").textContent="Você já achou todos!";return}
+ p.classList.add("d");$("em").textContent="Dica: olhe a parte destacada em amarelo.";setTimeout(function(){p.classList.remove("d")},1800)};
+$("ea").onclick=function(){all.forEach(function(b){if(b.dataset.e){found[b.dataset.e]=1;mark(b)}});$("em").textContent="Estes são todos os erros e como corrigi-los.";upd()};
+$("er").onclick=function(){found={};wrong=0;all.forEach(function(b){b.classList.remove("f","w","d")});$("em").textContent="Clique em uma parte do banner para começar.";upd()};
+upd();
+})();
+</script></body>
 </html>
