@@ -7,7 +7,8 @@
 <meta name="description" content="Guia interativo, passo a passo, para planejar, criar no Canva e finalizar um banner educativo, com QR Code, realidade aumentada e modelos 3D como recursos complementares.">
 <meta name="theme-color" content="#176B5B">
 <style>
-:root{--logo:none;--g:#176B5B;--gl:#e4f1ee;--ink:#1d2b28;--mut:#4f625c;--ln:#cfdcd8;--ok:#1b7a3d;--no:#b3261e;--am:#f2b705;color-scheme:light}
+
+:root{--logo:url("logo.png");--g:#176B5B;--gl:#e4f1ee;--ink:#1d2b28;--mut:#4f625c;--ln:#cfdcd8;--ok:#1b7a3d;--no:#b3261e;--am:#f2b705;color-scheme:light}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:70px}
 body{margin:0;font:17px/1.6 Inter,Arial,sans-serif;color:var(--ink);background:#fff}
@@ -349,7 +350,7 @@ $("hp").addEventListener("click",function(e){var b=e.target.closest("button");if
 /* modelos 3D */
 var mv=$("mv"),O=[["Coração","heart.glb","Coração humano em 3D","0deg 80deg auto"],["Pulmões","lungs.glb","Pulmões humanos em 3D, com traqueia e brônquios","0deg 80deg auto"],["Cérebro","brain.glb","Cérebro humano em 3D","70deg 75deg auto"]];
 $("oc").innerHTML=O.map(function(o,k){return '<button type="button" data-k="'+k+'" aria-pressed="false">'+o[0]+'</button>'}).join("");
-function so(k){var o=O[k];$("mvm").hidden=true;mv.setAttribute("alt",o[2]);mv.setAttribute("camera-orbit",o[3]);mv.src=o[1];document.querySelectorAll("#oc button").forEach(function(b,j){b.setAttribute("aria-pressed",j==k)})}
+function so(k){var o=O[k];$("mvm").hidden=true;mv.setAttribute("alt",o[2]);mv.setAttribute("camera-orbit",o[3]);mv.setAttribute("src",o[1]);document.querySelectorAll("#oc button").forEach(function(b,j){b.setAttribute("aria-pressed",j==k)})}
 $("oc").addEventListener("click",function(e){var b=e.target.closest("button");if(b)so(+b.dataset.k)});
 mv.addEventListener("error",function(){$("mvm").hidden=false});so(0);
 /* quiz */
