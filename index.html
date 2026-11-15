@@ -261,11 +261,16 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <section id="ra"><div class="w">
 <h2 class="t">Realidade aumentada e 3D: o banner que ganha vida</h2>
 <p class="sub">Recursos opcionais para ir além do QR Code. A realidade aumentada combina elementos reais e virtuais, em tempo real e alinhados (Azuma, 1997). O QR Code, sozinho, apenas abre um endereço: ele não cria realidade aumentada.</p>
-<div class="two">
+<div class="card"><span class="chip" style="margin:0 0 8px">Tamanho real</span><h3>Banners na sua sala, em tamanho real</h3>
+<p id="mvt" style="margin:6px 0 12px">No celular, toque em “Ver em tamanho real” e aponte para o chão. Aparecem dois banners lado a lado, com o mesmo conteúdo: um com erros e outro corrigido. Afaste-se 3 metros e responda: qual dos dois você leria?</p>
+<div class="pills" id="rp" role="group" aria-label="Escolha o que ver"><button type="button" data-k="0" aria-pressed="true">Bom e ruim lado a lado</button><button type="button" data-k="1" aria-pressed="false">Banner do projeto</button></div>
+<model-viewer id="mv2" src="banner-bom-e-ruim.glb" ar ar-modes="webxr scene-viewer quick-look" ar-placement="floor" ar-scale="fixed" camera-controls alt="Dois banners de 90 por 120 centímetros lado a lado: o Banner A, com erros, e o Banner B, corrigido" camera-orbit="0deg 80deg auto" environment-image="neutral" shadow-intensity="1" touch-action="pan-y" style="height:440px">
+<button slot="ar-button" class="arb" type="button">Ver em tamanho real</button></model-viewer>
+<p class="sub" style="font-size:.88rem;margin:10px 0 0">Cada banner tem 90 cm de largura e 120 cm de altura. Funciona em celulares compatíveis; no computador, gire com o mouse.</p></div><div class="two">
 <div class="card"><span class="chip" style="margin:0 0 8px">Experiência com a câmera</span><h3>Banner que ganha vida</h3>
 <p style="margin:6px 0 14px">A pessoa aponta a câmera do celular para uma imagem específica do banner. A plataforma reconhece o marcador e exibe uma animação, um modelo 3D ou um vídeo.</p>
 <a class="btn" href="./ar.html">Abrir experiência pela câmera</a></div>
-<div class="card"><span class="chip" style="margin:0 0 8px">Tamanho real</span><h3>Banner de 90 × 120 cm na sua sala</h3>
+<div class="card"><span class="chip" style="margin:0 0 8px"/span><h3>Banner de 90 × 120 cm na sua sala</h3>
 <p style="margin:6px 0 12px">No celular, toque em “Ver em tamanho real” e aponte para o chão. O banner aparece em pé, no tamanho verdadeiro. Afaste-se 2 ou 3 metros e confira: dá para ler o título e os blocos de longe?</p>
 <model-viewer id="mv2" src="banner-tamanho-real.glb" ar ar-modes="webxr scene-viewer quick-look" ar-placement="floor" ar-scale="fixed" camera-controls alt="Banner educativo de 90 por 120 centímetros sobre um suporte" camera-orbit="0deg 80deg auto" environment-image="neutral" shadow-intensity="1" touch-action="pan-y" style="height:440px">
 <button slot="ar-button" class="arb" type="button">Ver em tamanho real</button></model-viewer>
@@ -320,7 +325,8 @@ function go(i,sc){cur=Math.max(0,Math.min(4,i));for(var k=0;k<5;k++){$("p"+(k+1)
  $("pb").style.width=((cur+1)*20)+"%";$("pv").disabled=cur==0;$("nx").disabled=cur==4;if(sc)$("passos").scrollIntoView()}
 $("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i,false)});
 $("ov").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i,true)});
-$("pv").onclick=function(){go(cur-1,true)};$("nx").onclick=function(){go(cur+1,true)};go(0,false);
+$("pv").onclick=function(){go(cur-1,true)};$("nx").onclick=function(){go(cur+1,true)};go(0,false); function porHash(){var m=location.hash.match(/^#etapa-([1-5])$/);if(m)go(+m[1]-1,true)}
+window.addEventListener("hashchange",porHash);porHash();
 /* ficha */
 function ficha(){var a=$("i1").value.trim(),b=$("i2").value.trim(),c=$("i3").value.trim();
  $("fo").textContent=(a||b||c)?"Tema: "+(a||"—")+"\nObjetivo: "+(b||"—")+"\nPúblico: "+(c||"—"):"Preencha os campos para ver sua ficha."}
@@ -420,5 +426,11 @@ function sel(i){var z=Z[i];hs.forEach(function(b,k){b.setAttribute("aria-pressed
 sel(0);
 })();
 </script>
-</body>
+<script>
+(function(){
+var mv=document.getElementById("mv2"),B=[["banner-bom-e-ruim.glb","Dois banners de 90 por 120 centímetros lado a lado: o Banner A, com erros, e o Banner B, corrigido","No celular, toque em “Ver em tamanho real” e aponte para o chão. Aparecem dois banners lado a lado, com o mesmo conteúdo: um com erros e outro corrigido. Afaste-se 3 metros e responda: qual dos dois você leria?"],["banner-tamanho-real.glb","Banner educativo de 90 por 120 centímetros sobre um suporte","No celular, toque em “Ver em tamanho real” e aponte para o chão. O banner do projeto aparece em pé, no tamanho verdadeiro. Afaste-se 2 ou 3 metros e confira: dá para ler o título e os blocos de longe?"]];
+var bs=document.querySelectorAll("#rp button");
+bs.forEach(function(b){b.onclick=function(){var k=+b.dataset.k;mv.setAttribute("src",B[k][0]);mv.setAttribute("alt",B[k][1]);document.getElementById("mvt").textContent=B[k][2];bs.forEach(function(x){x.setAttribute("aria-pressed",x==b)})}});
+})();
+</script></body>
 </html>
