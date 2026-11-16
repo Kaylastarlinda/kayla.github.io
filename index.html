@@ -134,7 +134,7 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 </head>
 <body>
 <nav aria-label="Navegação principal"><div class="w"><b><span class="lg" role="img" aria-label="Logo do IFPA"></span>IFPA · Banner educativo</b>
-<a href="#inicio">Início</a><a href="#estrutura">Estrutura</a><a href="#passos">Passo a passo</a><a href="#pratica">Prática</a><a href="#erros">Caça aos erros</a><a href="#ra">RA e 3D</a><a href="#quiz">Quiz</a><a href="#refs">Referências</a></div></nav>
+<a href="#inicio">Início</a><a href="#estrutura">Estrutura</a><a href="#passos">Passo a passo</a><a href="#pratica">Prática</a><a href="#monte">Monte seu banner</a><a href="#erros">Caça aos erros</a><a href="#ra">RA e 3D</a><a href="#quiz">Quiz</a><a href="#refs">Referências</a></div></nav>
 
 <header class="hero" id="inicio"><div class="w">
 <div class="inst">Instituto Federal do Pará · Campus Paragominas · Licenciatura em Pedagogia</div>
@@ -242,8 +242,138 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <div class="ph"><b>5 min</b><div><b>QR Code e revisão</b><br>Gerem o QR Code (etapa 4) e confiram o banner com a lista da etapa 5.</div></div>
 <div class="card" style="text-align:center"><div class="timer" id="tm">20:00</div>
 <div class="btns" style="justify-content:center"><button class="btn" id="ts" type="button">Iniciar</button><button class="btn o" id="tr" type="button">Zerar</button></div></div>
+<div class="note g">Quer um desafio? Monte o seu banner com o kit de informações e deixe o site conferir. Quem acertar todas as partes ganha um selo: <a href="#monte">ir para o desafio</a>.</div>
 </div></section>
 
+
+<!-- ===== DESAFIO: MONTE O SEU BANNER ===== -->
+<style>
+.mb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:26px;align-items:start;margin-top:18px}
+@media(max-width:860px){.mb{grid-template-columns:1fr}}
+.mbp{position:sticky;top:76px}
+@media(max-width:860px){.mbp{position:static}}
+.mbp canvas{display:block;width:100%;height:auto;border:2px solid var(--ln);border-radius:10px;background:#fff}
+.mbf label.f{margin-top:14px}
+.mbf textarea,.mbf select{width:100%;font:inherit;padding:10px 12px;border:2px solid var(--ln);border-radius:10px;background:#fff}
+.mbf textarea{min-height:84px;resize:vertical}
+.mbf input[type=color]{width:64px;height:40px;padding:2px}
+.mbc{display:flex;gap:18px;flex-wrap:wrap}
+.mbr li{margin:8px 0;list-style:none;padding:10px 12px;border-radius:10px;border:2px solid var(--ln);background:#fff}
+.mbr li.ok{border-color:var(--ok);background:#e6f4ea}.mbr li.no{border-color:var(--no);background:#fce8e6}
+.mbr ul{padding:0;margin:14px 0}
+.selo{background:#fff7dc;border:3px solid var(--am);border-radius:16px;padding:18px 20px;margin-top:16px;text-align:center}
+.selo h3{font-size:1.5rem;color:var(--g);margin-bottom:6px}
+.kit li{margin:6px 0}
+</style>
+<section class="s" id="monte"><div class="w">
+<h2 class="t">Desafio: monte o seu banner</h2>
+<p class="sub">Use as informações do kit para montar o seu banner. Edite à vontade e acompanhe a prévia. Quando estiver pronto, clique em <b>Conferir</b>. <b>Atenção:</b> a conferência só pode ser feita <b>uma vez</b>. Quem acertar todas as partes ganha um selo!</p>
+<details open><summary>Kit de informações (exemplo fictício, só para o exercício)</summary><div><ul class="kit" id="kit"></ul></div></details>
+<div class="mb">
+<div class="mbf" id="mbf"></div>
+<div class="mbp"><canvas id="mbc" width="1200" height="1600" aria-label="Prévia do seu banner"></canvas>
+<div class="btns"><button class="btn o" id="mbd" type="button">Baixar imagem do banner</button></div></div>
+</div>
+<div class="btns"><button class="btn" id="mbk" type="button">Conferir meu banner (só uma vez)</button></div>
+<div class="mbr" id="mbr" aria-live="polite"></div>
+<div id="mba" hidden>
+<h3 style="margin:26px 0 8px">Seu banner em tamanho real</h3>
+<p class="sub">Toque em “Ver em tamanho real” e aponte para o chão. Funciona em celulares compatíveis (Chrome no Android e iPhone); em outros aparelhos pode aparecer só a prévia 3D.</p>
+<model-viewer id="mbm" src="banner-aluno.glb" ar ar-modes="webxr scene-viewer quick-look" ar-placement="floor" ar-scale="fixed" camera-controls alt="Seu banner em 3D, com 90 por 120 centímetros" camera-orbit="0deg 80deg auto" environment-image="neutral" shadow-intensity="1" touch-action="pan-y" style="height:440px">
+<button slot="ar-button" class="arb" type="button">Ver em tamanho real</button></model-viewer>
+<p class="sub" id="mbe" hidden style="margin-top:8px"></p>
+</div>
+<details style="margin-top:22px"><summary>Área do professor</summary><div>
+<p>Para liberar uma nova conferência neste aparelho, digite a senha.</p>
+<input type="text" id="mbs" placeholder="Senha" style="max-width:240px"> <button class="btn o" id="mbl" type="button">Liberar</button></div></details>
+</div></section>
+<script>
+(function(){
+/* ===== CONFIGURAÇÃO: troque aqui o tema, a palavra-chave, o site e a senha ===== */
+var KIT={tema:"Horta da escola",chave:"horta",url:"https://kaylastarlinda.github.io/kayla.github.io/",pin:"banner2026",
+fatos:["Tema: Horta da escola.","A horta foi criada para ensinar os estudantes a cuidar das plantas e dos alimentos.","Todas as turmas ajudam no plantio, na rega e na colheita.","Os alimentos colhidos são usados na merenda da escola.","Os estudantes anotam o crescimento das plantas em cadernos de campo.","O trabalho usou pesquisa em livros e sites oficiais e observação dos canteiros.","Resultado: as turmas aprenderam a plantar alface, cebolinha e tomate.","Mensagem final: cuidar da horta é cuidar da alimentação de todos.","Endereço do site para o QR Code: https://kaylastarlinda.github.io/kayla.github.io/","Referência que pode ser usada: WILLIAMS, Robin. Design para quem não é designer: princípios de design e tipografia para iniciantes. 4. ed. São Paulo: Callis, 2013."]};
+var FN=[["Arial, sans-serif","Arial"],["Verdana, sans-serif","Verdana"],["Georgia, serif","Georgia (com serifa)"],["'Comic Sans MS', cursive","Comic Sans"]];
+var FD=[["nome","Seu nome ou nome do grupo","t",60],["titulo","Título","t",90],["autores","Autores","t",120],["inst","Instituição","t",80],["intro","Introdução","a",280],["obj","Objetivos","a",170],["met","Metodologia","a",220],["cont","Conteúdo principal (um tópico por linha)","a",360],["img","Imagem",
+"s",[["0","Escolha..."],["1","Canteiro"],["2","Regador"],["3","Cesta de legumes"]]],["leg","Legenda da imagem","t",90],["concl","Conclusão","a",220],["qru","QR Code: endereço do site","t",120],["qrt","QR Code: instrução ao lado","t",70],["refs","Referências (uma por linha)","a",420],["fT","Fonte dos títulos","s",FN],["fB","Fonte do texto","s",FN],["tam","Tamanho do título","s",[["m","Médio"],["p","Pequeno"],["g","Grande"]]],["texto","Cor do texto","c","#1d2b28"],["fundo","Cor do fundo","c","#ffffff"],["destaque","Cor de destaque","c","#176B5B"]];
+var g=function(i){return document.getElementById(i)},SK="bn-c",SR="bn-r",lock=false;
+g("kit").innerHTML=KIT.fatos.map(function(t){return "<li>"+t+"</li>"}).join("");
+var h="";FD.forEach(function(f){var id="mb_"+f[0];
+ if(f[2]=="t")h+='<label class="f" for="'+id+'">'+f[1]+'</label><input type="text" id="'+id+'" maxlength="'+f[3]+'">';
+ else if(f[2]=="a")h+='<label class="f" for="'+id+'">'+f[1]+'</label><textarea id="'+id+'" maxlength="'+f[3]+'"></textarea>';
+ else if(f[2]=="s")h+='<label class="f" for="'+id+'">'+f[1]+'</label><select id="'+id+'">'+f[3].map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>'}).join("")+'</select>';
+ else h+='<label class="f" for="'+id+'">'+f[1]+'</label><input type="color" id="'+id+'" value="'+f[3]+'">'});
+g("mbf").innerHTML=h;
+function val(){var v={};FD.forEach(function(f){v[f[0]]=g("mb_"+f[0]).value});return v}
+function put(v){FD.forEach(function(f){if(v[f[0]]!=null)g("mb_"+f[0]).value=v[f[0]]})}
+function L(h){var c=[1,3,5].map(function(i){var v=parseInt(h.substr(i,2),16)/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+function cr(a,b){var x=L(a),y=L(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+function wr(x,t,mw){var o=[];String(t).split("\n").forEach(function(p){var cur="";p.split(/\s+/).forEach(function(w){if(!w)return;var c=cur?cur+" "+w:w;if(x.measureText(c).width<=mw)cur=c;else{if(cur)o.push(cur);cur=w}});o.push(cur)});return o}
+function pic(x,k,X,Y,W,H){x.save();x.beginPath();x.rect(X,Y,W,H);x.clip();
+ if(k=="1"){x.fillStyle="#bfe3f7";x.fillRect(X,Y,W,H);x.fillStyle="#fcd53c";x.beginPath();x.arc(X+W-70,Y+60,36,0,7);x.fill();x.fillStyle="#6aa84f";x.fillRect(X,Y+H*.55,W,H*.45);x.fillStyle="#7a5232";x.fillRect(X+20,Y+H*.72,W-40,26);for(var i=0;i<9;i++){x.fillStyle="#2f8f46";x.beginPath();x.arc(X+60+i*(W-120)/8,Y+H*.7,16,0,7);x.fill()}}
+ else if(k=="2"){x.fillStyle="#eaf6ee";x.fillRect(X,Y,W,H);x.fillStyle="#3b82c4";x.fillRect(X+W/2-70,Y+70,110,80);x.fillRect(X+W/2+40,Y+50,70,16);x.strokeStyle="#3b82c4";x.lineWidth=10;x.beginPath();x.arc(X+W/2-15,Y+70,34,Math.PI,0);x.stroke();x.fillStyle="#7cc4ff";for(var j=0;j<5;j++){x.beginPath();x.arc(X+W/2+120+j*12,Y+90+j*22,8,0,7);x.fill()}}
+ else if(k=="3"){x.fillStyle="#fff4d6";x.fillRect(X,Y,W,H);x.fillStyle="#d6322b";[0,1,2].forEach(function(i){x.beginPath();x.arc(X+W/2-60+i*60,Y+90,28,0,7);x.fill()});x.fillStyle="#2f8f46";x.fillRect(X+W/2-30,Y+50,60,24);x.fillStyle="#a56a2a";x.beginPath();x.moveTo(X+W/2-130,Y+110);x.lineTo(X+W/2+130,Y+110);x.lineTo(X+W/2+100,Y+H-24);x.lineTo(X+W/2-100,Y+H-24);x.fill()}
+ else{x.fillStyle="#f1f1f1";x.fillRect(X,Y,W,H);x.fillStyle="#888";x.font="28px Arial";x.fillText("Imagem",X+W/2-50,Y+H/2-12)}x.restore()}
+function qrd(x,url,X,Y,S){x.fillStyle="#fff";x.fillRect(X,Y,S,S);var ok=false;
+ try{if(typeof qrcode!=="undefined"&&/^https?:\/\/\S+$/.test(url)){var q=qrcode(0,"M");q.addData(url);q.make();var n=q.getModuleCount(),m=S/(n+8);x.fillStyle="#000";for(var r=0;r<n;r++)for(var c=0;c<n;c++)if(q.isDark(r,c))x.fillRect(X+(c+4)*m,Y+(r+4)*m,Math.ceil(m),Math.ceil(m));ok=true}}catch(e){}
+ if(!ok){x.strokeStyle="#999";x.setLineDash([8,6]);x.lineWidth=3;x.strokeRect(X+4,Y+4,S-8,S-8);x.setLineDash([]);x.fillStyle="#888";x.font="24px Arial";x.fillText("QR Code",X+S/2-44,Y+S/2-10)}}
+function render(){var v=val(),cv=g("mbc"),c=document.createElement("canvas");c.width=1200;c.height=2800;var x=c.getContext("2d");
+ x.fillStyle=v.fundo;x.fillRect(0,0,1200,2800);x.textBaseline="top";
+ var ts={g:72,m:48,p:30}[v.tam]||48,ld=Math.round(ts*1.18);x.font="bold "+ts+"px "+v.fT;var tl=wr(x,v.titulo||"Título do banner",1100);
+ var hh=36+tl.length*ld+14+84;x.fillStyle=v.destaque;x.fillRect(0,0,1200,hh);x.fillStyle=L(v.destaque)>.4?"#111111":"#ffffff";
+ var y=36;tl.forEach(function(l){x.fillText(l,50,y);y+=ld});x.font="30px "+v.fB;x.fillText(v.autores||"Autores",50,y+12);x.fillText(v.inst||"Instituição",50,y+52);
+ function blk(X,Y,W,t,txt,mh){x.font="30px "+v.fB;var ls=wr(x,txt||"",W-60),H=Math.max(mh||0,24+52+ls.length*40+16);
+  x.strokeStyle=v.destaque;x.lineWidth=3;x.strokeRect(X,Y,W,H);x.fillStyle=v.destaque;x.fillRect(X,Y,12,H);
+  x.fillStyle=v.texto;x.font="bold 36px "+v.fT;x.fillText(t,X+34,Y+16);x.font="30px "+v.fB;ls.forEach(function(l,i){x.fillText(l,X+34,Y+70+i*40)});return H}
+ var Y0=hh+30,yl=Y0;yl+=blk(40,yl,550,"Introdução",v.intro)+20;yl+=blk(40,yl,550,"Objetivos",v.obj)+20;yl+=blk(40,yl,550,"Metodologia",v.met)+20;
+ var yr=Y0,ih=300;x.strokeStyle=v.destaque;x.lineWidth=3;pic(x,v.img,610,yr,550,ih);x.strokeRect(610,yr,550,ih);
+ x.font="26px "+v.fB;x.fillStyle=v.texto;var cp=wr(x,v.leg||"",550);cp.forEach(function(l,i){x.fillText(l,610,yr+ih+8+i*32)});yr+=ih+8+cp.length*32+16;
+ var bl=(v.cont||"").split("\n").map(function(s){return s.trim()}).filter(Boolean).map(function(s){return "• "+s}).join("\n");
+ yr+=blk(610,yr,550,"Conteúdo principal",bl)+20;
+ var Y2=Math.max(yl,yr);Y2+=blk(40,Y2,1120,"Conclusão",v.concl)+20;
+ var rf=(v.refs||"").split("\n").map(function(s){return s.trim()}).filter(Boolean).join("\n");x.font="30px "+v.fB;var hr=Math.max(320,24+52+wr(x,rf,490).length*40+16);
+ x.strokeStyle=v.destaque;x.lineWidth=3;x.strokeRect(40,Y2,550,hr);x.fillStyle=v.destaque;x.fillRect(40,Y2,12,hr);qrd(x,v.qru,70,Y2+30,240);
+ x.fillStyle=v.texto;x.font="bold 34px "+v.fT;wr(x,v.qrt||"Instrução",240).forEach(function(l,i){x.fillText(l,330,Y2+40+i*44)});
+ blk(610,Y2,550,"Referências",rf,hr);var N=Y2+hr+40,f=cv.getContext("2d");
+ f.fillStyle=v.fundo;f.fillRect(0,0,1200,1600);var s=Math.min(1,1600/N);f.drawImage(c,0,0,1200,N,(1200-1200*s)/2,0,1200*s,N*s)}
+var tm;function sched(){clearTimeout(tm);tm=setTimeout(function(){render();if(!lock)try{localStorage.setItem(SR,JSON.stringify(val()))}catch(e){}},150)}
+FD.forEach(function(f){var e=g("mb_"+f[0]);e.addEventListener("input",sched);e.addEventListener("change",sched)});
+var nz=function(s){return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()},nw=function(s){return String(s).trim().split(/\s+/).filter(Boolean).length};
+function rules(v){var R=[],L1=function(s){return String(s).split("\n").map(function(t){return t.trim()}).filter(Boolean)};
+ function add(n,ok,m){R.push([n,ok,ok?"":m])}
+ var nt=nw(v.titulo);add("Título",nt>=3&&nt<=12&&nz(v.titulo).indexOf(KIT.chave)>-1,"Use de 3 a 12 palavras e inclua o tema do banner.");
+ add("Autores e instituição",nw(v.autores)>=2&&nw(v.inst)>=1,"Escreva o nome completo dos autores e a instituição.");
+ var ni=nw(v.intro);add("Introdução",ni>=10&&ni<=45,"A introdução deve ser curta (de 10 a 45 palavras).");
+ var no=nw(v.obj);add("Objetivos",no>=5&&no<=30&&/^[a-z]{4,}(ar|er|ir|or)$/.test(nz(String(v.obj).trim().split(/\s+/)[0]||"")),"Escreva uma frase curta que comece com um verbo no infinitivo (como ensinar).");
+ var nm=nw(v.met);add("Metodologia",nm>=8&&nm<=40,"Explique como o trabalho foi feito em poucas linhas (de 8 a 40 palavras).");
+ var lc=L1(v.cont);add("Conteúdo principal",lc.length>=3&&lc.length<=5&&lc.every(function(t){return nw(t)<=14}),"Use de 3 a 5 tópicos, um por linha, cada um curto (até 14 palavras).");
+ add("Imagem e legenda",v.img!="0"&&nw(v.leg)>=4&&/^figura/.test(nz(String(v.leg).trim())),"Escolha uma imagem e escreva a legenda começando com “Figura 1.” e o crédito.");
+ var nc=nw(v.concl);add("Conclusão",nc>=8&&nc<=35,"A conclusão deve ter de 8 a 35 palavras.");
+ var nq=nw(v.qrt);add("QR Code",/^https?:\/\/\S+\.\S+/.test(String(v.qru).trim())&&nq>=3&&nq<=12&&/(escaneie|aponte|acesse|leia|conheca|veja)/.test(nz(v.qrt)),"Informe o endereço do site e uma instrução curta ao lado (como “Escaneie e veja...”).");
+ var lr=L1(v.refs);add("Referências",lr.length>=1&&lr.length<=3&&lr.every(function(t){return /\b(19|20)\d{2}\b/.test(t)&&/^[A-ZÀ-Ú]{3,}/.test(t)}),"Escreva de 1 a 3 referências, cada uma começando pelo SOBRENOME em maiúsculas e com o ano.");
+ add("Contraste",cr(v.texto,v.fundo)>=4.5,"A cor do texto precisa contrastar bem com o fundo (razão de 4,5 ou mais).");
+ add("Fontes e tamanho do título",v.fT.indexOf("Comic")<0&&v.fB.indexOf("Comic")<0&&v.tam=="g","Use fontes sem decoração e deixe o título grande.");return R}
+function show(d){var R=d.r,n=R.filter(function(r){return r[1]}).length,all=n==R.length;
+ var o='<h3 style="margin:26px 0 6px">Resultado da conferência</h3><p class="sc">'+n+' de '+R.length+' partes corretas</p><ul>'+R.map(function(r){return '<li class="'+(r[1]?"ok":"no")+'"><b>'+r[0]+':</b> '+(r[1]?"Certo.":"Precisa de ajuste. "+r[2])+'</li>'}).join("")+'</ul>';
+ if(all)o+='<div class="selo"><h3>Parabéns, '+d.nome+'!</h3><p>Seu banner tem todas as partes corretas. Mostre esta tela ao professor para receber o seu prêmio.</p><p><b>Código:</b> '+d.cod+' · '+d.hora+'</p></div>';
+ else o+='<p class="sub">A conferência já foi feita e não pode ser repetida. Veja acima o que ajustar para o próximo banner.</p>';
+ g("mbr").innerHTML=o;g("mba").hidden=false}
+function trava(){lock=true;FD.forEach(function(f){g("mb_"+f[0]).disabled=true});g("mbk").disabled=true;g("mbk").textContent="Conferência já realizada"}
+function hs(s){var a=5381;for(var i=0;i<s.length;i++)a=((a<<5)+a+s.charCodeAt(i))>>>0;return a.toString(36).toUpperCase().slice(0,5)}
+g("mbk").onclick=function(){var v=val();if(!v.nome.trim()){alert("Escreva o seu nome ou o nome do grupo antes de conferir.");g("mb_nome").focus();return}
+ if(!confirm("Tem certeza? A conferência só pode ser feita UMA vez neste aparelho."))return;
+ var d={nome:v.nome.trim(),v:v,r:rules(v),hora:new Date().toLocaleString("pt-BR")};d.cod=hs(JSON.stringify(v)+d.hora);
+ try{localStorage.setItem(SK,JSON.stringify(d))}catch(e){}trava();render();show(d)};
+g("mbl").onclick=function(){if(g("mbs").value===KIT.pin){try{localStorage.removeItem(SK);localStorage.removeItem(SR)}catch(e){}location.reload()}else alert("Senha incorreta.")};
+g("mbd").onclick=function(){g("mbc").toBlob(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="meu-banner.png";a.click()})};
+(async function(){var mv=g("mbm");g("mba").addEventListener("toggle",function(){});
+ var ver=false;new MutationObserver(function(){if(!g("mba").hidden&&!ver){ver=true;aplica()}}).observe(g("mba"),{attributes:true,attributeFilter:["hidden"]});
+ async function aplica(){try{await customElements.whenDefined("model-viewer");if(!mv.loaded)await new Promise(function(r){mv.addEventListener("load",r,{once:true})});
+  var tx=await mv.createTexture(g("mbc").toDataURL("image/jpeg",.9));var m=mv.model.materials.filter(function(z){return z.name==="frente"})[0];m.pbrMetallicRoughness.baseColorTexture.setTexture(tx)}
+  catch(e){var p=g("mbe");p.hidden=false;p.textContent="Não foi possível mostrar o seu banner em 3D neste aparelho. Use o botão “Baixar imagem do banner” para guardar o resultado."}}})();
+window.addEventListener("load",function(){render()});var sv=null,sc=null;try{sv=localStorage.getItem(SR);sc=localStorage.getItem(SK)}catch(e){}
+if(sc){var d=JSON.parse(sc);put(d.v);trava();render();show(d)}else{if(sv)put(JSON.parse(sv));render()}
+})();
+</script>
 
 <section id="erros"><div class="w">
 <h2 class="t">Caça aos erros: o que há de errado neste banner?</h2>
@@ -261,20 +391,16 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <section id="ra"><div class="w">
 <h2 class="t">Realidade aumentada e 3D: o banner que ganha vida</h2>
 <p class="sub">Recursos opcionais para ir além do QR Code. A realidade aumentada combina elementos reais e virtuais, em tempo real e alinhados (Azuma, 1997). O QR Code, sozinho, apenas abre um endereço: ele não cria realidade aumentada.</p>
+<div class="two">
+<div class="card"><span class="chip" style="margin:0 0 8px">Experiência com a câmera</span><h3>Banner que ganha vida</h3>
+<p style="margin:6px 0 14px">A pessoa aponta a câmera do celular para uma imagem específica do banner. A plataforma reconhece o marcador e exibe uma animação, um modelo 3D ou um vídeo.</p>
+<a class="btn" href="./ar.html">Abrir experiência pela câmera</a></div>
 <div class="card"><span class="chip" style="margin:0 0 8px">Tamanho real</span><h3>Banners na sua sala, em tamanho real</h3>
 <p id="mvt" style="margin:6px 0 12px">No celular, toque em “Ver em tamanho real” e aponte para o chão. Aparecem dois banners lado a lado, com o mesmo conteúdo: um com erros e outro corrigido. Afaste-se 3 metros e responda: qual dos dois você leria?</p>
 <div class="pills" id="rp" role="group" aria-label="Escolha o que ver"><button type="button" data-k="0" aria-pressed="true">Bom e ruim lado a lado</button><button type="button" data-k="1" aria-pressed="false">Banner do projeto</button></div>
 <model-viewer id="mv2" src="banner-bom-e-ruim.glb" ar ar-modes="webxr scene-viewer quick-look" ar-placement="floor" ar-scale="fixed" camera-controls alt="Dois banners de 90 por 120 centímetros lado a lado: o Banner A, com erros, e o Banner B, corrigido" camera-orbit="0deg 80deg auto" environment-image="neutral" shadow-intensity="1" touch-action="pan-y" style="height:440px">
 <button slot="ar-button" class="arb" type="button">Ver em tamanho real</button></model-viewer>
-<p class="sub" style="font-size:.88rem;margin:10px 0 0">Cada banner tem 90 cm de largura e 120 cm de altura. Funciona em celulares compatíveis; no computador, gire com o mouse.</p></div><div class="two">
-<div class="card"><span class="chip" style="margin:0 0 8px">Experiência com a câmera</span><h3>Banner que ganha vida</h3>
-<p style="margin:6px 0 14px">A pessoa aponta a câmera do celular para uma imagem específica do banner. A plataforma reconhece o marcador e exibe uma animação, um modelo 3D ou um vídeo.</p>
-<a class="btn" href="./ar.html">Abrir experiência pela câmera</a></div>
-<div class="card"><span class="chip" style="margin:0 0 8px"/span><h3>Banner de 90 × 120 cm na sua sala</h3>
-<p style="margin:6px 0 12px">No celular, toque em “Ver em tamanho real” e aponte para o chão. O banner aparece em pé, no tamanho verdadeiro. Afaste-se 2 ou 3 metros e confira: dá para ler o título e os blocos de longe?</p>
-<model-viewer id="mv2" src="banner-tamanho-real.glb" ar ar-modes="webxr scene-viewer quick-look" ar-placement="floor" ar-scale="fixed" camera-controls alt="Banner educativo de 90 por 120 centímetros sobre um suporte" camera-orbit="0deg 80deg auto" environment-image="neutral" shadow-intensity="1" touch-action="pan-y" style="height:440px">
-<button slot="ar-button" class="arb" type="button">Ver em tamanho real</button></model-viewer>
-<p class="sub" style="font-size:.88rem;margin:10px 0 0">Medidas do banner: 90 cm de largura e 120 cm de altura. Funciona em celulares compatíveis; no computador, gire com o mouse.</p></div>
+<p class="sub" style="font-size:.88rem;margin:10px 0 0">Cada banner tem 90 cm de largura e 120 cm de altura. Funciona em celulares compatíveis; no computador, gire com o mouse.</p></div>
 </div>
 <details style="margin-top:18px"><summary>Como criar uma experiência de realidade aumentada</summary><div>
 <ol><li>Finalize o design do banner.</li><li>Escolha uma área com ilustração nítida para ser o marcador.</li><li>Crie a experiência em uma plataforma de WebAR ou desenvolva uma solução com rastreamento de imagem.</li><li>Adicione o conteúdo digital e publique.</li><li>Copie o link público gerado e coloque no botão “Abrir experiência pela câmera”.</li><li>Gere o QR Code com o endereço correto e teste em outro celular.</li></ol>
@@ -325,7 +451,8 @@ function go(i,sc){cur=Math.max(0,Math.min(4,i));for(var k=0;k<5;k++){$("p"+(k+1)
  $("pb").style.width=((cur+1)*20)+"%";$("pv").disabled=cur==0;$("nx").disabled=cur==4;if(sc)$("passos").scrollIntoView()}
 $("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i,false)});
 $("ov").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i,true)});
-$("pv").onclick=function(){go(cur-1,true)};$("nx").onclick=function(){go(cur+1,true)};go(0,false); function porHash(){var m=location.hash.match(/^#etapa-([1-5])$/);if(m)go(+m[1]-1,true)}
+$("pv").onclick=function(){go(cur-1,true)};$("nx").onclick=function(){go(cur+1,true)};go(0,false);
+function porHash(){var m=location.hash.match(/^#etapa-([1-5])$/);if(m)go(+m[1]-1,true)}
 window.addEventListener("hashchange",porHash);porHash();
 /* ficha */
 function ficha(){var a=$("i1").value.trim(),b=$("i2").value.trim(),c=$("i3").value.trim();
@@ -432,5 +559,6 @@ var mv=document.getElementById("mv2"),B=[["banner-bom-e-ruim.glb","Dois banners 
 var bs=document.querySelectorAll("#rp button");
 bs.forEach(function(b){b.onclick=function(){var k=+b.dataset.k;mv.setAttribute("src",B[k][0]);mv.setAttribute("alt",B[k][1]);document.getElementById("mvt").textContent=B[k][2];bs.forEach(function(x){x.setAttribute("aria-pressed",x==b)})}});
 })();
-</script></body>
+</script>
+</body>
 </html>
