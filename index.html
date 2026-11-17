@@ -214,7 +214,7 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <h3>4. Recursos tecnológicos</h3>
 <div class="note g"><b>O QR Code é um recurso complementar.</b> O objetivo principal é um banner claro e bem organizado. O código só leva o leitor a um conteúdo extra em um site, como vídeos, textos ou questionários.</div>
 <h4>Gere seu QR Code</h4>
-<label class="f" for="qu">Endereço do site</label><input type="text" id="qu" value="https://kaylastarlinda.github.io/kayla.github.io/">
+<label class="f" for="qu">Endereço do site</label><input type="text" id="qu" value="https://kaylastarlinda.github.io/banner-academico/">
 <div class="btns"><button class="btn" id="qg" type="button">Gerar QR Code</button></div>
 <div class="qrbox" id="qo" aria-live="polite"></div>
 <h4>Cuidados</h4>
@@ -267,8 +267,8 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 </style>
 <section class="s" id="monte"><div class="w">
 <h2 class="t">Desafio: monte o seu banner</h2>
-<p class="sub">Use as informações do kit para montar o seu banner. Edite à vontade e acompanhe a prévia. Quando estiver pronto, clique em <b>Conferir</b>. <b>Atenção:</b> a conferência só pode ser feita <b>uma vez</b>. Quem acertar todas as partes ganha um selo!</p>
-<details open><summary>Kit de informações (exemplo fictício, só para o exercício)</summary><div><ul class="kit" id="kit"></ul></div></details>
+<p class="sub">Use apenas as informações do kit para montar o seu banner e não invente orientações de primeiros socorros. Edite à vontade e acompanhe a prévia. Quando estiver pronto, clique em <b>Conferir</b>. <b>Atenção:</b> a conferência só pode ser feita <b>uma vez</b>. Quem acertar todas as partes ganha um selo!</p>
+<details open><summary>Kit de informações (use só estas informações)</summary><div><ul class="kit" id="kit"></ul></div></details>
 <div class="mb">
 <div class="mbf" id="mbf"></div>
 <div class="mbp"><canvas id="mbc" width="1200" height="1600" aria-label="Prévia do seu banner"></canvas>
@@ -290,11 +290,11 @@ footer{background:var(--g);color:#fff;padding:26px 0 36px;font-size:.95rem}
 <script>
 (function(){
 /* ===== CONFIGURAÇÃO: troque aqui o tema, a palavra-chave, o site e a senha ===== */
-var KIT={tema:"Horta da escola",chave:"horta",url:"https://kaylastarlinda.github.io/kayla.github.io/",pin:"banner2026",
-fatos:["Tema: Horta da escola.","A horta foi criada para ensinar os estudantes a cuidar das plantas e dos alimentos.","Todas as turmas ajudam no plantio, na rega e na colheita.","Os alimentos colhidos são usados na merenda da escola.","Os estudantes anotam o crescimento das plantas em cadernos de campo.","O trabalho usou pesquisa em livros e sites oficiais e observação dos canteiros.","Resultado: as turmas aprenderam a plantar alface, cebolinha e tomate.","Mensagem final: cuidar da horta é cuidar da alimentação de todos.","Endereço do site para o QR Code: https://kaylastarlinda.github.io/kayla.github.io/","Referência que pode ser usada: WILLIAMS, Robin. Design para quem não é designer: princípios de design e tipografia para iniciantes. 4. ed. São Paulo: Callis, 2013."]};
+var KIT={tema:"Primeiros socorros na escola",chave:"socorros",url:"https://kaylastarlinda.github.io/banner-academico/",pin:"pedagogia2026",
+fatos:["Tema: Primeiros socorros na escola.","A Lei Lucas (Lei nº 13.722/2018) torna obrigatória a capacitação em noções básicas de primeiros socorros em escolas.","Professores convivem com crianças e precisam reconhecer emergências e acionar ajuda.","O trabalho usou pesquisa em fontes oficiais e a produção de um banner com QR Code.","Em uma emergência, o SAMU atende pelo número 192.","Engasgo grave: se a pessoa não consegue respirar, falar ou tossir, peça ajuda e ligue 192.","Queda: proteja o local e peça ajuda se houver sinais de gravidade.","Queimadura: resfrie com água corrente fresca.","Mensagem final: em uma emergência, mantenha a calma, proteja o local, peça ajuda e ligue 192.","Este material tem finalidade educativa e não substitui treinamento prático.","Endereço do site para o QR Code: https://kaylastarlinda.github.io/banner-academico/","Referência que pode ser usada: BRASIL. Lei nº 13.722, de 4 de outubro de 2018. Brasília, DF: Presidência da República, 2018.","Referência que pode ser usada: BRASIL. Ministério da Saúde; FUNDAÇÃO OSWALDO CRUZ. Manual de primeiros socorros. Rio de Janeiro: Fundação Oswaldo Cruz, 2003."]};
 var FN=[["Arial, sans-serif","Arial"],["Verdana, sans-serif","Verdana"],["Georgia, serif","Georgia (com serifa)"],["'Comic Sans MS', cursive","Comic Sans"]];
 var FD=[["nome","Seu nome ou nome do grupo","t",60],["titulo","Título","t",90],["autores","Autores","t",120],["inst","Instituição","t",80],["intro","Introdução","a",280],["obj","Objetivos","a",170],["met","Metodologia","a",220],["cont","Conteúdo principal (um tópico por linha)","a",360],["img","Imagem",
-"s",[["0","Escolha..."],["1","Canteiro"],["2","Regador"],["3","Cesta de legumes"]]],["leg","Legenda da imagem","t",90],["concl","Conclusão","a",220],["qru","QR Code: endereço do site","t",120],["qrt","QR Code: instrução ao lado","t",70],["refs","Referências (uma por linha)","a",420],["fT","Fonte dos títulos","s",FN],["fB","Fonte do texto","s",FN],["tam","Tamanho do título","s",[["m","Médio"],["p","Pequeno"],["g","Grande"]]],["texto","Cor do texto","c","#1d2b28"],["fundo","Cor do fundo","c","#ffffff"],["destaque","Cor de destaque","c","#176B5B"]];
+"s",[["0","Escolha..."],["1","Maleta de primeiros socorros"],["2","Telefone do SAMU (192)"],["3","Curativo"]]],["leg","Legenda da imagem","t",90],["concl","Conclusão","a",220],["qru","QR Code: endereço do site","t",120],["qrt","QR Code: instrução ao lado","t",70],["refs","Referências (uma por linha)","a",420],["fT","Fonte dos títulos","s",FN],["fB","Fonte do texto","s",FN],["tam","Tamanho do título","s",[["m","Médio"],["p","Pequeno"],["g","Grande"]]],["texto","Cor do texto","c","#1d2b28"],["fundo","Cor do fundo","c","#ffffff"],["destaque","Cor de destaque","c","#176B5B"]];
 var g=function(i){return document.getElementById(i)},SK="bn-c",SR="bn-r",lock=false;
 g("kit").innerHTML=KIT.fatos.map(function(t){return "<li>"+t+"</li>"}).join("");
 var h="";FD.forEach(function(f){var id="mb_"+f[0];
@@ -308,11 +308,11 @@ function put(v){FD.forEach(function(f){if(v[f[0]]!=null)g("mb_"+f[0]).value=v[f[
 function L(h){var c=[1,3,5].map(function(i){var v=parseInt(h.substr(i,2),16)/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
 function cr(a,b){var x=L(a),y=L(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
 function wr(x,t,mw){var o=[];String(t).split("\n").forEach(function(p){var cur="";p.split(/\s+/).forEach(function(w){if(!w)return;var c=cur?cur+" "+w:w;if(x.measureText(c).width<=mw)cur=c;else{if(cur)o.push(cur);cur=w}});o.push(cur)});return o}
-function pic(x,k,X,Y,W,H){x.save();x.beginPath();x.rect(X,Y,W,H);x.clip();
- if(k=="1"){x.fillStyle="#bfe3f7";x.fillRect(X,Y,W,H);x.fillStyle="#fcd53c";x.beginPath();x.arc(X+W-70,Y+60,36,0,7);x.fill();x.fillStyle="#6aa84f";x.fillRect(X,Y+H*.55,W,H*.45);x.fillStyle="#7a5232";x.fillRect(X+20,Y+H*.72,W-40,26);for(var i=0;i<9;i++){x.fillStyle="#2f8f46";x.beginPath();x.arc(X+60+i*(W-120)/8,Y+H*.7,16,0,7);x.fill()}}
- else if(k=="2"){x.fillStyle="#eaf6ee";x.fillRect(X,Y,W,H);x.fillStyle="#3b82c4";x.fillRect(X+W/2-70,Y+70,110,80);x.fillRect(X+W/2+40,Y+50,70,16);x.strokeStyle="#3b82c4";x.lineWidth=10;x.beginPath();x.arc(X+W/2-15,Y+70,34,Math.PI,0);x.stroke();x.fillStyle="#7cc4ff";for(var j=0;j<5;j++){x.beginPath();x.arc(X+W/2+120+j*12,Y+90+j*22,8,0,7);x.fill()}}
- else if(k=="3"){x.fillStyle="#fff4d6";x.fillRect(X,Y,W,H);x.fillStyle="#d6322b";[0,1,2].forEach(function(i){x.beginPath();x.arc(X+W/2-60+i*60,Y+90,28,0,7);x.fill()});x.fillStyle="#2f8f46";x.fillRect(X+W/2-30,Y+50,60,24);x.fillStyle="#a56a2a";x.beginPath();x.moveTo(X+W/2-130,Y+110);x.lineTo(X+W/2+130,Y+110);x.lineTo(X+W/2+100,Y+H-24);x.lineTo(X+W/2-100,Y+H-24);x.fill()}
- else{x.fillStyle="#f1f1f1";x.fillRect(X,Y,W,H);x.fillStyle="#888";x.font="28px Arial";x.fillText("Imagem",X+W/2-50,Y+H/2-12)}x.restore()}
+function pic(x,k,X,Y,W,H){x.save();x.beginPath();x.rect(X,Y,W,H);x.clip();var cx=X+W/2,cy=Y+H/2;
+ if(k=="1"){x.fillStyle="#eaf6ee";x.fillRect(X,Y,W,H);x.strokeStyle="#8e1f1a";x.lineWidth=14;x.beginPath();x.arc(cx,cy-30,46,Math.PI,0);x.stroke();x.fillStyle="#d6322b";x.fillRect(cx-120,cy-30,240,140);x.fillStyle="#fff";x.fillRect(cx-15,cy-6,30,90);x.fillRect(cx-45,cy+24,90,30)}
+ else if(k=="2"){x.fillStyle="#eaf1fb";x.fillRect(X,Y,W,H);x.fillStyle="#2b3a42";x.fillRect(cx-80,Y+20,160,H-40);x.fillStyle="#fff";x.fillRect(cx-68,Y+48,136,H-110);x.fillStyle="#d6322b";x.font="bold 56px Arial";x.fillText("192",cx-48,cy-30);x.fillStyle="#2b3a42";x.font="22px Arial";x.fillText("SAMU",cx-30,cy+34)}
+ else if(k=="3"){x.fillStyle="#fff4d6";x.fillRect(X,Y,W,H);x.save();x.translate(cx,cy);x.rotate(-.5);x.fillStyle="#f0c8a0";x.fillRect(-150,-46,300,92);x.fillStyle="#fff";x.fillRect(-46,-46,92,92);x.fillStyle="#d6a47a";for(var i=0;i<5;i++){x.fillRect(-130+i*14,-30,6,6);x.fillRect(-130+i*14,20,6,6);x.fillRect(74+i*14,-30,6,6);x.fillRect(74+i*14,20,6,6)}x.restore()}
+ else{x.fillStyle="#f1f1f1";x.fillRect(X,Y,W,H);x.fillStyle="#888";x.font="28px Arial";x.fillText("Imagem",cx-50,cy-12)}x.restore()}
 function qrd(x,url,X,Y,S){x.fillStyle="#fff";x.fillRect(X,Y,S,S);var ok=false;
  try{if(typeof qrcode!=="undefined"&&/^https?:\/\/\S+$/.test(url)){var q=qrcode(0,"M");q.addData(url);q.make();var n=q.getModuleCount(),m=S/(n+8);x.fillStyle="#000";for(var r=0;r<n;r++)for(var c=0;c<n;c++)if(q.isDark(r,c))x.fillRect(X+(c+4)*m,Y+(r+4)*m,Math.ceil(m),Math.ceil(m));ok=true}}catch(e){}
  if(!ok){x.strokeStyle="#999";x.setLineDash([8,6]);x.lineWidth=3;x.strokeRect(X+4,Y+4,S-8,S-8);x.setLineDash([]);x.fillStyle="#888";x.font="24px Arial";x.fillText("QR Code",X+S/2-44,Y+S/2-10)}}
@@ -354,7 +354,7 @@ function rules(v){var R=[],L1=function(s){return String(s).split("\n").map(funct
  add("Fontes e tamanho do título",v.fT.indexOf("Comic")<0&&v.fB.indexOf("Comic")<0&&v.tam=="g","Use fontes sem decoração e deixe o título grande.");return R}
 function show(d){var R=d.r,n=R.filter(function(r){return r[1]}).length,all=n==R.length;
  var o='<h3 style="margin:26px 0 6px">Resultado da conferência</h3><p class="sc">'+n+' de '+R.length+' partes corretas</p><ul>'+R.map(function(r){return '<li class="'+(r[1]?"ok":"no")+'"><b>'+r[0]+':</b> '+(r[1]?"Certo.":"Precisa de ajuste. "+r[2])+'</li>'}).join("")+'</ul>';
- if(all)o+='<div class="selo"><h3>Parabéns, '+d.nome+'!</h3><p>Seu banner tem todas as partes corretas. Mostre esta tela ao professor para receber o seu prêmio.</p><p><b>Código:</b> '+d.cod+' · '+d.hora+'</p></div>';
+ if(all)o+='<div class="selo"><h3>Parabéns, '+d.nome+'!</h3><p>Seu banner tem todas as partes corretas. Mostre esta tela ao professor, que vai conferir o conteúdo e entregar o seu prêmio.</p><p><b>Código:</b> '+d.cod+' · '+d.hora+'</p></div>';
  else o+='<p class="sub">A conferência já foi feita e não pode ser repetida. Veja acima o que ajustar para o próximo banner.</p>';
  g("mbr").innerHTML=o;g("mba").hidden=false}
 function trava(){lock=true;FD.forEach(function(f){g("mb_"+f[0]).disabled=true});g("mbk").disabled=true;g("mbk").textContent="Conferência já realizada"}
